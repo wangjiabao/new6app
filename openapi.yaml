@@ -621,6 +621,33 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/UserInfoReply_List9'
+                level1price:
+                    type: integer
+                    format: int64
+                level2price:
+                    type: integer
+                    format: int64
+                level3price:
+                    type: integer
+                    format: int64
+                level4price:
+                    type: integer
+                    format: int64
+                level1csd:
+                    type: integer
+                    format: int64
+                level2csd:
+                    type: integer
+                    format: int64
+                level3csd:
+                    type: integer
+                    format: int64
+                level4csd:
+                    type: integer
+                    format: int64
+                term:
+                    type: integer
+                    format: int64
         UserInfoReply_List:
             type: object
             properties:

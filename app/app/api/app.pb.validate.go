@@ -1220,6 +1220,24 @@ func (m *UserInfoReply) validate(all bool) error {
 
 	}
 
+	// no validation rules for Level1Price
+
+	// no validation rules for Level2Price
+
+	// no validation rules for Level3Price
+
+	// no validation rules for Level4Price
+
+	// no validation rules for Level1Csd
+
+	// no validation rules for Level2Csd
+
+	// no validation rules for Level3Csd
+
+	// no validation rules for Level4Csd
+
+	// no validation rules for Term
+
 	if len(errors) > 0 {
 		return UserInfoReplyMultiError(errors)
 	}
