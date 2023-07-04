@@ -6210,11 +6210,9 @@ func (m *UserInfoReply_List) validate(all bool) error {
 
 	// no validation rules for Amount
 
-	// no validation rules for LocationStatus
-
 	// no validation rules for AmountMax
 
-	// no validation rules for OutRate
+	// no validation rules for Term
 
 	if len(errors) > 0 {
 		return UserInfoReply_ListMultiError(errors)

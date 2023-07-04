@@ -249,9 +249,8 @@ message UserInfoReply {
 	message List {
 		string created_at = 1;
 		string amount = 2;
-		string locationStatus = 3;
 		string amountMax = 4;
-		string outRate = 5;
+		int64 term = 5;
 	}
 
 	repeated List2 recommendTeamList = 53;

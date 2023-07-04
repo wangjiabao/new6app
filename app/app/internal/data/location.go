@@ -26,6 +26,7 @@ type Location struct {
 type LocationNew struct {
 	ID                int64     `gorm:"primarykey;type:int"`
 	UserId            int64     `gorm:"type:int;not null"`
+	Term              int64     `gorm:"type:int;not null"`
 	Status            string    `gorm:"type:varchar(45);not null"`
 	Current           int64     `gorm:"type:bigint;not null"`
 	CurrentMax        int64     `gorm:"type:bigint;not null"`
@@ -231,6 +232,7 @@ func (lr *LocationRepo) GetLocationsByUserId(ctx context.Context, userId int64) 
 			UserId:     location.UserId,
 			Status:     location.Status,
 			Current:    location.Current,
+			Term:       location.Term,
 			CurrentMax: location.CurrentMax,
 			CreatedAt:  location.CreatedAt,
 		})

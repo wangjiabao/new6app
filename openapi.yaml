@@ -655,12 +655,11 @@ components:
                     type: string
                 amount:
                     type: string
-                locationStatus:
-                    type: string
                 amountMax:
                     type: string
-                outRate:
-                    type: string
+                term:
+                    type: integer
+                    format: int64
         UserInfoReply_List2:
             type: object
             properties:
