@@ -104,7 +104,6 @@ type LocationNew struct {
 	Current           int64
 	CurrentMax        int64
 	StopLocationAgain int64
-	OutRate           int64
 	StopCoin          int64
 	StopDate          time.Time
 	CreatedAt         time.Time
@@ -533,7 +532,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 			if "running" == v.Status {
 				status = "yes"
 				tmpCurrent += v.Current
-				locationRunningAmount += v.CurrentMax * 100 / v.OutRate
+				locationRunningAmount += v.CurrentMax * 100
 				if v.CurrentMax >= v.Current {
 					tmpCurrentMaxSubCurrent += v.CurrentMax - v.Current
 				}
@@ -541,10 +540,9 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 
 			myLocations = append(myLocations, &v1.UserInfoReply_List{
 				CreatedAt:      v.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
-				Amount:         fmt.Sprintf("%.2f", float64(v.CurrentMax*100)/float64(v.OutRate)/float64(10000000000)),
+				Amount:         fmt.Sprintf("%.2f", float64(v.Current)/float64(10000000000)),
 				LocationStatus: v.Status,
 				AmountMax:      fmt.Sprintf("%.2f", float64(v.CurrentMax)/float64(10000000000)),
-				OutRate:        fmt.Sprintf("%.2f", float64(v.OutRate)/float64(100)),
 			})
 		}
 

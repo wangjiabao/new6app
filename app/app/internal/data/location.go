@@ -30,7 +30,6 @@ type LocationNew struct {
 	Current           int64     `gorm:"type:bigint;not null"`
 	CurrentMax        int64     `gorm:"type:bigint;not null"`
 	StopLocationAgain int64     `gorm:"type:int;not null"`
-	OutRate           int64     `gorm:"type:int;not null"`
 	StopCoin          int64     `gorm:"type:bigint;not null"`
 	StopDate          time.Time `gorm:"type:datetime;not null"`
 	CreatedAt         time.Time `gorm:"type:datetime;not null"`
@@ -234,7 +233,6 @@ func (lr *LocationRepo) GetLocationsByUserId(ctx context.Context, userId int64) 
 			Current:    location.Current,
 			CurrentMax: location.CurrentMax,
 			CreatedAt:  location.CreatedAt,
-			OutRate:    location.OutRate,
 		})
 	}
 
