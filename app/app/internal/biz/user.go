@@ -523,10 +523,13 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 	if nil != locations && 0 < len(locations) {
 		tmpCurrentMaxSubCurrent := int64(0)
 		for _, v := range locations {
-			if term == v.Term {
-				if v.CurrentMax >= v.Current {
-					tmpCurrentMaxSubCurrent += v.CurrentMax - v.Current
-				}
+			//if term == v.Term {
+			//	if v.CurrentMax >= v.Current {
+			//		tmpCurrentMaxSubCurrent += v.CurrentMax - v.Current
+			//	}
+			//}
+			if v.CurrentMax >= v.Current {
+				tmpCurrentMaxSubCurrent += v.CurrentMax - v.Current
 			}
 
 			myLocations = append(myLocations, &v1.UserInfoReply_List{
