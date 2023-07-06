@@ -788,6 +788,23 @@ func (ub UserBalanceRepo) CreateUserBalance(ctx context.Context, u *biz.User) (*
 	}, nil
 }
 
+// CreateUserBalanceLock .
+func (ub UserBalanceRepo) CreateUserBalanceLock(ctx context.Context, u *biz.User) (*biz.UserBalance, error) {
+	var userBalance UserBalance
+	userBalance.UserId = u.ID
+	res := ub.data.DB(ctx).Table("user_balance_lock").Create(&userBalance)
+	if res.Error != nil {
+		return nil, errors.New(500, "CREATE_USER_BALANCE_ERROR", "用户余额信息创建失败")
+	}
+
+	return &biz.UserBalance{
+		ID:          userBalance.ID,
+		UserId:      userBalance.UserId,
+		BalanceUsdt: userBalance.BalanceUsdt,
+		BalanceDhb:  userBalance.BalanceDhb,
+	}, nil
+}
+
 // GetUserBalance .
 func (ub UserBalanceRepo) GetUserBalance(ctx context.Context, userId int64) (*biz.UserBalance, error) {
 	var userBalance UserBalance

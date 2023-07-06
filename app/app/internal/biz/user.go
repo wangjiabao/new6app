@@ -146,6 +146,7 @@ type ConfigRepo interface {
 
 type UserBalanceRepo interface {
 	CreateUserBalance(ctx context.Context, u *User) (*UserBalance, error)
+	CreateUserBalanceLock(ctx context.Context, u *User) (*UserBalance, error)
 	LocationReward(ctx context.Context, userId int64, amount int64, locationId int64, myLocationId int64, locationType string) (int64, error)
 	WithdrawReward(ctx context.Context, userId int64, amount int64, locationId int64, myLocationId int64, locationType string) (int64, error)
 	RecommendReward(ctx context.Context, userId int64, amount int64, locationId int64) (int64, error)
@@ -256,14 +257,15 @@ func (uuc *UserUseCase) GetDhbConfig(ctx context.Context) ([]*Config, error) {
 
 func (uuc *UserUseCase) GetExistUserByAddressOrCreate(ctx context.Context, u *User, req *v1.EthAuthorizeRequest) (*User, error) {
 	var (
-		user          *User
-		recommendUser *UserRecommend
-		userRecommend *UserRecommend
-		userInfo      *UserInfo
-		userBalance   *UserBalance
-		err           error
-		userId        int64
-		decodeBytes   []byte
+		user            *User
+		recommendUser   *UserRecommend
+		userRecommend   *UserRecommend
+		userInfo        *UserInfo
+		userBalance     *UserBalance
+		userBalanceLock *UserBalance
+		err             error
+		userId          int64
+		decodeBytes     []byte
 	)
 
 	user, err = uuc.repo.GetUserByAddress(ctx, u.Address) // 查询用户
@@ -308,6 +310,11 @@ func (uuc *UserUseCase) GetExistUserByAddressOrCreate(ctx context.Context, u *Us
 			}
 
 			userBalance, err = uuc.ubRepo.CreateUserBalance(ctx, user) // 创建余额信息
+			if err != nil {
+				return err
+			}
+
+			userBalanceLock, err = uuc.ubRepo.CreateUserBalanceLock(ctx, user) // 创建余额信息
 			if err != nil {
 				return err
 			}
