@@ -75,6 +75,13 @@ service App {
 		};
 	};
 
+	rpc Tran (TranRequest) returns (TranReply) {
+		option (google.api.http) = {
+			post: "/api/app_server/tran"
+			body: "send_body"
+		};
+	};
+
 	rpc GetTrade (GetTradeRequest) returns (GetTradeReply) {
 		option (google.api.http) = {
 			post: "/api/app_server/get_trade"
@@ -413,6 +420,20 @@ message WithdrawRequest {
 }
 
 message WithdrawReply {
+	string status = 1;
+}
+
+message TranRequest {
+	message SendBody{
+		string type = 2;
+		string amount = 1;
+		string address = 3;
+	}
+
+	SendBody send_body = 1;
+}
+
+message TranReply {
 	string status = 1;
 }
 

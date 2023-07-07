@@ -200,6 +200,23 @@ func (a *AppService) Withdraw(ctx context.Context, req *v1.WithdrawRequest) (*v1
 	})
 }
 
+// Tran tran .
+func (a *AppService) Tran(ctx context.Context, req *v1.TranRequest) (*v1.TranReply, error) {
+	// 在上下文 context 中取出 claims 对象
+	var userId int64
+	if claims, ok := jwt.FromContext(ctx); ok {
+		c := claims.(jwt2.MapClaims)
+		if c["UserId"] == nil {
+			return nil, errors.New(500, "ERROR_TOKEN", "无效TOKEN")
+		}
+		userId = int64(c["UserId"].(float64))
+	}
+
+	return a.uuc.Tran(ctx, req, &biz.User{
+		ID: userId,
+	})
+}
+
 func (a *AppService) GetTrade(ctx context.Context, req *v1.GetTradeRequest) (*v1.GetTradeReply, error) {
 	// 在上下文 context 中取出 claims 对象
 	var (

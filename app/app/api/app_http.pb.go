@@ -33,6 +33,7 @@ const OperationAppRecommendUpdate = "/api.App/RecommendUpdate"
 const OperationAppRewardList = "/api.App/RewardList"
 const OperationAppSetBalanceReward = "/api.App/SetBalanceReward"
 const OperationAppTrade = "/api.App/Trade"
+const OperationAppTran = "/api.App/Tran"
 const OperationAppUserInfo = "/api.App/UserInfo"
 const OperationAppWithdraw = "/api.App/Withdraw"
 const OperationAppWithdrawList = "/api.App/WithdrawList"
@@ -52,6 +53,7 @@ type AppHTTPServer interface {
 	RewardList(context.Context, *RewardListRequest) (*RewardListReply, error)
 	SetBalanceReward(context.Context, *SetBalanceRewardRequest) (*SetBalanceRewardReply, error)
 	Trade(context.Context, *WithdrawRequest) (*WithdrawReply, error)
+	Tran(context.Context, *TranRequest) (*TranReply, error)
 	UserInfo(context.Context, *UserInfoRequest) (*UserInfoReply, error)
 	Withdraw(context.Context, *WithdrawRequest) (*WithdrawReply, error)
 	WithdrawList(context.Context, *WithdrawListRequest) (*WithdrawListReply, error)
@@ -69,6 +71,7 @@ func RegisterAppHTTPServer(s *http.Server, srv AppHTTPServer) {
 	r.GET("/api/app_server/recommend_list", _App_RecommendList0_HTTP_Handler(srv))
 	r.POST("/api/app_server/withdraw", _App_Withdraw0_HTTP_Handler(srv))
 	r.POST("/api/app_server/trade", _App_Trade0_HTTP_Handler(srv))
+	r.POST("/api/app_server/tran", _App_Tran0_HTTP_Handler(srv))
 	r.POST("/api/app_server/get_trade", _App_GetTrade0_HTTP_Handler(srv))
 	r.POST("/api/app_server/set_balance_reward", _App_SetBalanceReward0_HTTP_Handler(srv))
 	r.POST("/api/app_server/delete_balance_reward", _App_DeleteBalanceReward0_HTTP_Handler(srv))
@@ -280,6 +283,28 @@ func _App_Trade0_HTTP_Handler(srv AppHTTPServer) func(ctx http.Context) error {
 	}
 }
 
+func _App_Tran0_HTTP_Handler(srv AppHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in TranRequest
+		if err := ctx.Bind(&in.SendBody); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationAppTran)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.Tran(ctx, req.(*TranRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*TranReply)
+		return ctx.Result(200, reply)
+	}
+}
+
 func _App_GetTrade0_HTTP_Handler(srv AppHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in GetTradeRequest
@@ -437,6 +462,7 @@ type AppHTTPClient interface {
 	RewardList(ctx context.Context, req *RewardListRequest, opts ...http.CallOption) (rsp *RewardListReply, err error)
 	SetBalanceReward(ctx context.Context, req *SetBalanceRewardRequest, opts ...http.CallOption) (rsp *SetBalanceRewardReply, err error)
 	Trade(ctx context.Context, req *WithdrawRequest, opts ...http.CallOption) (rsp *WithdrawReply, err error)
+	Tran(ctx context.Context, req *TranRequest, opts ...http.CallOption) (rsp *TranReply, err error)
 	UserInfo(ctx context.Context, req *UserInfoRequest, opts ...http.CallOption) (rsp *UserInfoReply, err error)
 	Withdraw(ctx context.Context, req *WithdrawRequest, opts ...http.CallOption) (rsp *WithdrawReply, err error)
 	WithdrawList(ctx context.Context, req *WithdrawListRequest, opts ...http.CallOption) (rsp *WithdrawListReply, err error)
@@ -624,6 +650,19 @@ func (c *AppHTTPClientImpl) Trade(ctx context.Context, in *WithdrawRequest, opts
 	pattern := "/api/app_server/trade"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationAppTrade))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in.SendBody, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
+}
+
+func (c *AppHTTPClientImpl) Tran(ctx context.Context, in *TranRequest, opts ...http.CallOption) (*TranReply, error) {
+	var out TranReply
+	pattern := "/api/app_server/tran"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationAppTran))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in.SendBody, &out, opts...)
 	if err != nil {

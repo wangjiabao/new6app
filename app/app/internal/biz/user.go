@@ -181,7 +181,9 @@ type UserBalanceRepo interface {
 	GetUserBalanceUsdtTotal(ctx context.Context) (int64, error)
 	GreateWithdraw(ctx context.Context, userId int64, amount int64, amountFee int64, coinType string) (*Withdraw, error)
 	WithdrawUsdt(ctx context.Context, userId int64, amount int64) error
+	TranUsdt(ctx context.Context, userId int64, toUserId int64, amount int64) error
 	WithdrawDhb(ctx context.Context, userId int64, amount int64) error
+	TranDhb(ctx context.Context, userId int64, toUserId int64, amount int64) error
 	GetWithdrawByUserId(ctx context.Context, userId int64, typeCoin string) ([]*Withdraw, error)
 	GetWithdraws(ctx context.Context, b *Pagination, userId int64) ([]*Withdraw, error, int64)
 	GetWithdrawPassOrRewarded(ctx context.Context) ([]*Withdraw, error)
@@ -1044,6 +1046,92 @@ func (uuc *UserUseCase) Withdraw(ctx context.Context, req *v1.WithdrawRequest, u
 	}
 
 	return &v1.WithdrawReply{
+		Status: "ok",
+	}, nil
+}
+
+func (uuc *UserUseCase) Tran(ctx context.Context, req *v1.TranRequest, user *User) (*v1.TranReply, error) {
+	var (
+		err         error
+		userBalance *UserBalance
+		toUser      *User
+	)
+
+	if "" == req.SendBody.Address {
+		return &v1.TranReply{
+			Status: "不存在地址",
+		}, nil
+	}
+
+	toUser, err = uuc.repo.GetUserByAddress(ctx, req.SendBody.Address)
+	if nil != err {
+		return &v1.TranReply{
+			Status: "不存在地址",
+		}, nil
+	}
+
+	if "dhb" != req.SendBody.Type && "usdt" != req.SendBody.Type {
+		return &v1.TranReply{
+			Status: "fail",
+		}, nil
+	}
+
+	userBalance, err = uuc.ubRepo.GetUserBalance(ctx, user.ID)
+	if nil != err {
+		return nil, err
+	}
+
+	amountFloat, _ := strconv.ParseFloat(req.SendBody.Amount, 10)
+	amountFloat *= 10000000000
+	amount, _ := strconv.ParseInt(strconv.FormatFloat(amountFloat, 'f', -1, 64), 10, 64)
+
+	if "dhb" == req.SendBody.Type {
+		if userBalance.BalanceDhb < amount {
+			return &v1.TranReply{
+				Status: "fail",
+			}, nil
+		}
+
+		if 1000000000000 > amount {
+			return &v1.TranReply{
+				Status: "fail",
+			}, nil
+		}
+	}
+
+	if "usdt" == req.SendBody.Type {
+		if userBalance.BalanceUsdt < amount {
+			return &v1.TranReply{
+				Status: "fail",
+			}, nil
+		}
+
+		if 100000000000 > amount {
+			return &v1.TranReply{
+				Status: "fail",
+			}, nil
+		}
+	}
+	if err = uuc.tx.ExecTx(ctx, func(ctx context.Context) error { // 事务
+
+		if "usdt" == req.SendBody.Type {
+			err = uuc.ubRepo.TranUsdt(ctx, user.ID, toUser.ID, amount) // 提现
+			if nil != err {
+				return err
+			}
+		} else if "dhb" == req.SendBody.Type {
+			err = uuc.ubRepo.TranDhb(ctx, user.ID, toUser.ID, amount) // 提现
+			if nil != err {
+				return err
+			}
+		}
+
+		return nil
+	}); nil != err {
+		return nil, err
+	}
+
+	return &v1.TranReply{
 		Status: "ok",
 	}, nil
 }

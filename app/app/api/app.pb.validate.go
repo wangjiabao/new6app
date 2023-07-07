@@ -2974,6 +2974,235 @@ var _ interface {
 	ErrorName() string
 } = WithdrawReplyValidationError{}
 
+// Validate checks the field values on TranRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *TranRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on TranRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in TranRequestMultiError, or
+// nil if none found.
+func (m *TranRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *TranRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetSendBody()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, TranRequestValidationError{
+					field:  "SendBody",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, TranRequestValidationError{
+					field:  "SendBody",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetSendBody()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return TranRequestValidationError{
+				field:  "SendBody",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return TranRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// TranRequestMultiError is an error wrapping multiple validation errors
+// returned by TranRequest.ValidateAll() if the designated constraints aren't met.
+type TranRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m TranRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m TranRequestMultiError) AllErrors() []error { return m }
+
+// TranRequestValidationError is the validation error returned by
+// TranRequest.Validate if the designated constraints aren't met.
+type TranRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TranRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TranRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TranRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TranRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TranRequestValidationError) ErrorName() string { return "TranRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e TranRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTranRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TranRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TranRequestValidationError{}
+
+// Validate checks the field values on TranReply with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *TranReply) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on TranReply with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in TranReplyMultiError, or nil
+// if none found.
+func (m *TranReply) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *TranReply) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Status
+
+	if len(errors) > 0 {
+		return TranReplyMultiError(errors)
+	}
+
+	return nil
+}
+
+// TranReplyMultiError is an error wrapping multiple validation errors returned
+// by TranReply.ValidateAll() if the designated constraints aren't met.
+type TranReplyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m TranReplyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m TranReplyMultiError) AllErrors() []error { return m }
+
+// TranReplyValidationError is the validation error returned by
+// TranReply.Validate if the designated constraints aren't met.
+type TranReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TranReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TranReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TranReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TranReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TranReplyValidationError) ErrorName() string { return "TranReplyValidationError" }
+
+// Error satisfies the builtin error interface
+func (e TranReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTranReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TranReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TranReplyValidationError{}
+
 // Validate checks the field values on SetBalanceRewardRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -8127,6 +8356,114 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = WithdrawRequest_SendBodyValidationError{}
+
+// Validate checks the field values on TranRequest_SendBody with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *TranRequest_SendBody) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on TranRequest_SendBody with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// TranRequest_SendBodyMultiError, or nil if none found.
+func (m *TranRequest_SendBody) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *TranRequest_SendBody) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Type
+
+	// no validation rules for Amount
+
+	// no validation rules for Address
+
+	if len(errors) > 0 {
+		return TranRequest_SendBodyMultiError(errors)
+	}
+
+	return nil
+}
+
+// TranRequest_SendBodyMultiError is an error wrapping multiple validation
+// errors returned by TranRequest_SendBody.ValidateAll() if the designated
+// constraints aren't met.
+type TranRequest_SendBodyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m TranRequest_SendBodyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m TranRequest_SendBodyMultiError) AllErrors() []error { return m }
+
+// TranRequest_SendBodyValidationError is the validation error returned by
+// TranRequest_SendBody.Validate if the designated constraints aren't met.
+type TranRequest_SendBodyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TranRequest_SendBodyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TranRequest_SendBodyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TranRequest_SendBodyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TranRequest_SendBodyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TranRequest_SendBodyValidationError) ErrorName() string {
+	return "TranRequest_SendBodyValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e TranRequest_SendBodyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTranRequest_SendBody.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TranRequest_SendBodyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TranRequest_SendBodyValidationError{}
 
 // Validate checks the field values on SetBalanceRewardRequest_SendBody with
 // the rules defined in the proto definition for this message. If any rules

@@ -1142,6 +1142,51 @@ func (ub *UserBalanceRepo) WithdrawUsdt(ctx context.Context, userId int64, amoun
 	return nil
 }
 
+// TranUsdt .
+func (ub *UserBalanceRepo) TranUsdt(ctx context.Context, userId int64, toUserId int64, amount int64) error {
+	var err error
+	if res := ub.data.DB(ctx).Table("user_balance").
+		Where("user_id=? and balance_usdt>=?", userId, amount).
+		Updates(map[string]interface{}{"balance_usdt": gorm.Expr("balance_usdt - ?", amount)}); 0 == res.RowsAffected || nil != res.Error {
+		return errors.NotFound("user balance err", "user balance error")
+	}
+
+	if err = ub.data.DB(ctx).Table("user_balance").
+		Where("user_id=?", toUserId).
+		Updates(map[string]interface{}{"balance_usdt": gorm.Expr("balance_usdt + ?", amount)}).Error; nil != err {
+		return errors.NotFound("user balance err", "user balance not found")
+	}
+
+	var userBalance UserBalance
+	err = ub.data.DB(ctx).Where(&UserBalance{UserId: userId}).Table("user_balance").First(&userBalance).Error
+	if err != nil {
+		return err
+	}
+
+	var userBalanceRecode UserBalanceRecord
+	userBalanceRecode.Balance = userBalance.BalanceUsdt
+	userBalanceRecode.UserId = userBalance.UserId
+	userBalanceRecode.Type = "tran"
+	userBalanceRecode.CoinType = "usdt"
+	userBalanceRecode.Amount = amount
+	err = ub.data.DB(ctx).Table("user_balance_record").Create(&userBalanceRecode).Error
+	if err != nil {
+		return err
+	}
+
+	var userBalanceRecode1 UserBalanceRecord
+	userBalanceRecode1.UserId = toUserId
+	userBalanceRecode1.Type = "tran_to"
+	userBalanceRecode1.CoinType = "usdt"
+	userBalanceRecode1.Amount = amount
+	err = ub.data.DB(ctx).Table("user_balance_record").Create(&userBalanceRecode1).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (ub *UserBalanceRepo) TradeUsdt(ctx context.Context, userId int64, amount int64) error {
 	var err error
 	if res := ub.data.DB(ctx).Table("user_balance").
@@ -1234,6 +1279,51 @@ func (ub *UserBalanceRepo) WithdrawDhb(ctx context.Context, userId int64, amount
 	userBalanceRecode.CoinType = "dhb"
 	userBalanceRecode.Amount = amount
 	err = ub.data.DB(ctx).Table("user_balance_record").Create(&userBalanceRecode).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// TranDhb .
+func (ub *UserBalanceRepo) TranDhb(ctx context.Context, userId int64, toUserId int64, amount int64) error {
+	var err error
+	if res := ub.data.DB(ctx).Table("user_balance").
+		Where("user_id=? and balance_dhb>=?", userId, amount).
+		Updates(map[string]interface{}{"balance_dhb": gorm.Expr("balance_dhb - ?", amount)}); 0 == res.RowsAffected || nil != res.Error {
+		return errors.NotFound("user balance err", "user balance error")
+	}
+
+	if err = ub.data.DB(ctx).Table("user_balance").
+		Where("user_id=?", toUserId).
+		Updates(map[string]interface{}{"balance_usdt": gorm.Expr("balance_usdt + ?", amount)}).Error; nil != err {
+		return errors.NotFound("user balance err", "user balance not found")
+	}
+
+	var userBalance UserBalance
+	err = ub.data.DB(ctx).Where(&UserBalance{UserId: userId}).Table("user_balance").First(&userBalance).Error
+	if err != nil {
+		return err
+	}
+
+	var userBalanceRecode UserBalanceRecord
+	userBalanceRecode.Balance = userBalance.BalanceDhb
+	userBalanceRecode.UserId = userBalance.UserId
+	userBalanceRecode.Type = "tran"
+	userBalanceRecode.CoinType = "dhb"
+	userBalanceRecode.Amount = amount
+	err = ub.data.DB(ctx).Table("user_balance_record").Create(&userBalanceRecode).Error
+	if err != nil {
+		return err
+	}
+
+	var userBalanceRecode1 UserBalanceRecord
+	userBalanceRecode1.UserId = toUserId
+	userBalanceRecode1.Type = "tran_to"
+	userBalanceRecode1.CoinType = "dhb"
+	userBalanceRecode1.Amount = amount
+	err = ub.data.DB(ctx).Table("user_balance_record").Create(&userBalanceRecode1).Error
 	if err != nil {
 		return err
 	}
