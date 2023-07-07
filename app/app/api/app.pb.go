@@ -953,6 +953,108 @@ func (x *RewardListReply) GetRewards() []*RewardListReply_List {
 	return nil
 }
 
+type GetTradeRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SendBody *GetTradeRequest_SendBody `protobuf:"bytes,1,opt,name=send_body,json=sendBody,proto3" json:"send_body,omitempty"`
+}
+
+func (x *GetTradeRequest) Reset() {
+	*x = GetTradeRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_app_app_api_app_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetTradeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTradeRequest) ProtoMessage() {}
+
+func (x *GetTradeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_app_app_api_app_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTradeRequest.ProtoReflect.Descriptor instead.
+func (*GetTradeRequest) Descriptor() ([]byte, []int) {
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *GetTradeRequest) GetSendBody() *GetTradeRequest_SendBody {
+	if x != nil {
+		return x.SendBody
+	}
+	return nil
+}
+
+type GetTradeReply struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AmountCsd string `protobuf:"bytes,1,opt,name=amountCsd,proto3" json:"amountCsd,omitempty"`
+	AmountHbs string `protobuf:"bytes,2,opt,name=amountHbs,proto3" json:"amountHbs,omitempty"`
+}
+
+func (x *GetTradeReply) Reset() {
+	*x = GetTradeReply{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_app_app_api_app_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetTradeReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTradeReply) ProtoMessage() {}
+
+func (x *GetTradeReply) ProtoReflect() protoreflect.Message {
+	mi := &file_app_app_api_app_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTradeReply.ProtoReflect.Descriptor instead.
+func (*GetTradeReply) Descriptor() ([]byte, []int) {
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetTradeReply) GetAmountCsd() string {
+	if x != nil {
+		return x.AmountCsd
+	}
+	return ""
+}
+
+func (x *GetTradeReply) GetAmountHbs() string {
+	if x != nil {
+		return x.AmountHbs
+	}
+	return ""
+}
+
 type RecommendRewardListRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -962,7 +1064,7 @@ type RecommendRewardListRequest struct {
 func (x *RecommendRewardListRequest) Reset() {
 	*x = RecommendRewardListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[10]
+		mi := &file_app_app_api_app_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -975,7 +1077,7 @@ func (x *RecommendRewardListRequest) String() string {
 func (*RecommendRewardListRequest) ProtoMessage() {}
 
 func (x *RecommendRewardListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[10]
+	mi := &file_app_app_api_app_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -988,7 +1090,7 @@ func (x *RecommendRewardListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RecommendRewardListRequest.ProtoReflect.Descriptor instead.
 func (*RecommendRewardListRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{10}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{12}
 }
 
 type RecommendRewardListReply struct {
@@ -1002,7 +1104,7 @@ type RecommendRewardListReply struct {
 func (x *RecommendRewardListReply) Reset() {
 	*x = RecommendRewardListReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[11]
+		mi := &file_app_app_api_app_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1015,7 +1117,7 @@ func (x *RecommendRewardListReply) String() string {
 func (*RecommendRewardListReply) ProtoMessage() {}
 
 func (x *RecommendRewardListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[11]
+	mi := &file_app_app_api_app_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1028,7 +1130,7 @@ func (x *RecommendRewardListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RecommendRewardListReply.ProtoReflect.Descriptor instead.
 func (*RecommendRewardListReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{11}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *RecommendRewardListReply) GetRewards() []*RecommendRewardListReply_List {
@@ -1047,7 +1149,7 @@ type FeeRewardListRequest struct {
 func (x *FeeRewardListRequest) Reset() {
 	*x = FeeRewardListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[12]
+		mi := &file_app_app_api_app_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1060,7 +1162,7 @@ func (x *FeeRewardListRequest) String() string {
 func (*FeeRewardListRequest) ProtoMessage() {}
 
 func (x *FeeRewardListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[12]
+	mi := &file_app_app_api_app_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1073,7 +1175,7 @@ func (x *FeeRewardListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FeeRewardListRequest.ProtoReflect.Descriptor instead.
 func (*FeeRewardListRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{12}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{14}
 }
 
 type FeeRewardListReply struct {
@@ -1087,7 +1189,7 @@ type FeeRewardListReply struct {
 func (x *FeeRewardListReply) Reset() {
 	*x = FeeRewardListReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[13]
+		mi := &file_app_app_api_app_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1100,7 +1202,7 @@ func (x *FeeRewardListReply) String() string {
 func (*FeeRewardListReply) ProtoMessage() {}
 
 func (x *FeeRewardListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[13]
+	mi := &file_app_app_api_app_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1113,7 +1215,7 @@ func (x *FeeRewardListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FeeRewardListReply.ProtoReflect.Descriptor instead.
 func (*FeeRewardListReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{13}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *FeeRewardListReply) GetRewards() []*FeeRewardListReply_List {
@@ -1134,7 +1236,7 @@ type WithdrawListRequest struct {
 func (x *WithdrawListRequest) Reset() {
 	*x = WithdrawListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[14]
+		mi := &file_app_app_api_app_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1147,7 +1249,7 @@ func (x *WithdrawListRequest) String() string {
 func (*WithdrawListRequest) ProtoMessage() {}
 
 func (x *WithdrawListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[14]
+	mi := &file_app_app_api_app_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1160,7 +1262,7 @@ func (x *WithdrawListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WithdrawListRequest.ProtoReflect.Descriptor instead.
 func (*WithdrawListRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{14}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *WithdrawListRequest) GetType() string {
@@ -1181,7 +1283,7 @@ type WithdrawListReply struct {
 func (x *WithdrawListReply) Reset() {
 	*x = WithdrawListReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[15]
+		mi := &file_app_app_api_app_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1194,7 +1296,7 @@ func (x *WithdrawListReply) String() string {
 func (*WithdrawListReply) ProtoMessage() {}
 
 func (x *WithdrawListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[15]
+	mi := &file_app_app_api_app_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1207,7 +1309,7 @@ func (x *WithdrawListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WithdrawListReply.ProtoReflect.Descriptor instead.
 func (*WithdrawListReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{15}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *WithdrawListReply) GetWithdraw() []*WithdrawListReply_List {
@@ -1228,7 +1330,7 @@ type RecommendListRequest struct {
 func (x *RecommendListRequest) Reset() {
 	*x = RecommendListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[16]
+		mi := &file_app_app_api_app_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1241,7 +1343,7 @@ func (x *RecommendListRequest) String() string {
 func (*RecommendListRequest) ProtoMessage() {}
 
 func (x *RecommendListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[16]
+	mi := &file_app_app_api_app_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1254,7 +1356,7 @@ func (x *RecommendListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RecommendListRequest.ProtoReflect.Descriptor instead.
 func (*RecommendListRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{16}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *RecommendListRequest) GetType() string {
@@ -1275,7 +1377,7 @@ type RecommendListReply struct {
 func (x *RecommendListReply) Reset() {
 	*x = RecommendListReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[17]
+		mi := &file_app_app_api_app_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1288,7 +1390,7 @@ func (x *RecommendListReply) String() string {
 func (*RecommendListReply) ProtoMessage() {}
 
 func (x *RecommendListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[17]
+	mi := &file_app_app_api_app_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1301,7 +1403,7 @@ func (x *RecommendListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RecommendListReply.ProtoReflect.Descriptor instead.
 func (*RecommendListReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{17}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *RecommendListReply) GetRecommends() []*RecommendListReply_List {
@@ -1322,7 +1424,7 @@ type WithdrawRequest struct {
 func (x *WithdrawRequest) Reset() {
 	*x = WithdrawRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[18]
+		mi := &file_app_app_api_app_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1335,7 +1437,7 @@ func (x *WithdrawRequest) String() string {
 func (*WithdrawRequest) ProtoMessage() {}
 
 func (x *WithdrawRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[18]
+	mi := &file_app_app_api_app_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1348,7 +1450,7 @@ func (x *WithdrawRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WithdrawRequest.ProtoReflect.Descriptor instead.
 func (*WithdrawRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{18}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *WithdrawRequest) GetSendBody() *WithdrawRequest_SendBody {
@@ -1369,7 +1471,7 @@ type WithdrawReply struct {
 func (x *WithdrawReply) Reset() {
 	*x = WithdrawReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[19]
+		mi := &file_app_app_api_app_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1382,7 +1484,7 @@ func (x *WithdrawReply) String() string {
 func (*WithdrawReply) ProtoMessage() {}
 
 func (x *WithdrawReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[19]
+	mi := &file_app_app_api_app_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1395,7 +1497,7 @@ func (x *WithdrawReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WithdrawReply.ProtoReflect.Descriptor instead.
 func (*WithdrawReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{19}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *WithdrawReply) GetStatus() string {
@@ -1416,7 +1518,7 @@ type SetBalanceRewardRequest struct {
 func (x *SetBalanceRewardRequest) Reset() {
 	*x = SetBalanceRewardRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[20]
+		mi := &file_app_app_api_app_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1429,7 +1531,7 @@ func (x *SetBalanceRewardRequest) String() string {
 func (*SetBalanceRewardRequest) ProtoMessage() {}
 
 func (x *SetBalanceRewardRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[20]
+	mi := &file_app_app_api_app_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1442,7 +1544,7 @@ func (x *SetBalanceRewardRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetBalanceRewardRequest.ProtoReflect.Descriptor instead.
 func (*SetBalanceRewardRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{20}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *SetBalanceRewardRequest) GetSendBody() *SetBalanceRewardRequest_SendBody {
@@ -1463,7 +1565,7 @@ type SetBalanceRewardReply struct {
 func (x *SetBalanceRewardReply) Reset() {
 	*x = SetBalanceRewardReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[21]
+		mi := &file_app_app_api_app_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1476,7 +1578,7 @@ func (x *SetBalanceRewardReply) String() string {
 func (*SetBalanceRewardReply) ProtoMessage() {}
 
 func (x *SetBalanceRewardReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[21]
+	mi := &file_app_app_api_app_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1489,7 +1591,7 @@ func (x *SetBalanceRewardReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetBalanceRewardReply.ProtoReflect.Descriptor instead.
 func (*SetBalanceRewardReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{21}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *SetBalanceRewardReply) GetStatus() string {
@@ -1510,7 +1612,7 @@ type DeleteBalanceRewardRequest struct {
 func (x *DeleteBalanceRewardRequest) Reset() {
 	*x = DeleteBalanceRewardRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[22]
+		mi := &file_app_app_api_app_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1523,7 +1625,7 @@ func (x *DeleteBalanceRewardRequest) String() string {
 func (*DeleteBalanceRewardRequest) ProtoMessage() {}
 
 func (x *DeleteBalanceRewardRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[22]
+	mi := &file_app_app_api_app_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1536,7 +1638,7 @@ func (x *DeleteBalanceRewardRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteBalanceRewardRequest.ProtoReflect.Descriptor instead.
 func (*DeleteBalanceRewardRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{22}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *DeleteBalanceRewardRequest) GetSendBody() *DeleteBalanceRewardRequest_SendBody {
@@ -1557,7 +1659,7 @@ type DeleteBalanceRewardReply struct {
 func (x *DeleteBalanceRewardReply) Reset() {
 	*x = DeleteBalanceRewardReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[23]
+		mi := &file_app_app_api_app_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1570,7 +1672,7 @@ func (x *DeleteBalanceRewardReply) String() string {
 func (*DeleteBalanceRewardReply) ProtoMessage() {}
 
 func (x *DeleteBalanceRewardReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[23]
+	mi := &file_app_app_api_app_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1583,7 +1685,7 @@ func (x *DeleteBalanceRewardReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteBalanceRewardReply.ProtoReflect.Descriptor instead.
 func (*DeleteBalanceRewardReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{23}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *DeleteBalanceRewardReply) GetStatus() string {
@@ -1605,7 +1707,7 @@ type AdminRewardListRequest struct {
 func (x *AdminRewardListRequest) Reset() {
 	*x = AdminRewardListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[24]
+		mi := &file_app_app_api_app_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1618,7 +1720,7 @@ func (x *AdminRewardListRequest) String() string {
 func (*AdminRewardListRequest) ProtoMessage() {}
 
 func (x *AdminRewardListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[24]
+	mi := &file_app_app_api_app_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1631,7 +1733,7 @@ func (x *AdminRewardListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminRewardListRequest.ProtoReflect.Descriptor instead.
 func (*AdminRewardListRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{24}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *AdminRewardListRequest) GetPage() int64 {
@@ -1660,7 +1762,7 @@ type AdminRewardListReply struct {
 func (x *AdminRewardListReply) Reset() {
 	*x = AdminRewardListReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[25]
+		mi := &file_app_app_api_app_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1673,7 +1775,7 @@ func (x *AdminRewardListReply) String() string {
 func (*AdminRewardListReply) ProtoMessage() {}
 
 func (x *AdminRewardListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[25]
+	mi := &file_app_app_api_app_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1686,7 +1788,7 @@ func (x *AdminRewardListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminRewardListReply.ProtoReflect.Descriptor instead.
 func (*AdminRewardListReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{25}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *AdminRewardListReply) GetRewards() []*AdminRewardListReply_List {
@@ -1715,7 +1817,7 @@ type AdminUserListRequest struct {
 func (x *AdminUserListRequest) Reset() {
 	*x = AdminUserListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[26]
+		mi := &file_app_app_api_app_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1728,7 +1830,7 @@ func (x *AdminUserListRequest) String() string {
 func (*AdminUserListRequest) ProtoMessage() {}
 
 func (x *AdminUserListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[26]
+	mi := &file_app_app_api_app_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1741,7 +1843,7 @@ func (x *AdminUserListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminUserListRequest.ProtoReflect.Descriptor instead.
 func (*AdminUserListRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{26}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *AdminUserListRequest) GetPage() int64 {
@@ -1770,7 +1872,7 @@ type AdminUserListReply struct {
 func (x *AdminUserListReply) Reset() {
 	*x = AdminUserListReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[27]
+		mi := &file_app_app_api_app_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1783,7 +1885,7 @@ func (x *AdminUserListReply) String() string {
 func (*AdminUserListReply) ProtoMessage() {}
 
 func (x *AdminUserListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[27]
+	mi := &file_app_app_api_app_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1796,7 +1898,7 @@ func (x *AdminUserListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminUserListReply.ProtoReflect.Descriptor instead.
 func (*AdminUserListReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{27}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *AdminUserListReply) GetUsers() []*AdminUserListReply_UserList {
@@ -1825,7 +1927,7 @@ type AdminLocationListRequest struct {
 func (x *AdminLocationListRequest) Reset() {
 	*x = AdminLocationListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[28]
+		mi := &file_app_app_api_app_proto_msgTypes[30]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1838,7 +1940,7 @@ func (x *AdminLocationListRequest) String() string {
 func (*AdminLocationListRequest) ProtoMessage() {}
 
 func (x *AdminLocationListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[28]
+	mi := &file_app_app_api_app_proto_msgTypes[30]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1851,7 +1953,7 @@ func (x *AdminLocationListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminLocationListRequest.ProtoReflect.Descriptor instead.
 func (*AdminLocationListRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{28}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *AdminLocationListRequest) GetPage() int64 {
@@ -1880,7 +1982,7 @@ type AdminLocationListReply struct {
 func (x *AdminLocationListReply) Reset() {
 	*x = AdminLocationListReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[29]
+		mi := &file_app_app_api_app_proto_msgTypes[31]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1893,7 +1995,7 @@ func (x *AdminLocationListReply) String() string {
 func (*AdminLocationListReply) ProtoMessage() {}
 
 func (x *AdminLocationListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[29]
+	mi := &file_app_app_api_app_proto_msgTypes[31]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1906,7 +2008,7 @@ func (x *AdminLocationListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminLocationListReply.ProtoReflect.Descriptor instead.
 func (*AdminLocationListReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{29}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *AdminLocationListReply) GetLocations() []*AdminLocationListReply_LocationList {
@@ -1935,7 +2037,7 @@ type AdminWithdrawListRequest struct {
 func (x *AdminWithdrawListRequest) Reset() {
 	*x = AdminWithdrawListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[30]
+		mi := &file_app_app_api_app_proto_msgTypes[32]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1948,7 +2050,7 @@ func (x *AdminWithdrawListRequest) String() string {
 func (*AdminWithdrawListRequest) ProtoMessage() {}
 
 func (x *AdminWithdrawListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[30]
+	mi := &file_app_app_api_app_proto_msgTypes[32]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1961,7 +2063,7 @@ func (x *AdminWithdrawListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminWithdrawListRequest.ProtoReflect.Descriptor instead.
 func (*AdminWithdrawListRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{30}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *AdminWithdrawListRequest) GetPage() int64 {
@@ -1990,7 +2092,7 @@ type AdminWithdrawListReply struct {
 func (x *AdminWithdrawListReply) Reset() {
 	*x = AdminWithdrawListReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[31]
+		mi := &file_app_app_api_app_proto_msgTypes[33]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2003,7 +2105,7 @@ func (x *AdminWithdrawListReply) String() string {
 func (*AdminWithdrawListReply) ProtoMessage() {}
 
 func (x *AdminWithdrawListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[31]
+	mi := &file_app_app_api_app_proto_msgTypes[33]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2016,7 +2118,7 @@ func (x *AdminWithdrawListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminWithdrawListReply.ProtoReflect.Descriptor instead.
 func (*AdminWithdrawListReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{31}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *AdminWithdrawListReply) GetWithdraw() []*AdminWithdrawListReply_List {
@@ -2042,7 +2144,7 @@ type AdminWithdrawRequest struct {
 func (x *AdminWithdrawRequest) Reset() {
 	*x = AdminWithdrawRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[32]
+		mi := &file_app_app_api_app_proto_msgTypes[34]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2055,7 +2157,7 @@ func (x *AdminWithdrawRequest) String() string {
 func (*AdminWithdrawRequest) ProtoMessage() {}
 
 func (x *AdminWithdrawRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[32]
+	mi := &file_app_app_api_app_proto_msgTypes[34]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2068,7 +2170,7 @@ func (x *AdminWithdrawRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminWithdrawRequest.ProtoReflect.Descriptor instead.
 func (*AdminWithdrawRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{32}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{34}
 }
 
 type AdminWithdrawReply struct {
@@ -2080,7 +2182,7 @@ type AdminWithdrawReply struct {
 func (x *AdminWithdrawReply) Reset() {
 	*x = AdminWithdrawReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[33]
+		mi := &file_app_app_api_app_proto_msgTypes[35]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2093,7 +2195,7 @@ func (x *AdminWithdrawReply) String() string {
 func (*AdminWithdrawReply) ProtoMessage() {}
 
 func (x *AdminWithdrawReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[33]
+	mi := &file_app_app_api_app_proto_msgTypes[35]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2106,7 +2208,7 @@ func (x *AdminWithdrawReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminWithdrawReply.ProtoReflect.Descriptor instead.
 func (*AdminWithdrawReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{33}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{35}
 }
 
 type AdminWithdrawEthRequest struct {
@@ -2118,7 +2220,7 @@ type AdminWithdrawEthRequest struct {
 func (x *AdminWithdrawEthRequest) Reset() {
 	*x = AdminWithdrawEthRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[34]
+		mi := &file_app_app_api_app_proto_msgTypes[36]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2131,7 +2233,7 @@ func (x *AdminWithdrawEthRequest) String() string {
 func (*AdminWithdrawEthRequest) ProtoMessage() {}
 
 func (x *AdminWithdrawEthRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[34]
+	mi := &file_app_app_api_app_proto_msgTypes[36]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2144,7 +2246,7 @@ func (x *AdminWithdrawEthRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminWithdrawEthRequest.ProtoReflect.Descriptor instead.
 func (*AdminWithdrawEthRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{34}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{36}
 }
 
 type AdminWithdrawEthReply struct {
@@ -2156,7 +2258,7 @@ type AdminWithdrawEthReply struct {
 func (x *AdminWithdrawEthReply) Reset() {
 	*x = AdminWithdrawEthReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[35]
+		mi := &file_app_app_api_app_proto_msgTypes[37]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2169,7 +2271,7 @@ func (x *AdminWithdrawEthReply) String() string {
 func (*AdminWithdrawEthReply) ProtoMessage() {}
 
 func (x *AdminWithdrawEthReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[35]
+	mi := &file_app_app_api_app_proto_msgTypes[37]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2182,7 +2284,7 @@ func (x *AdminWithdrawEthReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminWithdrawEthReply.ProtoReflect.Descriptor instead.
 func (*AdminWithdrawEthReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{35}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{37}
 }
 
 type AdminFeeRequest struct {
@@ -2194,7 +2296,7 @@ type AdminFeeRequest struct {
 func (x *AdminFeeRequest) Reset() {
 	*x = AdminFeeRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[36]
+		mi := &file_app_app_api_app_proto_msgTypes[38]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2207,7 +2309,7 @@ func (x *AdminFeeRequest) String() string {
 func (*AdminFeeRequest) ProtoMessage() {}
 
 func (x *AdminFeeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[36]
+	mi := &file_app_app_api_app_proto_msgTypes[38]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2220,7 +2322,7 @@ func (x *AdminFeeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminFeeRequest.ProtoReflect.Descriptor instead.
 func (*AdminFeeRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{36}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{38}
 }
 
 type AdminFeeReply struct {
@@ -2232,7 +2334,7 @@ type AdminFeeReply struct {
 func (x *AdminFeeReply) Reset() {
 	*x = AdminFeeReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[37]
+		mi := &file_app_app_api_app_proto_msgTypes[39]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2245,7 +2347,7 @@ func (x *AdminFeeReply) String() string {
 func (*AdminFeeReply) ProtoMessage() {}
 
 func (x *AdminFeeReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[37]
+	mi := &file_app_app_api_app_proto_msgTypes[39]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2258,7 +2360,7 @@ func (x *AdminFeeReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminFeeReply.ProtoReflect.Descriptor instead.
 func (*AdminFeeReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{37}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{39}
 }
 
 type AdminAllRequest struct {
@@ -2270,7 +2372,7 @@ type AdminAllRequest struct {
 func (x *AdminAllRequest) Reset() {
 	*x = AdminAllRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[38]
+		mi := &file_app_app_api_app_proto_msgTypes[40]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2283,7 +2385,7 @@ func (x *AdminAllRequest) String() string {
 func (*AdminAllRequest) ProtoMessage() {}
 
 func (x *AdminAllRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[38]
+	mi := &file_app_app_api_app_proto_msgTypes[40]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2296,7 +2398,7 @@ func (x *AdminAllRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminAllRequest.ProtoReflect.Descriptor instead.
 func (*AdminAllRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{38}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{40}
 }
 
 type AdminAllReply struct {
@@ -2318,7 +2420,7 @@ type AdminAllReply struct {
 func (x *AdminAllReply) Reset() {
 	*x = AdminAllReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[39]
+		mi := &file_app_app_api_app_proto_msgTypes[41]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2331,7 +2433,7 @@ func (x *AdminAllReply) String() string {
 func (*AdminAllReply) ProtoMessage() {}
 
 func (x *AdminAllReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[39]
+	mi := &file_app_app_api_app_proto_msgTypes[41]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2344,7 +2446,7 @@ func (x *AdminAllReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminAllReply.ProtoReflect.Descriptor instead.
 func (*AdminAllReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{39}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *AdminAllReply) GetTodayTotalUser() int64 {
@@ -2421,7 +2523,7 @@ type AdminUserRecommendRequest struct {
 func (x *AdminUserRecommendRequest) Reset() {
 	*x = AdminUserRecommendRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[40]
+		mi := &file_app_app_api_app_proto_msgTypes[42]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2434,7 +2536,7 @@ func (x *AdminUserRecommendRequest) String() string {
 func (*AdminUserRecommendRequest) ProtoMessage() {}
 
 func (x *AdminUserRecommendRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[40]
+	mi := &file_app_app_api_app_proto_msgTypes[42]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2447,7 +2549,7 @@ func (x *AdminUserRecommendRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminUserRecommendRequest.ProtoReflect.Descriptor instead.
 func (*AdminUserRecommendRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{40}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *AdminUserRecommendRequest) GetUserId() int64 {
@@ -2468,7 +2570,7 @@ type AdminUserRecommendReply struct {
 func (x *AdminUserRecommendReply) Reset() {
 	*x = AdminUserRecommendReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[41]
+		mi := &file_app_app_api_app_proto_msgTypes[43]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2481,7 +2583,7 @@ func (x *AdminUserRecommendReply) String() string {
 func (*AdminUserRecommendReply) ProtoMessage() {}
 
 func (x *AdminUserRecommendReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[41]
+	mi := &file_app_app_api_app_proto_msgTypes[43]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2494,7 +2596,7 @@ func (x *AdminUserRecommendReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminUserRecommendReply.ProtoReflect.Descriptor instead.
 func (*AdminUserRecommendReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{41}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *AdminUserRecommendReply) GetUsers() []*AdminUserRecommendReply_List {
@@ -2516,7 +2618,7 @@ type AdminMonthRecommendRequest struct {
 func (x *AdminMonthRecommendRequest) Reset() {
 	*x = AdminMonthRecommendRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[42]
+		mi := &file_app_app_api_app_proto_msgTypes[44]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2529,7 +2631,7 @@ func (x *AdminMonthRecommendRequest) String() string {
 func (*AdminMonthRecommendRequest) ProtoMessage() {}
 
 func (x *AdminMonthRecommendRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[42]
+	mi := &file_app_app_api_app_proto_msgTypes[44]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2542,7 +2644,7 @@ func (x *AdminMonthRecommendRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminMonthRecommendRequest.ProtoReflect.Descriptor instead.
 func (*AdminMonthRecommendRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{42}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *AdminMonthRecommendRequest) GetAddress() string {
@@ -2571,7 +2673,7 @@ type AdminMonthRecommendReply struct {
 func (x *AdminMonthRecommendReply) Reset() {
 	*x = AdminMonthRecommendReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[43]
+		mi := &file_app_app_api_app_proto_msgTypes[45]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2584,7 +2686,7 @@ func (x *AdminMonthRecommendReply) String() string {
 func (*AdminMonthRecommendReply) ProtoMessage() {}
 
 func (x *AdminMonthRecommendReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[43]
+	mi := &file_app_app_api_app_proto_msgTypes[45]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2597,7 +2699,7 @@ func (x *AdminMonthRecommendReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminMonthRecommendReply.ProtoReflect.Descriptor instead.
 func (*AdminMonthRecommendReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{43}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{45}
 }
 
 func (x *AdminMonthRecommendReply) GetUsers() []*AdminMonthRecommendReply_List {
@@ -2626,7 +2728,7 @@ type AdminConfigRequest struct {
 func (x *AdminConfigRequest) Reset() {
 	*x = AdminConfigRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[44]
+		mi := &file_app_app_api_app_proto_msgTypes[46]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2639,7 +2741,7 @@ func (x *AdminConfigRequest) String() string {
 func (*AdminConfigRequest) ProtoMessage() {}
 
 func (x *AdminConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[44]
+	mi := &file_app_app_api_app_proto_msgTypes[46]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2652,7 +2754,7 @@ func (x *AdminConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminConfigRequest.ProtoReflect.Descriptor instead.
 func (*AdminConfigRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{44}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *AdminConfigRequest) GetUserId() int64 {
@@ -2681,7 +2783,7 @@ type AdminConfigReply struct {
 func (x *AdminConfigReply) Reset() {
 	*x = AdminConfigReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[45]
+		mi := &file_app_app_api_app_proto_msgTypes[47]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2694,7 +2796,7 @@ func (x *AdminConfigReply) String() string {
 func (*AdminConfigReply) ProtoMessage() {}
 
 func (x *AdminConfigReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[45]
+	mi := &file_app_app_api_app_proto_msgTypes[47]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2707,7 +2809,7 @@ func (x *AdminConfigReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminConfigReply.ProtoReflect.Descriptor instead.
 func (*AdminConfigReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{45}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *AdminConfigReply) GetConfig() []*AdminConfigReply_List {
@@ -2735,7 +2837,7 @@ type AdminConfigUpdateRequest struct {
 func (x *AdminConfigUpdateRequest) Reset() {
 	*x = AdminConfigUpdateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[46]
+		mi := &file_app_app_api_app_proto_msgTypes[48]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2748,7 +2850,7 @@ func (x *AdminConfigUpdateRequest) String() string {
 func (*AdminConfigUpdateRequest) ProtoMessage() {}
 
 func (x *AdminConfigUpdateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[46]
+	mi := &file_app_app_api_app_proto_msgTypes[48]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2761,7 +2863,7 @@ func (x *AdminConfigUpdateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminConfigUpdateRequest.ProtoReflect.Descriptor instead.
 func (*AdminConfigUpdateRequest) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{46}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *AdminConfigUpdateRequest) GetSendBody() *AdminConfigUpdateRequest_SendBody {
@@ -2780,7 +2882,7 @@ type AdminConfigUpdateReply struct {
 func (x *AdminConfigUpdateReply) Reset() {
 	*x = AdminConfigUpdateReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[47]
+		mi := &file_app_app_api_app_proto_msgTypes[49]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2793,7 +2895,7 @@ func (x *AdminConfigUpdateReply) String() string {
 func (*AdminConfigUpdateReply) ProtoMessage() {}
 
 func (x *AdminConfigUpdateReply) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[47]
+	mi := &file_app_app_api_app_proto_msgTypes[49]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2806,7 +2908,7 @@ func (x *AdminConfigUpdateReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminConfigUpdateReply.ProtoReflect.Descriptor instead.
 func (*AdminConfigUpdateReply) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{47}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{49}
 }
 
 type EthAuthorizeRequest_SendBody struct {
@@ -2821,7 +2923,7 @@ type EthAuthorizeRequest_SendBody struct {
 func (x *EthAuthorizeRequest_SendBody) Reset() {
 	*x = EthAuthorizeRequest_SendBody{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[48]
+		mi := &file_app_app_api_app_proto_msgTypes[50]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2834,7 +2936,7 @@ func (x *EthAuthorizeRequest_SendBody) String() string {
 func (*EthAuthorizeRequest_SendBody) ProtoMessage() {}
 
 func (x *EthAuthorizeRequest_SendBody) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[48]
+	mi := &file_app_app_api_app_proto_msgTypes[50]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2875,7 +2977,7 @@ type RecommendUpdateRequest_SendBody struct {
 func (x *RecommendUpdateRequest_SendBody) Reset() {
 	*x = RecommendUpdateRequest_SendBody{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[49]
+		mi := &file_app_app_api_app_proto_msgTypes[51]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2888,7 +2990,7 @@ func (x *RecommendUpdateRequest_SendBody) String() string {
 func (*RecommendUpdateRequest_SendBody) ProtoMessage() {}
 
 func (x *RecommendUpdateRequest_SendBody) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[49]
+	mi := &file_app_app_api_app_proto_msgTypes[51]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2925,7 +3027,7 @@ type UserInfoReply_List struct {
 func (x *UserInfoReply_List) Reset() {
 	*x = UserInfoReply_List{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[50]
+		mi := &file_app_app_api_app_proto_msgTypes[52]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2938,7 +3040,7 @@ func (x *UserInfoReply_List) String() string {
 func (*UserInfoReply_List) ProtoMessage() {}
 
 func (x *UserInfoReply_List) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[50]
+	mi := &file_app_app_api_app_proto_msgTypes[52]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2995,7 +3097,7 @@ type UserInfoReply_List2 struct {
 func (x *UserInfoReply_List2) Reset() {
 	*x = UserInfoReply_List2{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[51]
+		mi := &file_app_app_api_app_proto_msgTypes[53]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3008,7 +3110,7 @@ func (x *UserInfoReply_List2) String() string {
 func (*UserInfoReply_List2) ProtoMessage() {}
 
 func (x *UserInfoReply_List2) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[51]
+	mi := &file_app_app_api_app_proto_msgTypes[53]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3057,7 +3159,7 @@ type UserInfoReply_List3 struct {
 func (x *UserInfoReply_List3) Reset() {
 	*x = UserInfoReply_List3{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[52]
+		mi := &file_app_app_api_app_proto_msgTypes[54]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3070,7 +3172,7 @@ func (x *UserInfoReply_List3) String() string {
 func (*UserInfoReply_List3) ProtoMessage() {}
 
 func (x *UserInfoReply_List3) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[52]
+	mi := &file_app_app_api_app_proto_msgTypes[54]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3112,7 +3214,7 @@ type UserInfoReply_List4 struct {
 func (x *UserInfoReply_List4) Reset() {
 	*x = UserInfoReply_List4{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[53]
+		mi := &file_app_app_api_app_proto_msgTypes[55]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3125,7 +3227,7 @@ func (x *UserInfoReply_List4) String() string {
 func (*UserInfoReply_List4) ProtoMessage() {}
 
 func (x *UserInfoReply_List4) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[53]
+	mi := &file_app_app_api_app_proto_msgTypes[55]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3167,7 +3269,7 @@ type UserInfoReply_List5 struct {
 func (x *UserInfoReply_List5) Reset() {
 	*x = UserInfoReply_List5{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[54]
+		mi := &file_app_app_api_app_proto_msgTypes[56]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3180,7 +3282,7 @@ func (x *UserInfoReply_List5) String() string {
 func (*UserInfoReply_List5) ProtoMessage() {}
 
 func (x *UserInfoReply_List5) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[54]
+	mi := &file_app_app_api_app_proto_msgTypes[56]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3222,7 +3324,7 @@ type UserInfoReply_List6 struct {
 func (x *UserInfoReply_List6) Reset() {
 	*x = UserInfoReply_List6{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[55]
+		mi := &file_app_app_api_app_proto_msgTypes[57]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3235,7 +3337,7 @@ func (x *UserInfoReply_List6) String() string {
 func (*UserInfoReply_List6) ProtoMessage() {}
 
 func (x *UserInfoReply_List6) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[55]
+	mi := &file_app_app_api_app_proto_msgTypes[57]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3277,7 +3379,7 @@ type UserInfoReply_List7 struct {
 func (x *UserInfoReply_List7) Reset() {
 	*x = UserInfoReply_List7{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[56]
+		mi := &file_app_app_api_app_proto_msgTypes[58]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3290,7 +3392,7 @@ func (x *UserInfoReply_List7) String() string {
 func (*UserInfoReply_List7) ProtoMessage() {}
 
 func (x *UserInfoReply_List7) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[56]
+	mi := &file_app_app_api_app_proto_msgTypes[58]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3331,7 +3433,7 @@ type UserInfoReply_List8 struct {
 func (x *UserInfoReply_List8) Reset() {
 	*x = UserInfoReply_List8{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[57]
+		mi := &file_app_app_api_app_proto_msgTypes[59]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3344,7 +3446,7 @@ func (x *UserInfoReply_List8) String() string {
 func (*UserInfoReply_List8) ProtoMessage() {}
 
 func (x *UserInfoReply_List8) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[57]
+	mi := &file_app_app_api_app_proto_msgTypes[59]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3379,7 +3481,7 @@ type UserInfoReply_List9 struct {
 func (x *UserInfoReply_List9) Reset() {
 	*x = UserInfoReply_List9{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[58]
+		mi := &file_app_app_api_app_proto_msgTypes[60]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3392,7 +3494,7 @@ func (x *UserInfoReply_List9) String() string {
 func (*UserInfoReply_List9) ProtoMessage() {}
 
 func (x *UserInfoReply_List9) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[58]
+	mi := &file_app_app_api_app_proto_msgTypes[60]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3436,7 +3538,7 @@ type RewardListReply_List struct {
 func (x *RewardListReply_List) Reset() {
 	*x = RewardListReply_List{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[59]
+		mi := &file_app_app_api_app_proto_msgTypes[61]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3449,7 +3551,7 @@ func (x *RewardListReply_List) String() string {
 func (*RewardListReply_List) ProtoMessage() {}
 
 func (x *RewardListReply_List) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[59]
+	mi := &file_app_app_api_app_proto_msgTypes[61]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3493,6 +3595,53 @@ func (x *RewardListReply_List) GetType() string {
 	return ""
 }
 
+type GetTradeRequest_SendBody struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Amount string `protobuf:"bytes,1,opt,name=amount,proto3" json:"amount,omitempty"`
+}
+
+func (x *GetTradeRequest_SendBody) Reset() {
+	*x = GetTradeRequest_SendBody{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_app_app_api_app_proto_msgTypes[62]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetTradeRequest_SendBody) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTradeRequest_SendBody) ProtoMessage() {}
+
+func (x *GetTradeRequest_SendBody) ProtoReflect() protoreflect.Message {
+	mi := &file_app_app_api_app_proto_msgTypes[62]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTradeRequest_SendBody.ProtoReflect.Descriptor instead.
+func (*GetTradeRequest_SendBody) Descriptor() ([]byte, []int) {
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{10, 0}
+}
+
+func (x *GetTradeRequest_SendBody) GetAmount() string {
+	if x != nil {
+		return x.Amount
+	}
+	return ""
+}
+
 type RecommendRewardListReply_List struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3507,7 +3656,7 @@ type RecommendRewardListReply_List struct {
 func (x *RecommendRewardListReply_List) Reset() {
 	*x = RecommendRewardListReply_List{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[60]
+		mi := &file_app_app_api_app_proto_msgTypes[63]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3520,7 +3669,7 @@ func (x *RecommendRewardListReply_List) String() string {
 func (*RecommendRewardListReply_List) ProtoMessage() {}
 
 func (x *RecommendRewardListReply_List) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[60]
+	mi := &file_app_app_api_app_proto_msgTypes[63]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3533,7 +3682,7 @@ func (x *RecommendRewardListReply_List) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RecommendRewardListReply_List.ProtoReflect.Descriptor instead.
 func (*RecommendRewardListReply_List) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{11, 0}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{13, 0}
 }
 
 func (x *RecommendRewardListReply_List) GetCreatedAt() string {
@@ -3576,7 +3725,7 @@ type FeeRewardListReply_List struct {
 func (x *FeeRewardListReply_List) Reset() {
 	*x = FeeRewardListReply_List{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[61]
+		mi := &file_app_app_api_app_proto_msgTypes[64]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3589,7 +3738,7 @@ func (x *FeeRewardListReply_List) String() string {
 func (*FeeRewardListReply_List) ProtoMessage() {}
 
 func (x *FeeRewardListReply_List) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[61]
+	mi := &file_app_app_api_app_proto_msgTypes[64]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3602,7 +3751,7 @@ func (x *FeeRewardListReply_List) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FeeRewardListReply_List.ProtoReflect.Descriptor instead.
 func (*FeeRewardListReply_List) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{13, 0}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{15, 0}
 }
 
 func (x *FeeRewardListReply_List) GetCreatedAt() string {
@@ -3633,7 +3782,7 @@ type WithdrawListReply_List struct {
 func (x *WithdrawListReply_List) Reset() {
 	*x = WithdrawListReply_List{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[62]
+		mi := &file_app_app_api_app_proto_msgTypes[65]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3646,7 +3795,7 @@ func (x *WithdrawListReply_List) String() string {
 func (*WithdrawListReply_List) ProtoMessage() {}
 
 func (x *WithdrawListReply_List) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[62]
+	mi := &file_app_app_api_app_proto_msgTypes[65]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3659,7 +3808,7 @@ func (x *WithdrawListReply_List) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WithdrawListReply_List.ProtoReflect.Descriptor instead.
 func (*WithdrawListReply_List) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{15, 0}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{17, 0}
 }
 
 func (x *WithdrawListReply_List) GetCreatedAt() string {
@@ -3702,7 +3851,7 @@ type RecommendListReply_List struct {
 func (x *RecommendListReply_List) Reset() {
 	*x = RecommendListReply_List{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[63]
+		mi := &file_app_app_api_app_proto_msgTypes[66]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3715,7 +3864,7 @@ func (x *RecommendListReply_List) String() string {
 func (*RecommendListReply_List) ProtoMessage() {}
 
 func (x *RecommendListReply_List) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[63]
+	mi := &file_app_app_api_app_proto_msgTypes[66]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3728,7 +3877,7 @@ func (x *RecommendListReply_List) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RecommendListReply_List.ProtoReflect.Descriptor instead.
 func (*RecommendListReply_List) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{17, 0}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{19, 0}
 }
 
 func (x *RecommendListReply_List) GetAmount() string {
@@ -3757,7 +3906,7 @@ type WithdrawRequest_SendBody struct {
 func (x *WithdrawRequest_SendBody) Reset() {
 	*x = WithdrawRequest_SendBody{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[64]
+		mi := &file_app_app_api_app_proto_msgTypes[67]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3770,7 +3919,7 @@ func (x *WithdrawRequest_SendBody) String() string {
 func (*WithdrawRequest_SendBody) ProtoMessage() {}
 
 func (x *WithdrawRequest_SendBody) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[64]
+	mi := &file_app_app_api_app_proto_msgTypes[67]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3783,7 +3932,7 @@ func (x *WithdrawRequest_SendBody) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WithdrawRequest_SendBody.ProtoReflect.Descriptor instead.
 func (*WithdrawRequest_SendBody) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{18, 0}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{20, 0}
 }
 
 func (x *WithdrawRequest_SendBody) GetType() string {
@@ -3811,7 +3960,7 @@ type SetBalanceRewardRequest_SendBody struct {
 func (x *SetBalanceRewardRequest_SendBody) Reset() {
 	*x = SetBalanceRewardRequest_SendBody{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[65]
+		mi := &file_app_app_api_app_proto_msgTypes[68]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3824,7 +3973,7 @@ func (x *SetBalanceRewardRequest_SendBody) String() string {
 func (*SetBalanceRewardRequest_SendBody) ProtoMessage() {}
 
 func (x *SetBalanceRewardRequest_SendBody) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[65]
+	mi := &file_app_app_api_app_proto_msgTypes[68]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3837,7 +3986,7 @@ func (x *SetBalanceRewardRequest_SendBody) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetBalanceRewardRequest_SendBody.ProtoReflect.Descriptor instead.
 func (*SetBalanceRewardRequest_SendBody) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{20, 0}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{22, 0}
 }
 
 func (x *SetBalanceRewardRequest_SendBody) GetAmount() string {
@@ -3858,7 +4007,7 @@ type DeleteBalanceRewardRequest_SendBody struct {
 func (x *DeleteBalanceRewardRequest_SendBody) Reset() {
 	*x = DeleteBalanceRewardRequest_SendBody{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[66]
+		mi := &file_app_app_api_app_proto_msgTypes[69]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3871,7 +4020,7 @@ func (x *DeleteBalanceRewardRequest_SendBody) String() string {
 func (*DeleteBalanceRewardRequest_SendBody) ProtoMessage() {}
 
 func (x *DeleteBalanceRewardRequest_SendBody) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[66]
+	mi := &file_app_app_api_app_proto_msgTypes[69]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3884,7 +4033,7 @@ func (x *DeleteBalanceRewardRequest_SendBody) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use DeleteBalanceRewardRequest_SendBody.ProtoReflect.Descriptor instead.
 func (*DeleteBalanceRewardRequest_SendBody) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{22, 0}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{24, 0}
 }
 
 func (x *DeleteBalanceRewardRequest_SendBody) GetAmount() string {
@@ -3909,7 +4058,7 @@ type AdminRewardListReply_List struct {
 func (x *AdminRewardListReply_List) Reset() {
 	*x = AdminRewardListReply_List{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[67]
+		mi := &file_app_app_api_app_proto_msgTypes[70]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3922,7 +4071,7 @@ func (x *AdminRewardListReply_List) String() string {
 func (*AdminRewardListReply_List) ProtoMessage() {}
 
 func (x *AdminRewardListReply_List) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[67]
+	mi := &file_app_app_api_app_proto_msgTypes[70]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3935,7 +4084,7 @@ func (x *AdminRewardListReply_List) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminRewardListReply_List.ProtoReflect.Descriptor instead.
 func (*AdminRewardListReply_List) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{25, 0}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{27, 0}
 }
 
 func (x *AdminRewardListReply_List) GetCreatedAt() string {
@@ -3991,7 +4140,7 @@ type AdminUserListReply_UserList struct {
 func (x *AdminUserListReply_UserList) Reset() {
 	*x = AdminUserListReply_UserList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[68]
+		mi := &file_app_app_api_app_proto_msgTypes[71]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4004,7 +4153,7 @@ func (x *AdminUserListReply_UserList) String() string {
 func (*AdminUserListReply_UserList) ProtoMessage() {}
 
 func (x *AdminUserListReply_UserList) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[68]
+	mi := &file_app_app_api_app_proto_msgTypes[71]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4017,7 +4166,7 @@ func (x *AdminUserListReply_UserList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminUserListReply_UserList.ProtoReflect.Descriptor instead.
 func (*AdminUserListReply_UserList) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{27, 0}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{29, 0}
 }
 
 func (x *AdminUserListReply_UserList) GetUserId() int64 {
@@ -4094,7 +4243,7 @@ type AdminLocationListReply_LocationList struct {
 func (x *AdminLocationListReply_LocationList) Reset() {
 	*x = AdminLocationListReply_LocationList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[69]
+		mi := &file_app_app_api_app_proto_msgTypes[72]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4107,7 +4256,7 @@ func (x *AdminLocationListReply_LocationList) String() string {
 func (*AdminLocationListReply_LocationList) ProtoMessage() {}
 
 func (x *AdminLocationListReply_LocationList) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[69]
+	mi := &file_app_app_api_app_proto_msgTypes[72]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4120,7 +4269,7 @@ func (x *AdminLocationListReply_LocationList) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use AdminLocationListReply_LocationList.ProtoReflect.Descriptor instead.
 func (*AdminLocationListReply_LocationList) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{29, 0}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{31, 0}
 }
 
 func (x *AdminLocationListReply_LocationList) GetCreatedAt() string {
@@ -4196,7 +4345,7 @@ type AdminWithdrawListReply_List struct {
 func (x *AdminWithdrawListReply_List) Reset() {
 	*x = AdminWithdrawListReply_List{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[70]
+		mi := &file_app_app_api_app_proto_msgTypes[73]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4209,7 +4358,7 @@ func (x *AdminWithdrawListReply_List) String() string {
 func (*AdminWithdrawListReply_List) ProtoMessage() {}
 
 func (x *AdminWithdrawListReply_List) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[70]
+	mi := &file_app_app_api_app_proto_msgTypes[73]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4222,7 +4371,7 @@ func (x *AdminWithdrawListReply_List) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminWithdrawListReply_List.ProtoReflect.Descriptor instead.
 func (*AdminWithdrawListReply_List) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{31, 0}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{33, 0}
 }
 
 func (x *AdminWithdrawListReply_List) GetAddress() string {
@@ -4288,7 +4437,7 @@ type AdminUserRecommendReply_List struct {
 func (x *AdminUserRecommendReply_List) Reset() {
 	*x = AdminUserRecommendReply_List{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[71]
+		mi := &file_app_app_api_app_proto_msgTypes[74]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4301,7 +4450,7 @@ func (x *AdminUserRecommendReply_List) String() string {
 func (*AdminUserRecommendReply_List) ProtoMessage() {}
 
 func (x *AdminUserRecommendReply_List) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[71]
+	mi := &file_app_app_api_app_proto_msgTypes[74]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4314,7 +4463,7 @@ func (x *AdminUserRecommendReply_List) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminUserRecommendReply_List.ProtoReflect.Descriptor instead.
 func (*AdminUserRecommendReply_List) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{41, 0}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{43, 0}
 }
 
 func (x *AdminUserRecommendReply_List) GetUserId() int64 {
@@ -4359,7 +4508,7 @@ type AdminMonthRecommendReply_List struct {
 func (x *AdminMonthRecommendReply_List) Reset() {
 	*x = AdminMonthRecommendReply_List{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[72]
+		mi := &file_app_app_api_app_proto_msgTypes[75]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4372,7 +4521,7 @@ func (x *AdminMonthRecommendReply_List) String() string {
 func (*AdminMonthRecommendReply_List) ProtoMessage() {}
 
 func (x *AdminMonthRecommendReply_List) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[72]
+	mi := &file_app_app_api_app_proto_msgTypes[75]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4385,7 +4534,7 @@ func (x *AdminMonthRecommendReply_List) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminMonthRecommendReply_List.ProtoReflect.Descriptor instead.
 func (*AdminMonthRecommendReply_List) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{43, 0}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{45, 0}
 }
 
 func (x *AdminMonthRecommendReply_List) GetAddress() string {
@@ -4429,7 +4578,7 @@ type AdminConfigReply_List struct {
 func (x *AdminConfigReply_List) Reset() {
 	*x = AdminConfigReply_List{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[73]
+		mi := &file_app_app_api_app_proto_msgTypes[76]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4442,7 +4591,7 @@ func (x *AdminConfigReply_List) String() string {
 func (*AdminConfigReply_List) ProtoMessage() {}
 
 func (x *AdminConfigReply_List) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[73]
+	mi := &file_app_app_api_app_proto_msgTypes[76]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4455,7 +4604,7 @@ func (x *AdminConfigReply_List) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminConfigReply_List.ProtoReflect.Descriptor instead.
 func (*AdminConfigReply_List) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{45, 0}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{47, 0}
 }
 
 func (x *AdminConfigReply_List) GetId() int64 {
@@ -4491,7 +4640,7 @@ type AdminConfigUpdateRequest_SendBody struct {
 func (x *AdminConfigUpdateRequest_SendBody) Reset() {
 	*x = AdminConfigUpdateRequest_SendBody{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_app_app_api_app_proto_msgTypes[74]
+		mi := &file_app_app_api_app_proto_msgTypes[77]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4504,7 +4653,7 @@ func (x *AdminConfigUpdateRequest_SendBody) String() string {
 func (*AdminConfigUpdateRequest_SendBody) ProtoMessage() {}
 
 func (x *AdminConfigUpdateRequest_SendBody) ProtoReflect() protoreflect.Message {
-	mi := &file_app_app_api_app_proto_msgTypes[74]
+	mi := &file_app_app_api_app_proto_msgTypes[77]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4517,7 +4666,7 @@ func (x *AdminConfigUpdateRequest_SendBody) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use AdminConfigUpdateRequest_SendBody.ProtoReflect.Descriptor instead.
 func (*AdminConfigUpdateRequest_SendBody) Descriptor() ([]byte, []int) {
-	return file_app_app_api_app_proto_rawDescGZIP(), []int{46, 0}
+	return file_app_app_api_app_proto_rawDescGZIP(), []int{48, 0}
 }
 
 func (x *AdminConfigUpdateRequest_SendBody) GetId() int64 {
@@ -4789,7 +4938,19 @@ var file_app_app_api_app_proto_rawDesc = []byte{
 	0x6c, 0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x03,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x0e, 0x6c, 0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74,
 	0x61, 0x74, 0x75, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x22, 0x1c, 0x0a, 0x1a, 0x52, 0x65, 0x63, 0x6f,
+	0x28, 0x09, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x22, 0x71, 0x0a, 0x0f, 0x47, 0x65, 0x74, 0x54,
+	0x72, 0x61, 0x64, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x3a, 0x0a, 0x09, 0x73,
+	0x65, 0x6e, 0x64, 0x5f, 0x62, 0x6f, 0x64, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x74, 0x54, 0x72, 0x61, 0x64, 0x65, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x2e, 0x53, 0x65, 0x6e, 0x64, 0x42, 0x6f, 0x64, 0x79, 0x52, 0x08, 0x73,
+	0x65, 0x6e, 0x64, 0x42, 0x6f, 0x64, 0x79, 0x1a, 0x22, 0x0a, 0x08, 0x53, 0x65, 0x6e, 0x64, 0x42,
+	0x6f, 0x64, 0x79, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x4b, 0x0a, 0x0d, 0x47,
+	0x65, 0x74, 0x54, 0x72, 0x61, 0x64, 0x65, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x1c, 0x0a, 0x09,
+	0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x43, 0x73, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x09, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x43, 0x73, 0x64, 0x12, 0x1c, 0x0a, 0x09, 0x61, 0x6d,
+	0x6f, 0x75, 0x6e, 0x74, 0x48, 0x62, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x61,
+	0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x48, 0x62, 0x73, 0x22, 0x1c, 0x0a, 0x1a, 0x52, 0x65, 0x63, 0x6f,
 	0x6d, 0x6d, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x52,
 	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0xc3, 0x01, 0x0a, 0x18, 0x52, 0x65, 0x63, 0x6f, 0x6d,
 	0x6d, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65,
@@ -5061,7 +5222,7 @@ var file_app_app_api_app_proto_rawDesc = []byte{
 	0x69, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
 	0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x18, 0x0a, 0x16, 0x41, 0x64, 0x6d, 0x69,
 	0x6e, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x65, 0x70,
-	0x6c, 0x79, 0x32, 0xf7, 0x0c, 0x0a, 0x03, 0x41, 0x70, 0x70, 0x12, 0x72, 0x0a, 0x0c, 0x45, 0x74,
+	0x6c, 0x79, 0x32, 0xb8, 0x0e, 0x0a, 0x03, 0x41, 0x70, 0x70, 0x12, 0x72, 0x0a, 0x0c, 0x45, 0x74,
 	0x68, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x12, 0x18, 0x2e, 0x61, 0x70, 0x69,
 	0x2e, 0x45, 0x74, 0x68, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x52, 0x65, 0x71,
 	0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x45, 0x74, 0x68, 0x41, 0x75,
@@ -5123,50 +5284,62 @@ var file_app_app_api_app_proto_rawDesc = []byte{
 	0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x2b, 0x82, 0xd3, 0xe4, 0x93, 0x02,
 	0x25, 0x22, 0x18, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x61, 0x70, 0x70, 0x5f, 0x73, 0x65, 0x72, 0x76,
 	0x65, 0x72, 0x2f, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x3a, 0x09, 0x73, 0x65, 0x6e,
-	0x64, 0x5f, 0x62, 0x6f, 0x64, 0x79, 0x12, 0x83, 0x01, 0x0a, 0x10, 0x53, 0x65, 0x74, 0x42, 0x61,
-	0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x12, 0x1c, 0x2e, 0x61, 0x70,
-	0x69, 0x2e, 0x53, 0x65, 0x74, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x77, 0x61,
-	0x72, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x61, 0x70, 0x69, 0x2e,
-	0x53, 0x65, 0x74, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64,
-	0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x35, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2f, 0x22, 0x22, 0x2f,
-	0x61, 0x70, 0x69, 0x2f, 0x61, 0x70, 0x70, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x2f, 0x73,
-	0x65, 0x74, 0x5f, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x5f, 0x72, 0x65, 0x77, 0x61, 0x72,
-	0x64, 0x3a, 0x09, 0x73, 0x65, 0x6e, 0x64, 0x5f, 0x62, 0x6f, 0x64, 0x79, 0x12, 0x8f, 0x01, 0x0a,
-	0x13, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65,
-	0x77, 0x61, 0x72, 0x64, 0x12, 0x1f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74,
-	0x65, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x44, 0x65, 0x6c, 0x65,
+	0x64, 0x5f, 0x62, 0x6f, 0x64, 0x79, 0x12, 0x5b, 0x0a, 0x05, 0x54, 0x72, 0x61, 0x64, 0x65, 0x12,
+	0x14, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x12, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x57, 0x69, 0x74, 0x68,
+	0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x28, 0x82, 0xd3, 0xe4, 0x93, 0x02,
+	0x22, 0x22, 0x15, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x61, 0x70, 0x70, 0x5f, 0x73, 0x65, 0x72, 0x76,
+	0x65, 0x72, 0x2f, 0x74, 0x72, 0x61, 0x64, 0x65, 0x3a, 0x09, 0x73, 0x65, 0x6e, 0x64, 0x5f, 0x62,
+	0x6f, 0x64, 0x79, 0x12, 0x62, 0x0a, 0x08, 0x47, 0x65, 0x74, 0x54, 0x72, 0x61, 0x64, 0x65, 0x12,
+	0x14, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x74, 0x54, 0x72, 0x61, 0x64, 0x65, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x12, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x74, 0x54,
+	0x72, 0x61, 0x64, 0x65, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x2c, 0x82, 0xd3, 0xe4, 0x93, 0x02,
+	0x26, 0x22, 0x19, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x61, 0x70, 0x70, 0x5f, 0x73, 0x65, 0x72, 0x76,
+	0x65, 0x72, 0x2f, 0x67, 0x65, 0x74, 0x5f, 0x74, 0x72, 0x61, 0x64, 0x65, 0x3a, 0x09, 0x73, 0x65,
+	0x6e, 0x64, 0x5f, 0x62, 0x6f, 0x64, 0x79, 0x12, 0x83, 0x01, 0x0a, 0x10, 0x53, 0x65, 0x74, 0x42,
+	0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x12, 0x1c, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x53, 0x65, 0x74, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x77,
+	0x61, 0x72, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x53, 0x65, 0x74, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x77, 0x61, 0x72,
+	0x64, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x35, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2f, 0x22, 0x22,
+	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x61, 0x70, 0x70, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x2f,
+	0x73, 0x65, 0x74, 0x5f, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x5f, 0x72, 0x65, 0x77, 0x61,
+	0x72, 0x64, 0x3a, 0x09, 0x73, 0x65, 0x6e, 0x64, 0x5f, 0x62, 0x6f, 0x64, 0x79, 0x12, 0x8f, 0x01,
+	0x0a, 0x13, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52,
+	0x65, 0x77, 0x61, 0x72, 0x64, 0x12, 0x1f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x44, 0x65, 0x6c, 0x65,
 	0x74, 0x65, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x52,
-	0x65, 0x70, 0x6c, 0x79, 0x22, 0x38, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x32, 0x22, 0x25, 0x2f, 0x61,
-	0x70, 0x69, 0x2f, 0x61, 0x70, 0x70, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x2f, 0x64, 0x65,
-	0x6c, 0x65, 0x74, 0x65, 0x5f, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x5f, 0x72, 0x65, 0x77,
-	0x61, 0x72, 0x64, 0x3a, 0x09, 0x73, 0x65, 0x6e, 0x64, 0x5f, 0x62, 0x6f, 0x64, 0x79, 0x12, 0x51,
-	0x0a, 0x07, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x12, 0x13, 0x2e, 0x61, 0x70, 0x69, 0x2e,
-	0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x11,
-	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52, 0x65, 0x70, 0x6c,
-	0x79, 0x22, 0x1e, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x18, 0x12, 0x16, 0x2f, 0x61, 0x70, 0x69, 0x2f,
-	0x61, 0x64, 0x6d, 0x69, 0x6e, 0x5f, 0x64, 0x68, 0x62, 0x2f, 0x64, 0x65, 0x70, 0x6f, 0x73, 0x69,
-	0x74, 0x12, 0x64, 0x0a, 0x0d, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72,
-	0x61, 0x77, 0x12, 0x19, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x57, 0x69,
-	0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x17, 0x2e,
-	0x61, 0x70, 0x69, 0x2e, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61,
-	0x77, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x1f, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x19, 0x12, 0x17,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x44, 0x65, 0x6c,
+	0x65, 0x74, 0x65, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64,
+	0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x38, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x32, 0x22, 0x25, 0x2f,
+	0x61, 0x70, 0x69, 0x2f, 0x61, 0x70, 0x70, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x2f, 0x64,
+	0x65, 0x6c, 0x65, 0x74, 0x65, 0x5f, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x5f, 0x72, 0x65,
+	0x77, 0x61, 0x72, 0x64, 0x3a, 0x09, 0x73, 0x65, 0x6e, 0x64, 0x5f, 0x62, 0x6f, 0x64, 0x79, 0x12,
+	0x51, 0x0a, 0x07, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x12, 0x13, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x11, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52, 0x65, 0x70,
+	0x6c, 0x79, 0x22, 0x1e, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x18, 0x12, 0x16, 0x2f, 0x61, 0x70, 0x69,
+	0x2f, 0x61, 0x64, 0x6d, 0x69, 0x6e, 0x5f, 0x64, 0x68, 0x62, 0x2f, 0x64, 0x65, 0x70, 0x6f, 0x73,
+	0x69, 0x74, 0x12, 0x64, 0x0a, 0x0d, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x57, 0x69, 0x74, 0x68, 0x64,
+	0x72, 0x61, 0x77, 0x12, 0x19, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x57,
+	0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x17,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72,
+	0x61, 0x77, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x1f, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x19, 0x12,
+	0x17, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x61, 0x64, 0x6d, 0x69, 0x6e, 0x5f, 0x64, 0x68, 0x62, 0x2f,
+	0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x12, 0x71, 0x0a, 0x10, 0x41, 0x64, 0x6d, 0x69,
+	0x6e, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x45, 0x74, 0x68, 0x12, 0x1c, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77,
+	0x45, 0x74, 0x68, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x45, 0x74,
+	0x68, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x23, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1d, 0x12, 0x1b,
 	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x61, 0x64, 0x6d, 0x69, 0x6e, 0x5f, 0x64, 0x68, 0x62, 0x2f, 0x77,
-	0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x12, 0x71, 0x0a, 0x10, 0x41, 0x64, 0x6d, 0x69, 0x6e,
-	0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x45, 0x74, 0x68, 0x12, 0x1c, 0x2e, 0x61, 0x70,
-	0x69, 0x2e, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x45,
-	0x74, 0x68, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x61, 0x70, 0x69, 0x2e,
-	0x41, 0x64, 0x6d, 0x69, 0x6e, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x45, 0x74, 0x68,
-	0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x23, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1d, 0x12, 0x1b, 0x2f,
-	0x61, 0x70, 0x69, 0x2f, 0x61, 0x64, 0x6d, 0x69, 0x6e, 0x5f, 0x64, 0x68, 0x62, 0x2f, 0x77, 0x69,
-	0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x5f, 0x65, 0x74, 0x68, 0x12, 0x50, 0x0a, 0x08, 0x41, 0x64,
-	0x6d, 0x69, 0x6e, 0x46, 0x65, 0x65, 0x12, 0x14, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x41, 0x64, 0x6d,
-	0x69, 0x6e, 0x46, 0x65, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x12, 0x2e, 0x61,
-	0x70, 0x69, 0x2e, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x46, 0x65, 0x65, 0x52, 0x65, 0x70, 0x6c, 0x79,
-	0x22, 0x1a, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x14, 0x12, 0x12, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x61,
-	0x64, 0x6d, 0x69, 0x6e, 0x5f, 0x64, 0x68, 0x62, 0x2f, 0x66, 0x65, 0x65, 0x42, 0x11, 0x0a, 0x03,
-	0x61, 0x70, 0x69, 0x50, 0x01, 0x5a, 0x08, 0x2f, 0x61, 0x70, 0x69, 0x3b, 0x61, 0x70, 0x69, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x5f, 0x65, 0x74, 0x68, 0x12, 0x50, 0x0a, 0x08, 0x41,
+	0x64, 0x6d, 0x69, 0x6e, 0x46, 0x65, 0x65, 0x12, 0x14, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x41, 0x64,
+	0x6d, 0x69, 0x6e, 0x46, 0x65, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x12, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x46, 0x65, 0x65, 0x52, 0x65, 0x70, 0x6c,
+	0x79, 0x22, 0x1a, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x14, 0x12, 0x12, 0x2f, 0x61, 0x70, 0x69, 0x2f,
+	0x61, 0x64, 0x6d, 0x69, 0x6e, 0x5f, 0x64, 0x68, 0x62, 0x2f, 0x66, 0x65, 0x65, 0x42, 0x11, 0x0a,
+	0x03, 0x61, 0x70, 0x69, 0x50, 0x01, 0x5a, 0x08, 0x2f, 0x61, 0x70, 0x69, 0x3b, 0x61, 0x70, 0x69,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -5181,7 +5354,7 @@ func file_app_app_api_app_proto_rawDescGZIP() []byte {
 	return file_app_app_api_app_proto_rawDescData
 }
 
-var file_app_app_api_app_proto_msgTypes = make([]protoimpl.MessageInfo, 75)
+var file_app_app_api_app_proto_msgTypes = make([]protoimpl.MessageInfo, 78)
 var file_app_app_api_app_proto_goTypes = []interface{}{
 	(*EthAuthorizeRequest)(nil),                 // 0: api.EthAuthorizeRequest
 	(*EthAuthorizeReply)(nil),                   // 1: api.EthAuthorizeReply
@@ -5193,135 +5366,143 @@ var file_app_app_api_app_proto_goTypes = []interface{}{
 	(*UserInfoReply)(nil),                       // 7: api.UserInfoReply
 	(*RewardListRequest)(nil),                   // 8: api.RewardListRequest
 	(*RewardListReply)(nil),                     // 9: api.RewardListReply
-	(*RecommendRewardListRequest)(nil),          // 10: api.RecommendRewardListRequest
-	(*RecommendRewardListReply)(nil),            // 11: api.RecommendRewardListReply
-	(*FeeRewardListRequest)(nil),                // 12: api.FeeRewardListRequest
-	(*FeeRewardListReply)(nil),                  // 13: api.FeeRewardListReply
-	(*WithdrawListRequest)(nil),                 // 14: api.WithdrawListRequest
-	(*WithdrawListReply)(nil),                   // 15: api.WithdrawListReply
-	(*RecommendListRequest)(nil),                // 16: api.RecommendListRequest
-	(*RecommendListReply)(nil),                  // 17: api.RecommendListReply
-	(*WithdrawRequest)(nil),                     // 18: api.WithdrawRequest
-	(*WithdrawReply)(nil),                       // 19: api.WithdrawReply
-	(*SetBalanceRewardRequest)(nil),             // 20: api.SetBalanceRewardRequest
-	(*SetBalanceRewardReply)(nil),               // 21: api.SetBalanceRewardReply
-	(*DeleteBalanceRewardRequest)(nil),          // 22: api.DeleteBalanceRewardRequest
-	(*DeleteBalanceRewardReply)(nil),            // 23: api.DeleteBalanceRewardReply
-	(*AdminRewardListRequest)(nil),              // 24: api.AdminRewardListRequest
-	(*AdminRewardListReply)(nil),                // 25: api.AdminRewardListReply
-	(*AdminUserListRequest)(nil),                // 26: api.AdminUserListRequest
-	(*AdminUserListReply)(nil),                  // 27: api.AdminUserListReply
-	(*AdminLocationListRequest)(nil),            // 28: api.AdminLocationListRequest
-	(*AdminLocationListReply)(nil),              // 29: api.AdminLocationListReply
-	(*AdminWithdrawListRequest)(nil),            // 30: api.AdminWithdrawListRequest
-	(*AdminWithdrawListReply)(nil),              // 31: api.AdminWithdrawListReply
-	(*AdminWithdrawRequest)(nil),                // 32: api.AdminWithdrawRequest
-	(*AdminWithdrawReply)(nil),                  // 33: api.AdminWithdrawReply
-	(*AdminWithdrawEthRequest)(nil),             // 34: api.AdminWithdrawEthRequest
-	(*AdminWithdrawEthReply)(nil),               // 35: api.AdminWithdrawEthReply
-	(*AdminFeeRequest)(nil),                     // 36: api.AdminFeeRequest
-	(*AdminFeeReply)(nil),                       // 37: api.AdminFeeReply
-	(*AdminAllRequest)(nil),                     // 38: api.AdminAllRequest
-	(*AdminAllReply)(nil),                       // 39: api.AdminAllReply
-	(*AdminUserRecommendRequest)(nil),           // 40: api.AdminUserRecommendRequest
-	(*AdminUserRecommendReply)(nil),             // 41: api.AdminUserRecommendReply
-	(*AdminMonthRecommendRequest)(nil),          // 42: api.AdminMonthRecommendRequest
-	(*AdminMonthRecommendReply)(nil),            // 43: api.AdminMonthRecommendReply
-	(*AdminConfigRequest)(nil),                  // 44: api.AdminConfigRequest
-	(*AdminConfigReply)(nil),                    // 45: api.AdminConfigReply
-	(*AdminConfigUpdateRequest)(nil),            // 46: api.AdminConfigUpdateRequest
-	(*AdminConfigUpdateReply)(nil),              // 47: api.AdminConfigUpdateReply
-	(*EthAuthorizeRequest_SendBody)(nil),        // 48: api.EthAuthorizeRequest.SendBody
-	(*RecommendUpdateRequest_SendBody)(nil),     // 49: api.RecommendUpdateRequest.SendBody
-	(*UserInfoReply_List)(nil),                  // 50: api.UserInfoReply.List
-	(*UserInfoReply_List2)(nil),                 // 51: api.UserInfoReply.List2
-	(*UserInfoReply_List3)(nil),                 // 52: api.UserInfoReply.List3
-	(*UserInfoReply_List4)(nil),                 // 53: api.UserInfoReply.List4
-	(*UserInfoReply_List5)(nil),                 // 54: api.UserInfoReply.List5
-	(*UserInfoReply_List6)(nil),                 // 55: api.UserInfoReply.List6
-	(*UserInfoReply_List7)(nil),                 // 56: api.UserInfoReply.List7
-	(*UserInfoReply_List8)(nil),                 // 57: api.UserInfoReply.List8
-	(*UserInfoReply_List9)(nil),                 // 58: api.UserInfoReply.List9
-	(*RewardListReply_List)(nil),                // 59: api.RewardListReply.List
-	(*RecommendRewardListReply_List)(nil),       // 60: api.RecommendRewardListReply.List
-	(*FeeRewardListReply_List)(nil),             // 61: api.FeeRewardListReply.List
-	(*WithdrawListReply_List)(nil),              // 62: api.WithdrawListReply.List
-	(*RecommendListReply_List)(nil),             // 63: api.RecommendListReply.List
-	(*WithdrawRequest_SendBody)(nil),            // 64: api.WithdrawRequest.SendBody
-	(*SetBalanceRewardRequest_SendBody)(nil),    // 65: api.SetBalanceRewardRequest.SendBody
-	(*DeleteBalanceRewardRequest_SendBody)(nil), // 66: api.DeleteBalanceRewardRequest.SendBody
-	(*AdminRewardListReply_List)(nil),           // 67: api.AdminRewardListReply.List
-	(*AdminUserListReply_UserList)(nil),         // 68: api.AdminUserListReply.UserList
-	(*AdminLocationListReply_LocationList)(nil), // 69: api.AdminLocationListReply.LocationList
-	(*AdminWithdrawListReply_List)(nil),         // 70: api.AdminWithdrawListReply.List
-	(*AdminUserRecommendReply_List)(nil),        // 71: api.AdminUserRecommendReply.List
-	(*AdminMonthRecommendReply_List)(nil),       // 72: api.AdminMonthRecommendReply.List
-	(*AdminConfigReply_List)(nil),               // 73: api.AdminConfigReply.List
-	(*AdminConfigUpdateRequest_SendBody)(nil),   // 74: api.AdminConfigUpdateRequest.SendBody
+	(*GetTradeRequest)(nil),                     // 10: api.GetTradeRequest
+	(*GetTradeReply)(nil),                       // 11: api.GetTradeReply
+	(*RecommendRewardListRequest)(nil),          // 12: api.RecommendRewardListRequest
+	(*RecommendRewardListReply)(nil),            // 13: api.RecommendRewardListReply
+	(*FeeRewardListRequest)(nil),                // 14: api.FeeRewardListRequest
+	(*FeeRewardListReply)(nil),                  // 15: api.FeeRewardListReply
+	(*WithdrawListRequest)(nil),                 // 16: api.WithdrawListRequest
+	(*WithdrawListReply)(nil),                   // 17: api.WithdrawListReply
+	(*RecommendListRequest)(nil),                // 18: api.RecommendListRequest
+	(*RecommendListReply)(nil),                  // 19: api.RecommendListReply
+	(*WithdrawRequest)(nil),                     // 20: api.WithdrawRequest
+	(*WithdrawReply)(nil),                       // 21: api.WithdrawReply
+	(*SetBalanceRewardRequest)(nil),             // 22: api.SetBalanceRewardRequest
+	(*SetBalanceRewardReply)(nil),               // 23: api.SetBalanceRewardReply
+	(*DeleteBalanceRewardRequest)(nil),          // 24: api.DeleteBalanceRewardRequest
+	(*DeleteBalanceRewardReply)(nil),            // 25: api.DeleteBalanceRewardReply
+	(*AdminRewardListRequest)(nil),              // 26: api.AdminRewardListRequest
+	(*AdminRewardListReply)(nil),                // 27: api.AdminRewardListReply
+	(*AdminUserListRequest)(nil),                // 28: api.AdminUserListRequest
+	(*AdminUserListReply)(nil),                  // 29: api.AdminUserListReply
+	(*AdminLocationListRequest)(nil),            // 30: api.AdminLocationListRequest
+	(*AdminLocationListReply)(nil),              // 31: api.AdminLocationListReply
+	(*AdminWithdrawListRequest)(nil),            // 32: api.AdminWithdrawListRequest
+	(*AdminWithdrawListReply)(nil),              // 33: api.AdminWithdrawListReply
+	(*AdminWithdrawRequest)(nil),                // 34: api.AdminWithdrawRequest
+	(*AdminWithdrawReply)(nil),                  // 35: api.AdminWithdrawReply
+	(*AdminWithdrawEthRequest)(nil),             // 36: api.AdminWithdrawEthRequest
+	(*AdminWithdrawEthReply)(nil),               // 37: api.AdminWithdrawEthReply
+	(*AdminFeeRequest)(nil),                     // 38: api.AdminFeeRequest
+	(*AdminFeeReply)(nil),                       // 39: api.AdminFeeReply
+	(*AdminAllRequest)(nil),                     // 40: api.AdminAllRequest
+	(*AdminAllReply)(nil),                       // 41: api.AdminAllReply
+	(*AdminUserRecommendRequest)(nil),           // 42: api.AdminUserRecommendRequest
+	(*AdminUserRecommendReply)(nil),             // 43: api.AdminUserRecommendReply
+	(*AdminMonthRecommendRequest)(nil),          // 44: api.AdminMonthRecommendRequest
+	(*AdminMonthRecommendReply)(nil),            // 45: api.AdminMonthRecommendReply
+	(*AdminConfigRequest)(nil),                  // 46: api.AdminConfigRequest
+	(*AdminConfigReply)(nil),                    // 47: api.AdminConfigReply
+	(*AdminConfigUpdateRequest)(nil),            // 48: api.AdminConfigUpdateRequest
+	(*AdminConfigUpdateReply)(nil),              // 49: api.AdminConfigUpdateReply
+	(*EthAuthorizeRequest_SendBody)(nil),        // 50: api.EthAuthorizeRequest.SendBody
+	(*RecommendUpdateRequest_SendBody)(nil),     // 51: api.RecommendUpdateRequest.SendBody
+	(*UserInfoReply_List)(nil),                  // 52: api.UserInfoReply.List
+	(*UserInfoReply_List2)(nil),                 // 53: api.UserInfoReply.List2
+	(*UserInfoReply_List3)(nil),                 // 54: api.UserInfoReply.List3
+	(*UserInfoReply_List4)(nil),                 // 55: api.UserInfoReply.List4
+	(*UserInfoReply_List5)(nil),                 // 56: api.UserInfoReply.List5
+	(*UserInfoReply_List6)(nil),                 // 57: api.UserInfoReply.List6
+	(*UserInfoReply_List7)(nil),                 // 58: api.UserInfoReply.List7
+	(*UserInfoReply_List8)(nil),                 // 59: api.UserInfoReply.List8
+	(*UserInfoReply_List9)(nil),                 // 60: api.UserInfoReply.List9
+	(*RewardListReply_List)(nil),                // 61: api.RewardListReply.List
+	(*GetTradeRequest_SendBody)(nil),            // 62: api.GetTradeRequest.SendBody
+	(*RecommendRewardListReply_List)(nil),       // 63: api.RecommendRewardListReply.List
+	(*FeeRewardListReply_List)(nil),             // 64: api.FeeRewardListReply.List
+	(*WithdrawListReply_List)(nil),              // 65: api.WithdrawListReply.List
+	(*RecommendListReply_List)(nil),             // 66: api.RecommendListReply.List
+	(*WithdrawRequest_SendBody)(nil),            // 67: api.WithdrawRequest.SendBody
+	(*SetBalanceRewardRequest_SendBody)(nil),    // 68: api.SetBalanceRewardRequest.SendBody
+	(*DeleteBalanceRewardRequest_SendBody)(nil), // 69: api.DeleteBalanceRewardRequest.SendBody
+	(*AdminRewardListReply_List)(nil),           // 70: api.AdminRewardListReply.List
+	(*AdminUserListReply_UserList)(nil),         // 71: api.AdminUserListReply.UserList
+	(*AdminLocationListReply_LocationList)(nil), // 72: api.AdminLocationListReply.LocationList
+	(*AdminWithdrawListReply_List)(nil),         // 73: api.AdminWithdrawListReply.List
+	(*AdminUserRecommendReply_List)(nil),        // 74: api.AdminUserRecommendReply.List
+	(*AdminMonthRecommendReply_List)(nil),       // 75: api.AdminMonthRecommendReply.List
+	(*AdminConfigReply_List)(nil),               // 76: api.AdminConfigReply.List
+	(*AdminConfigUpdateRequest_SendBody)(nil),   // 77: api.AdminConfigUpdateRequest.SendBody
 }
 var file_app_app_api_app_proto_depIdxs = []int32{
-	48, // 0: api.EthAuthorizeRequest.send_body:type_name -> api.EthAuthorizeRequest.SendBody
-	49, // 1: api.RecommendUpdateRequest.send_body:type_name -> api.RecommendUpdateRequest.SendBody
-	50, // 2: api.UserInfoReply.LocationList:type_name -> api.UserInfoReply.List
-	51, // 3: api.UserInfoReply.recommendTeamList:type_name -> api.UserInfoReply.List2
-	52, // 4: api.UserInfoReply.recommendAreaList:type_name -> api.UserInfoReply.List3
-	53, // 5: api.UserInfoReply.locationDailyRewardList:type_name -> api.UserInfoReply.List4
-	54, // 6: api.UserInfoReply.recommendList:type_name -> api.UserInfoReply.List5
-	55, // 7: api.UserInfoReply.dailyBalanceRewardList:type_name -> api.UserInfoReply.List6
-	56, // 8: api.UserInfoReply.teamAddressList:type_name -> api.UserInfoReply.List7
-	57, // 9: api.UserInfoReply.myRecommendAddressList:type_name -> api.UserInfoReply.List8
-	58, // 10: api.UserInfoReply.allRewardList:type_name -> api.UserInfoReply.List9
-	59, // 11: api.RewardListReply.rewards:type_name -> api.RewardListReply.List
-	60, // 12: api.RecommendRewardListReply.rewards:type_name -> api.RecommendRewardListReply.List
-	61, // 13: api.FeeRewardListReply.rewards:type_name -> api.FeeRewardListReply.List
-	62, // 14: api.WithdrawListReply.withdraw:type_name -> api.WithdrawListReply.List
-	63, // 15: api.RecommendListReply.recommends:type_name -> api.RecommendListReply.List
-	64, // 16: api.WithdrawRequest.send_body:type_name -> api.WithdrawRequest.SendBody
-	65, // 17: api.SetBalanceRewardRequest.send_body:type_name -> api.SetBalanceRewardRequest.SendBody
-	66, // 18: api.DeleteBalanceRewardRequest.send_body:type_name -> api.DeleteBalanceRewardRequest.SendBody
-	67, // 19: api.AdminRewardListReply.rewards:type_name -> api.AdminRewardListReply.List
-	68, // 20: api.AdminUserListReply.users:type_name -> api.AdminUserListReply.UserList
-	69, // 21: api.AdminLocationListReply.locations:type_name -> api.AdminLocationListReply.LocationList
-	70, // 22: api.AdminWithdrawListReply.withdraw:type_name -> api.AdminWithdrawListReply.List
-	71, // 23: api.AdminUserRecommendReply.users:type_name -> api.AdminUserRecommendReply.List
-	72, // 24: api.AdminMonthRecommendReply.users:type_name -> api.AdminMonthRecommendReply.List
-	73, // 25: api.AdminConfigReply.config:type_name -> api.AdminConfigReply.List
-	74, // 26: api.AdminConfigUpdateRequest.send_body:type_name -> api.AdminConfigUpdateRequest.SendBody
-	0,  // 27: api.App.EthAuthorize:input_type -> api.EthAuthorizeRequest
-	2,  // 28: api.App.RecommendUpdate:input_type -> api.RecommendUpdateRequest
-	6,  // 29: api.App.UserInfo:input_type -> api.UserInfoRequest
-	8,  // 30: api.App.RewardList:input_type -> api.RewardListRequest
-	10, // 31: api.App.RecommendRewardList:input_type -> api.RecommendRewardListRequest
-	12, // 32: api.App.FeeRewardList:input_type -> api.FeeRewardListRequest
-	14, // 33: api.App.WithdrawList:input_type -> api.WithdrawListRequest
-	16, // 34: api.App.RecommendList:input_type -> api.RecommendListRequest
-	18, // 35: api.App.Withdraw:input_type -> api.WithdrawRequest
-	20, // 36: api.App.SetBalanceReward:input_type -> api.SetBalanceRewardRequest
-	22, // 37: api.App.DeleteBalanceReward:input_type -> api.DeleteBalanceRewardRequest
-	4,  // 38: api.App.Deposit:input_type -> api.DepositRequest
-	32, // 39: api.App.AdminWithdraw:input_type -> api.AdminWithdrawRequest
-	34, // 40: api.App.AdminWithdrawEth:input_type -> api.AdminWithdrawEthRequest
-	36, // 41: api.App.AdminFee:input_type -> api.AdminFeeRequest
-	1,  // 42: api.App.EthAuthorize:output_type -> api.EthAuthorizeReply
-	3,  // 43: api.App.RecommendUpdate:output_type -> api.RecommendUpdateReply
-	7,  // 44: api.App.UserInfo:output_type -> api.UserInfoReply
-	9,  // 45: api.App.RewardList:output_type -> api.RewardListReply
-	11, // 46: api.App.RecommendRewardList:output_type -> api.RecommendRewardListReply
-	13, // 47: api.App.FeeRewardList:output_type -> api.FeeRewardListReply
-	15, // 48: api.App.WithdrawList:output_type -> api.WithdrawListReply
-	17, // 49: api.App.RecommendList:output_type -> api.RecommendListReply
-	19, // 50: api.App.Withdraw:output_type -> api.WithdrawReply
-	21, // 51: api.App.SetBalanceReward:output_type -> api.SetBalanceRewardReply
-	23, // 52: api.App.DeleteBalanceReward:output_type -> api.DeleteBalanceRewardReply
-	5,  // 53: api.App.Deposit:output_type -> api.DepositReply
-	33, // 54: api.App.AdminWithdraw:output_type -> api.AdminWithdrawReply
-	35, // 55: api.App.AdminWithdrawEth:output_type -> api.AdminWithdrawEthReply
-	37, // 56: api.App.AdminFee:output_type -> api.AdminFeeReply
-	42, // [42:57] is the sub-list for method output_type
-	27, // [27:42] is the sub-list for method input_type
-	27, // [27:27] is the sub-list for extension type_name
-	27, // [27:27] is the sub-list for extension extendee
-	0,  // [0:27] is the sub-list for field type_name
+	50, // 0: api.EthAuthorizeRequest.send_body:type_name -> api.EthAuthorizeRequest.SendBody
+	51, // 1: api.RecommendUpdateRequest.send_body:type_name -> api.RecommendUpdateRequest.SendBody
+	52, // 2: api.UserInfoReply.LocationList:type_name -> api.UserInfoReply.List
+	53, // 3: api.UserInfoReply.recommendTeamList:type_name -> api.UserInfoReply.List2
+	54, // 4: api.UserInfoReply.recommendAreaList:type_name -> api.UserInfoReply.List3
+	55, // 5: api.UserInfoReply.locationDailyRewardList:type_name -> api.UserInfoReply.List4
+	56, // 6: api.UserInfoReply.recommendList:type_name -> api.UserInfoReply.List5
+	57, // 7: api.UserInfoReply.dailyBalanceRewardList:type_name -> api.UserInfoReply.List6
+	58, // 8: api.UserInfoReply.teamAddressList:type_name -> api.UserInfoReply.List7
+	59, // 9: api.UserInfoReply.myRecommendAddressList:type_name -> api.UserInfoReply.List8
+	60, // 10: api.UserInfoReply.allRewardList:type_name -> api.UserInfoReply.List9
+	61, // 11: api.RewardListReply.rewards:type_name -> api.RewardListReply.List
+	62, // 12: api.GetTradeRequest.send_body:type_name -> api.GetTradeRequest.SendBody
+	63, // 13: api.RecommendRewardListReply.rewards:type_name -> api.RecommendRewardListReply.List
+	64, // 14: api.FeeRewardListReply.rewards:type_name -> api.FeeRewardListReply.List
+	65, // 15: api.WithdrawListReply.withdraw:type_name -> api.WithdrawListReply.List
+	66, // 16: api.RecommendListReply.recommends:type_name -> api.RecommendListReply.List
+	67, // 17: api.WithdrawRequest.send_body:type_name -> api.WithdrawRequest.SendBody
+	68, // 18: api.SetBalanceRewardRequest.send_body:type_name -> api.SetBalanceRewardRequest.SendBody
+	69, // 19: api.DeleteBalanceRewardRequest.send_body:type_name -> api.DeleteBalanceRewardRequest.SendBody
+	70, // 20: api.AdminRewardListReply.rewards:type_name -> api.AdminRewardListReply.List
+	71, // 21: api.AdminUserListReply.users:type_name -> api.AdminUserListReply.UserList
+	72, // 22: api.AdminLocationListReply.locations:type_name -> api.AdminLocationListReply.LocationList
+	73, // 23: api.AdminWithdrawListReply.withdraw:type_name -> api.AdminWithdrawListReply.List
+	74, // 24: api.AdminUserRecommendReply.users:type_name -> api.AdminUserRecommendReply.List
+	75, // 25: api.AdminMonthRecommendReply.users:type_name -> api.AdminMonthRecommendReply.List
+	76, // 26: api.AdminConfigReply.config:type_name -> api.AdminConfigReply.List
+	77, // 27: api.AdminConfigUpdateRequest.send_body:type_name -> api.AdminConfigUpdateRequest.SendBody
+	0,  // 28: api.App.EthAuthorize:input_type -> api.EthAuthorizeRequest
+	2,  // 29: api.App.RecommendUpdate:input_type -> api.RecommendUpdateRequest
+	6,  // 30: api.App.UserInfo:input_type -> api.UserInfoRequest
+	8,  // 31: api.App.RewardList:input_type -> api.RewardListRequest
+	12, // 32: api.App.RecommendRewardList:input_type -> api.RecommendRewardListRequest
+	14, // 33: api.App.FeeRewardList:input_type -> api.FeeRewardListRequest
+	16, // 34: api.App.WithdrawList:input_type -> api.WithdrawListRequest
+	18, // 35: api.App.RecommendList:input_type -> api.RecommendListRequest
+	20, // 36: api.App.Withdraw:input_type -> api.WithdrawRequest
+	20, // 37: api.App.Trade:input_type -> api.WithdrawRequest
+	10, // 38: api.App.GetTrade:input_type -> api.GetTradeRequest
+	22, // 39: api.App.SetBalanceReward:input_type -> api.SetBalanceRewardRequest
+	24, // 40: api.App.DeleteBalanceReward:input_type -> api.DeleteBalanceRewardRequest
+	4,  // 41: api.App.Deposit:input_type -> api.DepositRequest
+	34, // 42: api.App.AdminWithdraw:input_type -> api.AdminWithdrawRequest
+	36, // 43: api.App.AdminWithdrawEth:input_type -> api.AdminWithdrawEthRequest
+	38, // 44: api.App.AdminFee:input_type -> api.AdminFeeRequest
+	1,  // 45: api.App.EthAuthorize:output_type -> api.EthAuthorizeReply
+	3,  // 46: api.App.RecommendUpdate:output_type -> api.RecommendUpdateReply
+	7,  // 47: api.App.UserInfo:output_type -> api.UserInfoReply
+	9,  // 48: api.App.RewardList:output_type -> api.RewardListReply
+	13, // 49: api.App.RecommendRewardList:output_type -> api.RecommendRewardListReply
+	15, // 50: api.App.FeeRewardList:output_type -> api.FeeRewardListReply
+	17, // 51: api.App.WithdrawList:output_type -> api.WithdrawListReply
+	19, // 52: api.App.RecommendList:output_type -> api.RecommendListReply
+	21, // 53: api.App.Withdraw:output_type -> api.WithdrawReply
+	21, // 54: api.App.Trade:output_type -> api.WithdrawReply
+	11, // 55: api.App.GetTrade:output_type -> api.GetTradeReply
+	23, // 56: api.App.SetBalanceReward:output_type -> api.SetBalanceRewardReply
+	25, // 57: api.App.DeleteBalanceReward:output_type -> api.DeleteBalanceRewardReply
+	5,  // 58: api.App.Deposit:output_type -> api.DepositReply
+	35, // 59: api.App.AdminWithdraw:output_type -> api.AdminWithdrawReply
+	37, // 60: api.App.AdminWithdrawEth:output_type -> api.AdminWithdrawEthReply
+	39, // 61: api.App.AdminFee:output_type -> api.AdminFeeReply
+	45, // [45:62] is the sub-list for method output_type
+	28, // [28:45] is the sub-list for method input_type
+	28, // [28:28] is the sub-list for extension type_name
+	28, // [28:28] is the sub-list for extension extendee
+	0,  // [0:28] is the sub-list for field type_name
 }
 
 func init() { file_app_app_api_app_proto_init() }
@@ -5451,7 +5632,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RecommendRewardListRequest); i {
+			switch v := v.(*GetTradeRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5463,7 +5644,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RecommendRewardListReply); i {
+			switch v := v.(*GetTradeReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5475,7 +5656,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FeeRewardListRequest); i {
+			switch v := v.(*RecommendRewardListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5487,7 +5668,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FeeRewardListReply); i {
+			switch v := v.(*RecommendRewardListReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5499,7 +5680,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*WithdrawListRequest); i {
+			switch v := v.(*FeeRewardListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5511,7 +5692,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*WithdrawListReply); i {
+			switch v := v.(*FeeRewardListReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5523,7 +5704,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RecommendListRequest); i {
+			switch v := v.(*WithdrawListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5535,7 +5716,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RecommendListReply); i {
+			switch v := v.(*WithdrawListReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5547,7 +5728,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*WithdrawRequest); i {
+			switch v := v.(*RecommendListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5559,7 +5740,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*WithdrawReply); i {
+			switch v := v.(*RecommendListReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5571,7 +5752,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SetBalanceRewardRequest); i {
+			switch v := v.(*WithdrawRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5583,7 +5764,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SetBalanceRewardReply); i {
+			switch v := v.(*WithdrawReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5595,7 +5776,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteBalanceRewardRequest); i {
+			switch v := v.(*SetBalanceRewardRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5607,7 +5788,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteBalanceRewardReply); i {
+			switch v := v.(*SetBalanceRewardReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5619,7 +5800,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminRewardListRequest); i {
+			switch v := v.(*DeleteBalanceRewardRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5631,7 +5812,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminRewardListReply); i {
+			switch v := v.(*DeleteBalanceRewardReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5643,7 +5824,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminUserListRequest); i {
+			switch v := v.(*AdminRewardListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5655,7 +5836,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminUserListReply); i {
+			switch v := v.(*AdminRewardListReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5667,7 +5848,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminLocationListRequest); i {
+			switch v := v.(*AdminUserListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5679,7 +5860,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminLocationListReply); i {
+			switch v := v.(*AdminUserListReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5691,7 +5872,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminWithdrawListRequest); i {
+			switch v := v.(*AdminLocationListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5703,7 +5884,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminWithdrawListReply); i {
+			switch v := v.(*AdminLocationListReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5715,7 +5896,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminWithdrawRequest); i {
+			switch v := v.(*AdminWithdrawListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5727,7 +5908,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminWithdrawReply); i {
+			switch v := v.(*AdminWithdrawListReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5739,7 +5920,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminWithdrawEthRequest); i {
+			switch v := v.(*AdminWithdrawRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5751,7 +5932,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminWithdrawEthReply); i {
+			switch v := v.(*AdminWithdrawReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5763,7 +5944,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminFeeRequest); i {
+			switch v := v.(*AdminWithdrawEthRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5775,7 +5956,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminFeeReply); i {
+			switch v := v.(*AdminWithdrawEthReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5787,7 +5968,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminAllRequest); i {
+			switch v := v.(*AdminFeeRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5799,7 +5980,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminAllReply); i {
+			switch v := v.(*AdminFeeReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5811,7 +5992,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[40].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminUserRecommendRequest); i {
+			switch v := v.(*AdminAllRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5823,7 +6004,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[41].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminUserRecommendReply); i {
+			switch v := v.(*AdminAllReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5835,7 +6016,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminMonthRecommendRequest); i {
+			switch v := v.(*AdminUserRecommendRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5847,7 +6028,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminMonthRecommendReply); i {
+			switch v := v.(*AdminUserRecommendReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5859,7 +6040,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[44].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminConfigRequest); i {
+			switch v := v.(*AdminMonthRecommendRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5871,7 +6052,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[45].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminConfigReply); i {
+			switch v := v.(*AdminMonthRecommendReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5883,7 +6064,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminConfigUpdateRequest); i {
+			switch v := v.(*AdminConfigRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5895,7 +6076,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[47].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminConfigUpdateReply); i {
+			switch v := v.(*AdminConfigReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5907,7 +6088,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*EthAuthorizeRequest_SendBody); i {
+			switch v := v.(*AdminConfigUpdateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5919,7 +6100,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RecommendUpdateRequest_SendBody); i {
+			switch v := v.(*AdminConfigUpdateReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5931,7 +6112,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[50].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UserInfoReply_List); i {
+			switch v := v.(*EthAuthorizeRequest_SendBody); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5943,7 +6124,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[51].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UserInfoReply_List2); i {
+			switch v := v.(*RecommendUpdateRequest_SendBody); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5955,7 +6136,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[52].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UserInfoReply_List3); i {
+			switch v := v.(*UserInfoReply_List); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5967,7 +6148,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[53].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UserInfoReply_List4); i {
+			switch v := v.(*UserInfoReply_List2); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5979,7 +6160,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[54].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UserInfoReply_List5); i {
+			switch v := v.(*UserInfoReply_List3); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5991,7 +6172,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[55].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UserInfoReply_List6); i {
+			switch v := v.(*UserInfoReply_List4); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6003,7 +6184,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[56].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UserInfoReply_List7); i {
+			switch v := v.(*UserInfoReply_List5); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6015,7 +6196,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[57].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UserInfoReply_List8); i {
+			switch v := v.(*UserInfoReply_List6); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6027,7 +6208,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[58].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UserInfoReply_List9); i {
+			switch v := v.(*UserInfoReply_List7); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6039,7 +6220,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[59].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RewardListReply_List); i {
+			switch v := v.(*UserInfoReply_List8); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6051,7 +6232,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[60].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RecommendRewardListReply_List); i {
+			switch v := v.(*UserInfoReply_List9); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6063,7 +6244,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[61].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FeeRewardListReply_List); i {
+			switch v := v.(*RewardListReply_List); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6075,7 +6256,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[62].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*WithdrawListReply_List); i {
+			switch v := v.(*GetTradeRequest_SendBody); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6087,7 +6268,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[63].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RecommendListReply_List); i {
+			switch v := v.(*RecommendRewardListReply_List); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6099,7 +6280,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[64].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*WithdrawRequest_SendBody); i {
+			switch v := v.(*FeeRewardListReply_List); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6111,7 +6292,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[65].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SetBalanceRewardRequest_SendBody); i {
+			switch v := v.(*WithdrawListReply_List); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6123,7 +6304,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[66].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteBalanceRewardRequest_SendBody); i {
+			switch v := v.(*RecommendListReply_List); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6135,7 +6316,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[67].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminRewardListReply_List); i {
+			switch v := v.(*WithdrawRequest_SendBody); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6147,7 +6328,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[68].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminUserListReply_UserList); i {
+			switch v := v.(*SetBalanceRewardRequest_SendBody); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6159,7 +6340,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[69].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminLocationListReply_LocationList); i {
+			switch v := v.(*DeleteBalanceRewardRequest_SendBody); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6171,7 +6352,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[70].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminWithdrawListReply_List); i {
+			switch v := v.(*AdminRewardListReply_List); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6183,7 +6364,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[71].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminUserRecommendReply_List); i {
+			switch v := v.(*AdminUserListReply_UserList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6195,7 +6376,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[72].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminMonthRecommendReply_List); i {
+			switch v := v.(*AdminLocationListReply_LocationList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6207,7 +6388,7 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[73].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminConfigReply_List); i {
+			switch v := v.(*AdminWithdrawListReply_List); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6219,6 +6400,42 @@ func file_app_app_api_app_proto_init() {
 			}
 		}
 		file_app_app_api_app_proto_msgTypes[74].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AdminUserRecommendReply_List); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_app_app_api_app_proto_msgTypes[75].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AdminMonthRecommendReply_List); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_app_app_api_app_proto_msgTypes[76].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AdminConfigReply_List); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_app_app_api_app_proto_msgTypes[77].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AdminConfigUpdateRequest_SendBody); i {
 			case 0:
 				return &v.state
@@ -6237,7 +6454,7 @@ func file_app_app_api_app_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_app_app_api_app_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   75,
+			NumMessages:   78,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

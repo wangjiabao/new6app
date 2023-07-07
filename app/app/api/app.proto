@@ -68,6 +68,20 @@ service App {
 		};
 	};
 
+	rpc Trade (WithdrawRequest) returns (WithdrawReply) {
+		option (google.api.http) = {
+			post: "/api/app_server/trade"
+			body: "send_body"
+		};
+	};
+
+	rpc GetTrade (GetTradeRequest) returns (GetTradeReply) {
+		option (google.api.http) = {
+			post: "/api/app_server/get_trade"
+			body: "send_body"
+		};
+	};
+
 	rpc SetBalanceReward(SetBalanceRewardRequest) returns (SetBalanceRewardReply) {
 		option (google.api.http) = {
 			post: "/api/app_server/set_balance_reward"
@@ -324,6 +338,19 @@ message RewardListReply {
 		string locationStatus = 3;
 		string type = 4;
 	}
+}
+
+message GetTradeRequest {
+	message SendBody{
+		string amount = 1;
+	}
+
+	SendBody send_body = 1;
+}
+
+message GetTradeReply {
+	string amountCsd = 1;
+	string amountHbs = 2;
 }
 
 message RecommendRewardListRequest {

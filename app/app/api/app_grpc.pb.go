@@ -31,6 +31,8 @@ type AppClient interface {
 	WithdrawList(ctx context.Context, in *WithdrawListRequest, opts ...grpc.CallOption) (*WithdrawListReply, error)
 	RecommendList(ctx context.Context, in *RecommendListRequest, opts ...grpc.CallOption) (*RecommendListReply, error)
 	Withdraw(ctx context.Context, in *WithdrawRequest, opts ...grpc.CallOption) (*WithdrawReply, error)
+	Trade(ctx context.Context, in *WithdrawRequest, opts ...grpc.CallOption) (*WithdrawReply, error)
+	GetTrade(ctx context.Context, in *GetTradeRequest, opts ...grpc.CallOption) (*GetTradeReply, error)
 	SetBalanceReward(ctx context.Context, in *SetBalanceRewardRequest, opts ...grpc.CallOption) (*SetBalanceRewardReply, error)
 	DeleteBalanceReward(ctx context.Context, in *DeleteBalanceRewardRequest, opts ...grpc.CallOption) (*DeleteBalanceRewardReply, error)
 	Deposit(ctx context.Context, in *DepositRequest, opts ...grpc.CallOption) (*DepositReply, error)
@@ -153,6 +155,24 @@ func (c *appClient) Withdraw(ctx context.Context, in *WithdrawRequest, opts ...g
 	return out, nil
 }
 
+func (c *appClient) Trade(ctx context.Context, in *WithdrawRequest, opts ...grpc.CallOption) (*WithdrawReply, error) {
+	out := new(WithdrawReply)
+	err := c.cc.Invoke(ctx, "/api.App/Trade", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *appClient) GetTrade(ctx context.Context, in *GetTradeRequest, opts ...grpc.CallOption) (*GetTradeReply, error) {
+	out := new(GetTradeReply)
+	err := c.cc.Invoke(ctx, "/api.App/GetTrade", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *appClient) SetBalanceReward(ctx context.Context, in *SetBalanceRewardRequest, opts ...grpc.CallOption) (*SetBalanceRewardReply, error) {
 	out := new(SetBalanceRewardReply)
 	err := c.cc.Invoke(ctx, "/api.App/SetBalanceReward", in, out, opts...)
@@ -220,6 +240,8 @@ type AppServer interface {
 	WithdrawList(context.Context, *WithdrawListRequest) (*WithdrawListReply, error)
 	RecommendList(context.Context, *RecommendListRequest) (*RecommendListReply, error)
 	Withdraw(context.Context, *WithdrawRequest) (*WithdrawReply, error)
+	Trade(context.Context, *WithdrawRequest) (*WithdrawReply, error)
+	GetTrade(context.Context, *GetTradeRequest) (*GetTradeReply, error)
 	SetBalanceReward(context.Context, *SetBalanceRewardRequest) (*SetBalanceRewardReply, error)
 	DeleteBalanceReward(context.Context, *DeleteBalanceRewardRequest) (*DeleteBalanceRewardReply, error)
 	Deposit(context.Context, *DepositRequest) (*DepositReply, error)
@@ -284,6 +306,12 @@ func (UnimplementedAppServer) RecommendList(context.Context, *RecommendListReque
 }
 func (UnimplementedAppServer) Withdraw(context.Context, *WithdrawRequest) (*WithdrawReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Withdraw not implemented")
+}
+func (UnimplementedAppServer) Trade(context.Context, *WithdrawRequest) (*WithdrawReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Trade not implemented")
+}
+func (UnimplementedAppServer) GetTrade(context.Context, *GetTradeRequest) (*GetTradeReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTrade not implemented")
 }
 func (UnimplementedAppServer) SetBalanceReward(context.Context, *SetBalanceRewardRequest) (*SetBalanceRewardReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetBalanceReward not implemented")
@@ -478,6 +506,42 @@ func _App_Withdraw_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _App_Trade_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WithdrawRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppServer).Trade(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.App/Trade",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppServer).Trade(ctx, req.(*WithdrawRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _App_GetTrade_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTradeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppServer).GetTrade(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.App/GetTrade",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppServer).GetTrade(ctx, req.(*GetTradeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _App_SetBalanceReward_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SetBalanceRewardRequest)
 	if err := dec(in); err != nil {
@@ -628,6 +692,14 @@ var App_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Withdraw",
 			Handler:    _App_Withdraw_Handler,
+		},
+		{
+			MethodName: "Trade",
+			Handler:    _App_Trade_Handler,
+		},
+		{
+			MethodName: "GetTrade",
+			Handler:    _App_GetTrade_Handler,
 		},
 		{
 			MethodName: "SetBalanceReward",

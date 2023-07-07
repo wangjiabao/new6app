@@ -168,6 +168,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /api/app_server/get_trade:
+        post:
+            tags:
+                - App
+            operationId: App_GetTrade
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GetTradeRequest_SendBody'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetTradeReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /api/app_server/recommend_list:
         get:
             tags:
@@ -274,6 +298,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/SetBalanceRewardReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/app_server/trade:
+        post:
+            tags:
+                - App
+            operationId: App_Trade
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/WithdrawRequest_SendBody'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/WithdrawReply'
                 default:
                     description: Default error response
                     content:
@@ -393,6 +441,18 @@ components:
             properties:
                 createdAt:
                     type: string
+                amount:
+                    type: string
+        GetTradeReply:
+            type: object
+            properties:
+                amountCsd:
+                    type: string
+                amountHbs:
+                    type: string
+        GetTradeRequest_SendBody:
+            type: object
+            properties:
                 amount:
                     type: string
         GoogleProtobufAny:

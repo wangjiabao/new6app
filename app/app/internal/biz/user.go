@@ -40,6 +40,17 @@ type UserRecommendArea struct {
 	CreatedAt     time.Time
 }
 
+type Trade struct {
+	ID           int64
+	UserId       int64
+	AmountCsd    int64
+	RelAmountCsd int64
+	AmountHbs    int64
+	RelAmountHbs int64
+	Status       string
+	CreatedAt    time.Time
+}
+
 type UserArea struct {
 	ID         int64
 	UserId     int64
@@ -191,6 +202,9 @@ type UserBalanceRepo interface {
 	SetBalanceReward(ctx context.Context, userId int64, amount int64) error
 	UpdateBalanceReward(ctx context.Context, userId int64, id int64, amount int64, status int64) error
 	GetBalanceRewardByUserId(ctx context.Context, userId int64) ([]*BalanceReward, error)
+
+	GetUserBalanceLock(ctx context.Context, userId int64) (*UserBalance, error)
+	Trade(ctx context.Context, userId int64, amount int64, amountB int64, amountRel int64, amountBRel int64) error
 }
 
 type UserRecommendRepo interface {
@@ -1011,6 +1025,62 @@ func (uuc *UserUseCase) Withdraw(ctx context.Context, req *v1.WithdrawRequest, u
 			if nil != err {
 				return err
 			}
+		}
+
+		return nil
+	}); nil != err {
+		return nil, err
+	}
+
+	return &v1.WithdrawReply{
+		Status: "ok",
+	}, nil
+}
+
+func (uuc *UserUseCase) Trade(ctx context.Context, req *v1.WithdrawRequest, user *User, amount int64, amountB int64) (*v1.WithdrawReply, error) {
+	var (
+		userBalance         *UserBalance
+		configs             []*Config
+		withdrawRate        int64
+		withdrawDestroyRate int64
+		err                 error
+	)
+	configs, _ = uuc.configRepo.GetConfigByKeys(ctx, "withdraw_rate",
+		"withdraw_destroy_rate",
+	)
+
+	if nil != configs {
+		for _, vConfig := range configs {
+			if "withdraw_rate" == vConfig.KeyName {
+				withdrawRate, _ = strconv.ParseInt(vConfig.Value, 10, 64)
+			} else if "withdraw_destroy_rate" == vConfig.KeyName {
+				withdrawDestroyRate, _ = strconv.ParseInt(vConfig.Value, 10, 64)
+			}
+		}
+	}
+
+	userBalance, err = uuc.ubRepo.GetUserBalanceLock(ctx, user.ID)
+	if nil != err {
+		return nil, err
+	}
+
+	if userBalance.BalanceUsdt < amount {
+		return &v1.WithdrawReply{
+			Status: "csd锁定部分的余额不足",
+		}, nil
+	}
+
+	if userBalance.BalanceDhb < amountB {
+		return &v1.WithdrawReply{
+			Status: "hbs锁定部分的余额不足",
+		}, nil
+	}
+
+	if err = uuc.tx.ExecTx(ctx, func(ctx context.Context) error { // 事务
+
+		err = uuc.ubRepo.Trade(ctx, user.ID, amount, amountB, amount-amount/100*(withdrawRate+withdrawDestroyRate), amountB-amountB/100*(withdrawRate+withdrawDestroyRate)) // 提现
+		if nil != err {
+			return err
 		}
 
 		return nil

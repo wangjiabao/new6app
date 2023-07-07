@@ -1554,6 +1554,239 @@ var _ interface {
 	ErrorName() string
 } = RewardListReplyValidationError{}
 
+// Validate checks the field values on GetTradeRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *GetTradeRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetTradeRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetTradeRequestMultiError, or nil if none found.
+func (m *GetTradeRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetTradeRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetSendBody()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetTradeRequestValidationError{
+					field:  "SendBody",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetTradeRequestValidationError{
+					field:  "SendBody",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetSendBody()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetTradeRequestValidationError{
+				field:  "SendBody",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetTradeRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetTradeRequestMultiError is an error wrapping multiple validation errors
+// returned by GetTradeRequest.ValidateAll() if the designated constraints
+// aren't met.
+type GetTradeRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetTradeRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetTradeRequestMultiError) AllErrors() []error { return m }
+
+// GetTradeRequestValidationError is the validation error returned by
+// GetTradeRequest.Validate if the designated constraints aren't met.
+type GetTradeRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetTradeRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetTradeRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetTradeRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetTradeRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetTradeRequestValidationError) ErrorName() string { return "GetTradeRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetTradeRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetTradeRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetTradeRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetTradeRequestValidationError{}
+
+// Validate checks the field values on GetTradeReply with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *GetTradeReply) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetTradeReply with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in GetTradeReplyMultiError, or
+// nil if none found.
+func (m *GetTradeReply) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetTradeReply) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for AmountCsd
+
+	// no validation rules for AmountHbs
+
+	if len(errors) > 0 {
+		return GetTradeReplyMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetTradeReplyMultiError is an error wrapping multiple validation errors
+// returned by GetTradeReply.ValidateAll() if the designated constraints
+// aren't met.
+type GetTradeReplyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetTradeReplyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetTradeReplyMultiError) AllErrors() []error { return m }
+
+// GetTradeReplyValidationError is the validation error returned by
+// GetTradeReply.Validate if the designated constraints aren't met.
+type GetTradeReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetTradeReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetTradeReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetTradeReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetTradeReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetTradeReplyValidationError) ErrorName() string { return "GetTradeReplyValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetTradeReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetTradeReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetTradeReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetTradeReplyValidationError{}
+
 // Validate checks the field values on RecommendRewardListRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -7251,6 +7484,110 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = RewardListReply_ListValidationError{}
+
+// Validate checks the field values on GetTradeRequest_SendBody with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetTradeRequest_SendBody) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetTradeRequest_SendBody with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetTradeRequest_SendBodyMultiError, or nil if none found.
+func (m *GetTradeRequest_SendBody) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetTradeRequest_SendBody) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Amount
+
+	if len(errors) > 0 {
+		return GetTradeRequest_SendBodyMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetTradeRequest_SendBodyMultiError is an error wrapping multiple validation
+// errors returned by GetTradeRequest_SendBody.ValidateAll() if the designated
+// constraints aren't met.
+type GetTradeRequest_SendBodyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetTradeRequest_SendBodyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetTradeRequest_SendBodyMultiError) AllErrors() []error { return m }
+
+// GetTradeRequest_SendBodyValidationError is the validation error returned by
+// GetTradeRequest_SendBody.Validate if the designated constraints aren't met.
+type GetTradeRequest_SendBodyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetTradeRequest_SendBodyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetTradeRequest_SendBodyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetTradeRequest_SendBodyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetTradeRequest_SendBodyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetTradeRequest_SendBodyValidationError) ErrorName() string {
+	return "GetTradeRequest_SendBodyValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetTradeRequest_SendBodyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetTradeRequest_SendBody.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetTradeRequest_SendBodyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetTradeRequest_SendBodyValidationError{}
 
 // Validate checks the field values on RecommendRewardListReply_List with the
 // rules defined in the proto definition for this message. If any rules are
