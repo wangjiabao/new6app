@@ -856,7 +856,7 @@ func (ub UserBalanceRepo) GetUserBalanceLock(ctx context.Context, userId int64) 
 }
 
 // Trade .
-func (ub *UserBalanceRepo) Trade(ctx context.Context, userId int64, amount int64, amountB int64, amountRel int64, amountBRel int64) error {
+func (ub *UserBalanceRepo) Trade(ctx context.Context, userId int64, amount int64, amountB int64, amountRel int64, amountBRel int64, tmpRecommendUserIdsInt []int64) error {
 	var err error
 	if res := ub.data.DB(ctx).Table("user_balance_lock").
 		Where("user_id=? and balance_usdt>=? and balance_dhb>=?", userId, amount, amountB).
@@ -890,6 +890,14 @@ func (ub *UserBalanceRepo) Trade(ctx context.Context, userId int64, amount int64
 	err = ub.data.DB(ctx).Table("trade").Create(&trade).Error
 	if err != nil {
 		return err
+	}
+
+	if len(tmpRecommendUserIdsInt) > 0 {
+		if err = ub.data.DB(ctx).Table("user_info").
+			Where("user_id in (?)", tmpRecommendUserIdsInt).
+			Updates(map[string]interface{}{"team_csd_balance": gorm.Expr("team_csd_balance + ?", amountRel)}).Error; nil != err {
+			return errors.NotFound("user balance err", "user balance not found")
+		}
 	}
 
 	if err = ub.data.DB(ctx).Table("user_balance").
@@ -1114,12 +1122,20 @@ func (ub *UserBalanceRepo) UpdateWithdrawAmount(ctx context.Context, id int64, s
 }
 
 // WithdrawUsdt .
-func (ub *UserBalanceRepo) WithdrawUsdt(ctx context.Context, userId int64, amount int64) error {
+func (ub *UserBalanceRepo) WithdrawUsdt(ctx context.Context, userId int64, amount int64, tmpRecommendUserIdsInt []int64) error {
 	var err error
 	if res := ub.data.DB(ctx).Table("user_balance").
 		Where("user_id=? and balance_usdt>=?", userId, amount).
 		Updates(map[string]interface{}{"balance_usdt": gorm.Expr("balance_usdt - ?", amount)}); 0 == res.RowsAffected || nil != res.Error {
 		return errors.NotFound("user balance err", "user balance error")
+	}
+
+	if 0 < len(tmpRecommendUserIdsInt) {
+		if err = ub.data.DB(ctx).Table("user_info").
+			Where("user_id in (?)", tmpRecommendUserIdsInt).
+			Updates(map[string]interface{}{"team_csd_balance": gorm.Expr("team_csd_balance - ?", amount)}).Error; nil != err {
+			return errors.NotFound("user balance err", "user balance not found")
+		}
 	}
 
 	var userBalance UserBalance

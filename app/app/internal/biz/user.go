@@ -180,7 +180,7 @@ type UserBalanceRepo interface {
 	GetUserBalanceByUserIds(ctx context.Context, userIds ...int64) (map[int64]*UserBalance, error)
 	GetUserBalanceUsdtTotal(ctx context.Context) (int64, error)
 	GreateWithdraw(ctx context.Context, userId int64, amount int64, amountFee int64, coinType string) (*Withdraw, error)
-	WithdrawUsdt(ctx context.Context, userId int64, amount int64) error
+	WithdrawUsdt(ctx context.Context, userId int64, amount int64, tmpRecommendUserIdsInt []int64) error
 	TranUsdt(ctx context.Context, userId int64, toUserId int64, amount int64) error
 	WithdrawDhb(ctx context.Context, userId int64, amount int64) error
 	TranDhb(ctx context.Context, userId int64, toUserId int64, amount int64) error
@@ -206,7 +206,7 @@ type UserBalanceRepo interface {
 	GetBalanceRewardByUserId(ctx context.Context, userId int64) ([]*BalanceReward, error)
 
 	GetUserBalanceLock(ctx context.Context, userId int64) (*UserBalance, error)
-	Trade(ctx context.Context, userId int64, amount int64, amountB int64, amountRel int64, amountBRel int64) error
+	Trade(ctx context.Context, userId int64, amount int64, amountB int64, amountRel int64, amountBRel int64, tmpRecommendUserIdsInt []int64) error
 }
 
 type UserRecommendRepo interface {
@@ -458,14 +458,16 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		stopCoin              int64
 		locationRunningAmount int64
 		//totalAreaAmount          int64
-		level1Price              int64
-		level2Price              int64
-		level3Price              int64
-		level4Price              int64
-		level1csd                int64
-		level2csd                int64
-		level3csd                int64
-		level4csd                int64
+		level1Price int64
+		level2Price int64
+		level3Price int64
+		level4Price int64
+		level1csd   int64
+		level2csd   int64
+		level3csd   int64
+		level4csd   int64
+		//withdrawDestroyRate      int64
+		//withdrawRate             int64
 		term                     int64
 		myLocations              []*v1.UserInfoReply_List
 		myRecommendUserAddresses []*v1.UserInfoReply_List8
@@ -474,36 +476,12 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 	)
 
 	// 配置
-	configs, err = uuc.configRepo.GetConfigByKeys(ctx, "user_count",
-		"coin_price", "coin_rate", "time_again", "recommend_area_one",
-		"recommend_area_two", "recommend_area_three", "recommend_area_four",
-		"term",
-		"level_2_price", "level_1_price", "level_3_price", "level_4_price", "level_1_csd", "level_2_csd", "level_3_csd", "level_4_csd",
+	configs, err = uuc.configRepo.GetConfigByKeys(ctx,
+		"term", "level_2_price", "level_1_price", "level_3_price", "level_4_price", "level_1_csd", "level_2_csd",
+		"level_3_csd", "level_4_csd", "withdraw_destroy_rate", "withdraw_rate",
 	)
 	if nil != configs {
 		for _, vConfig := range configs {
-			if "user_count" == vConfig.KeyName {
-				userCount = vConfig.Value
-			}
-			if "coin_price" == vConfig.KeyName {
-				fybPrice, _ = strconv.ParseInt(vConfig.Value, 10, 64)
-			}
-			if "coin_rate" == vConfig.KeyName {
-				fybRate = vConfig.Value
-			}
-			//if "recommend_area_one" == vConfig.KeyName {
-			//	recommendAreaOne, _ = strconv.ParseInt(vConfig.Value, 10, 64)
-			//}
-			//if "recommend_area_two" == vConfig.KeyName {
-			//	recommendAreaTwo, _ = strconv.ParseInt(vConfig.Value, 10, 64)
-			//}
-			//if "recommend_area_three" == vConfig.KeyName {
-			//	recommendAreaThree, _ = strconv.ParseInt(vConfig.Value, 10, 64)
-			//}
-			//if "recommend_area_four" == vConfig.KeyName {
-			//	recommendAreaFour, _ = strconv.ParseInt(vConfig.Value, 10, 64)
-			//}
-
 			if "term" == vConfig.KeyName {
 				term, _ = strconv.ParseInt(vConfig.Value, 10, 64)
 			}
@@ -531,6 +509,12 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 			if "level_1_price" == vConfig.KeyName {
 				level1Price, _ = strconv.ParseInt(vConfig.Value, 10, 64)
 			}
+			//if "level_1_price" == vConfig.KeyName {
+			//	withdrawDestroyRate, _ = strconv.ParseInt(vConfig.Value, 10, 64)
+			//}
+			//if "level_1_price" == vConfig.KeyName {
+			//	withdrawRate, _ = strconv.ParseInt(vConfig.Value, 10, 64)
+			//}
 		}
 	}
 
@@ -1017,10 +1001,39 @@ func (uuc *UserUseCase) Withdraw(ctx context.Context, req *v1.WithdrawRequest, u
 			}, nil
 		}
 	}
+
+	var userRecommend *UserRecommend
+	userRecommend, err = uuc.urRepo.GetUserRecommendByUserId(ctx, user.ID)
+	if nil == userRecommend {
+		return &v1.WithdrawReply{
+			Status: "信息错误",
+		}, nil
+	}
+
+	var (
+		tmpRecommendUserIds    []string
+		tmpRecommendUserIdsInt []int64
+	)
+	if "" != userRecommend.RecommendCode {
+		tmpRecommendUserIds = strings.Split(userRecommend.RecommendCode, "D")
+	}
+	lastKey := len(tmpRecommendUserIds) - 1
+	if 1 <= lastKey {
+		for i := 0; i <= lastKey; i++ {
+			// 有占位信息，推荐人推荐人的上一代
+			if lastKey-i <= 0 {
+				break
+			}
+
+			tmpMyTopUserRecommendUserId, _ := strconv.ParseInt(tmpRecommendUserIds[lastKey-i], 10, 64) // 最后一位是直推人
+			tmpRecommendUserIdsInt = append(tmpRecommendUserIdsInt, tmpMyTopUserRecommendUserId)
+		}
+	}
+
 	if err = uuc.tx.ExecTx(ctx, func(ctx context.Context) error { // 事务
 
 		if "usdt" == req.SendBody.Type {
-			err = uuc.ubRepo.WithdrawUsdt(ctx, user.ID, amount) // 提现
+			err = uuc.ubRepo.WithdrawUsdt(ctx, user.ID, amount, tmpRecommendUserIdsInt) // 提现
 			if nil != err {
 				return err
 			}
@@ -1140,6 +1153,7 @@ func (uuc *UserUseCase) Trade(ctx context.Context, req *v1.WithdrawRequest, user
 	var (
 		userBalance         *UserBalance
 		configs             []*Config
+		userRecommend       *UserRecommend
 		withdrawRate        int64
 		withdrawDestroyRate int64
 		err                 error
@@ -1175,9 +1189,37 @@ func (uuc *UserUseCase) Trade(ctx context.Context, req *v1.WithdrawRequest, user
 		}, nil
 	}
 
+	// 推荐人
+	userRecommend, err = uuc.urRepo.GetUserRecommendByUserId(ctx, user.ID)
+	if nil == userRecommend {
+		return &v1.WithdrawReply{
+			Status: "信息错误",
+		}, nil
+	}
+
+	var (
+		tmpRecommendUserIds    []string
+		tmpRecommendUserIdsInt []int64
+	)
+	if "" != userRecommend.RecommendCode {
+		tmpRecommendUserIds = strings.Split(userRecommend.RecommendCode, "D")
+	}
+	lastKey := len(tmpRecommendUserIds) - 1
+	if 1 <= lastKey {
+		for i := 0; i <= lastKey; i++ {
+			// 有占位信息，推荐人推荐人的上一代
+			if lastKey-i <= 0 {
+				break
+			}
+
+			tmpMyTopUserRecommendUserId, _ := strconv.ParseInt(tmpRecommendUserIds[lastKey-i], 10, 64) // 最后一位是直推人
+			tmpRecommendUserIdsInt = append(tmpRecommendUserIdsInt, tmpMyTopUserRecommendUserId)
+		}
+	}
+
 	if err = uuc.tx.ExecTx(ctx, func(ctx context.Context) error { // 事务
 
-		err = uuc.ubRepo.Trade(ctx, user.ID, amount, amountB, amount-amount/100*(withdrawRate+withdrawDestroyRate), amountB-amountB/100*(withdrawRate+withdrawDestroyRate)) // 提现
+		err = uuc.ubRepo.Trade(ctx, user.ID, amount, amountB, amount-amount/100*(withdrawRate+withdrawDestroyRate), amountB-amountB/100*(withdrawRate+withdrawDestroyRate), tmpRecommendUserIdsInt) // 提现
 		if nil != err {
 			return err
 		}
