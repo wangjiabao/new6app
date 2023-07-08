@@ -742,7 +742,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		Address:                           myUser.Address,
 		Level:                             userInfo.Vip,
 		Amount:                            amount,
-		TeamCsdBalance:                    userInfo.TeamCsdBalance,
+		TeamCsdBalance:                    fmt.Sprintf("%.2f", float64(userInfo.TeamCsdBalance)/float64(10000000000)),
 		AmountAll:                         fmt.Sprintf("%.2f", float64(amountAll)/float64(10000000000)),
 		BalanceUsdt:                       fmt.Sprintf("%.2f", float64(userBalance.BalanceUsdt)/float64(10000000000)),
 		BalanceDhb:                        fmt.Sprintf("%.2f", float64(userBalance.BalanceDhb)/float64(10000000000)),
