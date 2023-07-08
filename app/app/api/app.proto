@@ -310,6 +310,12 @@ message UserInfoReply {
 		string Amount = 2;
 	}
 
+	repeated List11 recommendAddressList = 66; // 团队列表
+	message List11 {
+		string address = 1;
+		string Amount = 2;
+	}
+
 	repeated List9 allRewardList = 67;
 	message List9 {
 		string created_at = 1;

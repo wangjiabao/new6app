@@ -593,14 +593,20 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 
 	// 团队
 	var (
-		teamUserIds       []int64
-		teamUsers         map[int64]*User
-		teamUserInfos     map[int64]*UserInfo
-		teamUserAddresses []*v1.UserInfoReply_List7
+		teamUserIds        []int64
+		teamUsers          map[int64]*User
+		teamUserInfos      map[int64]*UserInfo
+		teamUserAddresses  []*v1.UserInfoReply_List7
+		recommendAddresses []*v1.UserInfoReply_List11
+		recommendUserIds   map[int64]int64
 	)
+	recommendUserIds = make(map[int64]int64, 0)
 	userRecommends, err = uuc.urRepo.GetUserRecommendLikeCode(ctx, myCode)
 	if nil != userRecommends {
 		for _, vUserRecommends := range userRecommends {
+			if myCode == vUserRecommends.RecommendCode {
+				recommendUserIds[vUserRecommends.UserId] = vUserRecommends.UserId
+			}
 			teamUserIds = append(teamUserIds, vUserRecommends.UserId)
 		}
 
@@ -613,6 +619,14 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 				if _, ok := teamUserInfos[vTeamUsers.ID]; !ok {
 					continue
 				}
+
+				if _, ok := recommendUserIds[vTeamUsers.ID]; ok {
+					recommendAddresses = append(recommendAddresses, &v1.UserInfoReply_List11{
+						Address: vTeamUsers.Address,
+						Amount:  fmt.Sprintf("%.4f", float64(teamUserInfos[vTeamUsers.ID].TeamCsdBalance)/float64(10000000000)),
+					})
+				}
+
 				teamUserAddresses = append(teamUserAddresses, &v1.UserInfoReply_List7{
 					Address: vTeamUsers.Address,
 					Amount:  fmt.Sprintf("%.4f", float64(teamUserInfos[vTeamUsers.ID].TeamCsdBalance)/float64(10000000000)),
@@ -776,6 +790,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		YesterdayRecommendTotal:           fmt.Sprintf("%.2f", float64(yesterdayRecommendTotal)/float64(10000000000)),
 		TeamAddressList:                   teamUserAddresses,
 		AllRewardList:                     allRewardList,
+		RecommendAddressList:              recommendAddresses,
 		Term:                              term,
 		Level1Csd:                         level1csd,
 		Level1Price:                       level1Price,

@@ -711,6 +711,10 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/UserInfoReply_List7'
+                recommendAddressList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/UserInfoReply_List11'
                 allRewardList:
                     type: array
                     items:
@@ -760,6 +764,13 @@ components:
                 term:
                     type: integer
                     format: int64
+        UserInfoReply_List11:
+            type: object
+            properties:
+                address:
+                    type: string
+                Amount:
+                    type: string
         UserInfoReply_List2:
             type: object
             properties:
