@@ -842,6 +842,8 @@ func (m *UserInfoReply) validate(all bool) error {
 
 	// no validation rules for BalanceDhb
 
+	// no validation rules for TeamCsdBalance
+
 	// no validation rules for InviteUrl
 
 	// no validation rules for InviteUserAddress
@@ -854,8 +856,6 @@ func (m *UserInfoReply) validate(all bool) error {
 
 	// no validation rules for RecommendTotal
 
-	// no validation rules for LocationTotal
-
 	// no validation rules for Usdt
 
 	// no validation rules for Hbs
@@ -864,7 +864,7 @@ func (m *UserInfoReply) validate(all bool) error {
 
 	// no validation rules for AmountB
 
-	// no validation rules for RecommendVipTotal
+	// no validation rules for RecommendLevelTotal
 
 	// no validation rules for FeeDaily
 
@@ -882,7 +882,7 @@ func (m *UserInfoReply) validate(all bool) error {
 
 	// no validation rules for AreaAmount
 
-	// no validation rules for RecommendAreaTotal
+	// no validation rules for RecommendSecondTotal
 
 	// no validation rules for AreaMaxAmount
 

@@ -329,6 +329,7 @@ func (ui *UserInfoRepo) GetUserInfoByUserId(ctx context.Context, userId int64) (
 		UserId:           userInfo.UserId,
 		Vip:              userInfo.Vip,
 		HistoryRecommend: userInfo.HistoryRecommend,
+		TeamCsdBalance:   userInfo.TeamCsdBalance,
 	}, nil
 }
 

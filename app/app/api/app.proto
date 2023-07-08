@@ -228,18 +228,18 @@ message UserInfoReply {
 	string balanceDhbLock = 83; // 未释放hbs金额
 	string balanceUsdt = 5; // 可提余额csd
 	string balanceDhb = 6; // 可提余额hbs
+	string teamCsdBalance = 12; // 团队可提余额csd
 	string inviteUrl = 7; // 邀请链接
 	string inviteUserAddress = 8; // 我的推荐人的地址
 	int64 recommendNum = 9; // 历史推荐人数
 	int64 recommendTeamNum = 10; // 团队人数
 	string total = 11; // 总收益
-	string recommendTotal = 15; // 直推受益
-	string locationTotal = 16; // 投资受益
+	string recommendTotal = 15; // 直推奖总
 	string usdt = 20; // csd地址
 	string hbs = 21; // hbs地址
 	string account = 22; // 收款账户地址
 	string amountB = 27;
-	string recommendVipTotal = 28; //
+	string recommendLevelTotal = 28; // 平级奖总
 	string feeDaily = 29;
 	string withdrawAmount = 30;
 	string userCount = 31;
@@ -248,14 +248,14 @@ message UserInfoReply {
 	int64 locationCount = 35;
 	string todayReward = 36;
 	string areaAmount = 42;
-	string recommendAreaTotal = 43;
+	string recommendSecondTotal = 43; // 间推奖总
 	string areaMaxAmount = 44;
 	int64  undo = 45;
 	string AmountC = 46;
 	string AmountBalanceReward = 47;
 	string areaName = 48;
-	string recommendTeamTotal = 49;
-	string locationDailyRewardTotal = 50;
+	string recommendTeamTotal = 49; // 团队奖总
+	string locationDailyRewardTotal = 50; // 投资奖总
 	string dailyBalanceRewardTotal = 51;
 
 	string yesterdayRecommendTeamTotal = 58;
@@ -266,7 +266,7 @@ message UserInfoReply {
 	string totalAreaAmount = 63;
 	string locationRunningAmount = 64;
 
-	repeated List LocationList = 52;
+	repeated List LocationList = 52; // 投资列表
 	message List {
 		string created_at = 1;
 		string amount = 2;
@@ -274,37 +274,37 @@ message UserInfoReply {
 		int64 term = 5;
 	}
 
-	repeated List2 recommendTeamList = 53;
+	repeated List2 recommendTeamList = 53; // 团队受益列表
 	message List2 {
 		string created_at = 1;
 		string amount = 2;
 	}
 
-	repeated List4 locationDailyRewardList = 55;
+	repeated List4 locationDailyRewardList = 55; // 投资每日释放受益列表
 	message List4 {
 		string created_at = 1;
 		string amount = 2;
 	}
 
-	repeated List5 recommendList = 56;
+	repeated List5 recommendList = 56; // 直推受益列表
 	message List5 {
 		string created_at = 1;
 		string amount = 2;
 	}
 
-	repeated List6 secondRecommendList = 57;
+	repeated List6 secondRecommendList = 57; // 间推受益列表
 	message List6 {
 		string created_at = 1;
 		string amount = 2;
 	}
 
-	repeated List8 levelRecommendList = 54;
+	repeated List8 levelRecommendList = 54; // 平级受益列表
 	message List8 {
 		string created_at = 1;
 		string amount = 2;
 	}
 
-	repeated List7 teamAddressList = 65;
+	repeated List7 teamAddressList = 65; // 团队列表
 	message List7 {
 		string address = 1;
 		string Amount = 2;

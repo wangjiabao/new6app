@@ -434,9 +434,9 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		recommendTeamNum         int64
 		recommendTotal           int64
 		recommendTeamTotal       int64
-		dailyBalanceRewardTotal  int64
 		locationDailyRewardTotal int64
-		recommendAreaTotal       int64
+		recommendSecondTotal     int64
+		recommendLevelTotal      int64
 		myCode                   string
 		inviteUserAddress        string
 		amount                   = "0"
@@ -668,7 +668,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 				})
 
 			} else if "second_recommend" == vUserReward.Reason {
-				recommendAreaTotal += vUserReward.Amount
+				recommendSecondTotal += vUserReward.Amount
 				if vUserReward.CreatedAt.Before(yesterdayEnd) && vUserReward.CreatedAt.After(yesterdayStart) {
 					yesterdayRecommendAreaTotal += vUserReward.Amount
 				}
@@ -682,7 +682,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
 				})
 			} else if "level_recommend" == vUserReward.Reason {
-				recommendAreaTotal += vUserReward.Amount
+				recommendLevelTotal += vUserReward.Amount
 				if vUserReward.CreatedAt.Before(yesterdayEnd) && vUserReward.CreatedAt.After(yesterdayStart) {
 					yesterdayRecommendAreaTotal += vUserReward.Amount
 				}
@@ -742,6 +742,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		Address:                           myUser.Address,
 		Level:                             userInfo.Vip,
 		Amount:                            amount,
+		TeamCsdBalance:                    userInfo.TeamCsdBalance,
 		AmountAll:                         fmt.Sprintf("%.2f", float64(amountAll)/float64(10000000000)),
 		BalanceUsdt:                       fmt.Sprintf("%.2f", float64(userBalance.BalanceUsdt)/float64(10000000000)),
 		BalanceDhb:                        fmt.Sprintf("%.2f", float64(userBalance.BalanceDhb)/float64(10000000000)),
@@ -755,9 +756,9 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		WithdrawAmount:                    fmt.Sprintf("%.2f", float64(withdrawAmount)/float64(10000000000)),
 		RecommendTotal:                    fmt.Sprintf("%.2f", float64(recommendTotal)/float64(10000000000)),
 		LocationDailyRewardTotal:          fmt.Sprintf("%.2f", float64(locationDailyRewardTotal)/float64(10000000000)),
-		DailyBalanceRewardTotal:           fmt.Sprintf("%.2f", float64(dailyBalanceRewardTotal)/float64(10000000000)),
 		RecommendTeamTotal:                fmt.Sprintf("%.2f", float64(recommendTeamTotal)/float64(10000000000)),
-		RecommendAreaTotal:                fmt.Sprintf("%.2f", float64(recommendAreaTotal)/float64(10000000000)),
+		RecommendSecondTotal:              fmt.Sprintf("%.2f", float64(recommendSecondTotal)/float64(10000000000)),
+		RecommendLevelTotal:               fmt.Sprintf("%.2f", float64(recommendLevelTotal)/float64(10000000000)),
 		Usdt:                              "0x55d398326f99059fF775485246999027B3197955",
 		Hbs:                               "0x0905397af05dd0bdf76690ff318b10c6216e3069",
 		Account:                           "0x8DbfC7a0C0DC41d96922B3B834d620e7aA808D6B",

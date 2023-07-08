@@ -607,6 +607,8 @@ components:
                     type: string
                 balanceDhb:
                     type: string
+                teamCsdBalance:
+                    type: string
                 inviteUrl:
                     type: string
                 inviteUserAddress:
@@ -621,8 +623,6 @@ components:
                     type: string
                 recommendTotal:
                     type: string
-                locationTotal:
-                    type: string
                 usdt:
                     type: string
                 hbs:
@@ -631,7 +631,7 @@ components:
                     type: string
                 amountB:
                     type: string
-                recommendVipTotal:
+                recommendLevelTotal:
                     type: string
                 feeDaily:
                     type: string
@@ -650,7 +650,7 @@ components:
                     type: string
                 areaAmount:
                     type: string
-                recommendAreaTotal:
+                recommendSecondTotal:
                     type: string
                 areaMaxAmount:
                     type: string
