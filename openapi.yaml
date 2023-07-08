@@ -595,9 +595,13 @@ components:
                 level:
                     type: integer
                     format: int64
-                status:
+                amountAll:
                     type: string
                 amount:
+                    type: string
+                balanceUsdtLock:
+                    type: string
+                balanceDhbLock:
                     type: string
                 balanceUsdt:
                     type: string
@@ -621,6 +625,8 @@ components:
                     type: string
                 usdt:
                     type: string
+                hbs:
+                    type: string
                 account:
                     type: string
                 amountB:
@@ -641,12 +647,6 @@ components:
                     type: integer
                     format: int64
                 todayReward:
-                    type: string
-                recommendTop:
-                    type: string
-                fybPrice:
-                    type: string
-                fybRate:
                     type: string
                 areaAmount:
                     type: string
@@ -691,10 +691,6 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/UserInfoReply_List2'
-                recommendAreaList:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/UserInfoReply_List3'
                 locationDailyRewardList:
                     type: array
                     items:
@@ -703,18 +699,18 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/UserInfoReply_List5'
-                dailyBalanceRewardList:
+                secondRecommendList:
                     type: array
                     items:
                         $ref: '#/components/schemas/UserInfoReply_List6'
+                levelRecommendList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/UserInfoReply_List8'
                 teamAddressList:
                     type: array
                     items:
                         $ref: '#/components/schemas/UserInfoReply_List7'
-                myRecommendAddressList:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/UserInfoReply_List8'
                 allRewardList:
                     type: array
                     items:
@@ -746,6 +742,12 @@ components:
                 term:
                     type: integer
                     format: int64
+                withdrawDestroyRate:
+                    type: integer
+                    format: int64
+                withdrawRate:
+                    type: integer
+                    format: int64
         UserInfoReply_List:
             type: object
             properties:
@@ -759,16 +761,6 @@ components:
                     type: integer
                     format: int64
         UserInfoReply_List2:
-            type: object
-            properties:
-                createdAt:
-                    type: string
-                amount:
-                    type: string
-                recommendNum:
-                    type: integer
-                    format: int64
-        UserInfoReply_List3:
             type: object
             properties:
                 createdAt:
@@ -806,7 +798,9 @@ components:
         UserInfoReply_List8:
             type: object
             properties:
-                address:
+                createdAt:
+                    type: string
+                amount:
                     type: string
         UserInfoReply_List9:
             type: object

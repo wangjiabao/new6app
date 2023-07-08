@@ -38,6 +38,7 @@ type UserInfo struct {
 	HistoryRecommend int64     `gorm:"type:int;not null"`
 	CreatedAt        time.Time `gorm:"type:datetime;not null"`
 	UpdatedAt        time.Time `gorm:"type:datetime;not null"`
+	TeamCsdBalance   int64     `gorm:"type:bigint;not null"`
 }
 
 type UserRecommend struct {
@@ -2381,6 +2382,7 @@ func (ui *UserInfoRepo) GetUserInfoByUserIds(ctx context.Context, userIds ...int
 			UserId:           userInfo.UserId,
 			Vip:              userInfo.Vip,
 			HistoryRecommend: userInfo.HistoryRecommend,
+			TeamCsdBalance:   userInfo.TeamCsdBalance,
 		}
 	}
 

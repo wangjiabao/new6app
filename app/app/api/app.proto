@@ -220,23 +220,26 @@ message UserInfoRequest {
 }
 
 message UserInfoReply {
-	string address = 1;
-	int64 level = 2;
-	string status = 3;
-	string amount = 4;
-	string balanceUsdt = 5;
-	string balanceDhb = 6;
-	string inviteUrl = 7;
-	string inviteUserAddress = 8;
-	int64 recommendNum = 9;
-	int64 recommendTeamNum = 10;
-	string total = 11;
-	string recommendTotal = 15;
-	string locationTotal = 16;
-	string usdt = 20;
-	string account = 22;
+	string address = 1; // 地址
+	int64 level = 2; // vip
+	string amountAll = 3; // 总锁定csd
+	string amount = 4; // 未解锁csd
+	string balanceUsdtLock = 82; // 未释放csd金额
+	string balanceDhbLock = 83; // 未释放hbs金额
+	string balanceUsdt = 5; // 可提余额csd
+	string balanceDhb = 6; // 可提余额hbs
+	string inviteUrl = 7; // 邀请链接
+	string inviteUserAddress = 8; // 我的推荐人的地址
+	int64 recommendNum = 9; // 历史推荐人数
+	int64 recommendTeamNum = 10; // 团队人数
+	string total = 11; // 总收益
+	string recommendTotal = 15; // 直推受益
+	string locationTotal = 16; // 投资受益
+	string usdt = 20; // csd地址
+	string hbs = 21; // hbs地址
+	string account = 22; // 收款账户地址
 	string amountB = 27;
-	string recommendVipTotal = 28;
+	string recommendVipTotal = 28; //
 	string feeDaily = 29;
 	string withdrawAmount = 30;
 	string userCount = 31;
@@ -244,9 +247,6 @@ message UserInfoReply {
 	string poolAmount = 34;
 	int64 locationCount = 35;
 	string todayReward = 36;
-	string recommendTop = 37;
-	string fybPrice = 40;
-	string fybRate = 41;
 	string areaAmount = 42;
 	string recommendAreaTotal = 43;
 	string areaMaxAmount = 44;
@@ -278,13 +278,6 @@ message UserInfoReply {
 	message List2 {
 		string created_at = 1;
 		string amount = 2;
-		int64 recommend_num = 3;
-	}
-
-	repeated List3 recommendAreaList = 54;
-	message List3 {
-		string created_at = 1;
-		string amount = 2;
 	}
 
 	repeated List4 locationDailyRewardList = 55;
@@ -299,8 +292,14 @@ message UserInfoReply {
 		string amount = 2;
 	}
 
-	repeated List6 dailyBalanceRewardList = 57;
+	repeated List6 secondRecommendList = 57;
 	message List6 {
+		string created_at = 1;
+		string amount = 2;
+	}
+
+	repeated List8 levelRecommendList = 54;
+	message List8 {
 		string created_at = 1;
 		string amount = 2;
 	}
@@ -309,11 +308,6 @@ message UserInfoReply {
 	message List7 {
 		string address = 1;
 		string Amount = 2;
-	}
-
-	repeated List8 myRecommendAddressList = 66;
-	message List8 {
-		string address = 1;
 	}
 
 	repeated List9 allRewardList = 67;
@@ -331,6 +325,8 @@ message UserInfoReply {
 	int64 level3csd = 76;
 	int64 level4csd = 77;
 	int64 term = 78;
+	int64 withdrawDestroyRate = 80;
+	int64 withdrawRate = 81;
 }
 
 message RewardListRequest {

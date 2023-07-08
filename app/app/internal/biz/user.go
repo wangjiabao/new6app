@@ -24,6 +24,7 @@ type UserInfo struct {
 	UserId           int64
 	Vip              int64
 	HistoryRecommend int64
+	TeamCsdBalance   int64
 }
 
 type UserRecommend struct {
@@ -422,6 +423,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		userInfo                 *UserInfo
 		locations                []*LocationNew
 		userBalance              *UserBalance
+		userBalanceLock          *UserBalance
 		userRecommend            *UserRecommend
 		userRecommends           []*UserRecommend
 		userRewards              []*Reward
@@ -438,41 +440,28 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		myCode                   string
 		inviteUserAddress        string
 		amount                   = "0"
-		userCount                string
-		status                   = "no"
 		configs                  []*Config
 		myLastLocationCurrent    int64
-		myWithdraws              []*Withdraw
 		totalDepoist             int64
 		withdrawAmount           int64
-		locationCount            int64
-		fybPrice                 int64
-		fybRate                  string
-		areaAmount               int64
-		maxAreaAmount            int64
-		//recommendAreaOne         int64
-		//recommendAreaTwo         int64
-		//recommendAreaThree       int64
-		//recommendAreaFour        int64
-		areaName              string
-		stopCoin              int64
-		locationRunningAmount int64
+
+		stopCoin int64
 		//totalAreaAmount          int64
-		level1Price int64
-		level2Price int64
-		level3Price int64
-		level4Price int64
-		level1csd   int64
-		level2csd   int64
-		level3csd   int64
-		level4csd   int64
-		//withdrawDestroyRate      int64
-		//withdrawRate             int64
-		term                     int64
-		myLocations              []*v1.UserInfoReply_List
-		myRecommendUserAddresses []*v1.UserInfoReply_List8
-		allRewardList            []*v1.UserInfoReply_List9
-		err                      error
+		level1Price         int64
+		level2Price         int64
+		level3Price         int64
+		level4Price         int64
+		level1csd           int64
+		level2csd           int64
+		level3csd           int64
+		level4csd           int64
+		withdrawDestroyRate int64
+		withdrawRate        int64
+		term                int64
+		amountAll           int64
+		myLocations         []*v1.UserInfoReply_List
+		allRewardList       []*v1.UserInfoReply_List9
+		err                 error
 	)
 
 	// 配置
@@ -509,12 +498,12 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 			if "level_1_price" == vConfig.KeyName {
 				level1Price, _ = strconv.ParseInt(vConfig.Value, 10, 64)
 			}
-			//if "level_1_price" == vConfig.KeyName {
-			//	withdrawDestroyRate, _ = strconv.ParseInt(vConfig.Value, 10, 64)
-			//}
-			//if "level_1_price" == vConfig.KeyName {
-			//	withdrawRate, _ = strconv.ParseInt(vConfig.Value, 10, 64)
-			//}
+			if "withdraw_destroy_rate" == vConfig.KeyName {
+				withdrawDestroyRate, _ = strconv.ParseInt(vConfig.Value, 10, 64)
+			}
+			if "withdraw_rate" == vConfig.KeyName {
+				withdrawRate, _ = strconv.ParseInt(vConfig.Value, 10, 64)
+			}
 		}
 	}
 
@@ -538,7 +527,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 			if v.CurrentMax >= v.Current {
 				tmpCurrentMaxSubCurrent += v.CurrentMax - v.Current
 			}
-
+			amountAll += v.CurrentMax
 			myLocations = append(myLocations, &v1.UserInfoReply_List{
 				CreatedAt: v.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
 				Amount:    fmt.Sprintf("%.2f", float64(v.Current)/float64(10000000000)),
@@ -549,16 +538,15 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 
 		amount = fmt.Sprintf("%.2f", float64(tmpCurrentMaxSubCurrent)/float64(10000000000))
 	}
-	locationCount = int64(len(locations))
 
 	// 提现记录
-	myWithdraws, err = uuc.ubRepo.GetWithdrawByUserId(ctx, myUser.ID, "usdt")
-	for _, vMyWithdraw := range myWithdraws {
-		withdrawAmount += vMyWithdraw.RelAmount
-	}
+	//myWithdraws, err = uuc.ubRepo.GetWithdrawByUserId(ctx, myUser.ID, "usdt")
+	//for _, vMyWithdraw := range myWithdraws {
+	//	withdrawAmount += vMyWithdraw.RelAmount
+	//}
 
 	// 充值记录
-	totalDepoist, err = uuc.ubRepo.GetUserBalanceRecordUserUsdtTotal(ctx, myUser.ID)
+	//totalDepoist, err = uuc.ubRepo.GetUserBalanceRecordUserUsdtTotal(ctx, myUser.ID)
 
 	// 冻结
 	//myLastStopLocations, err = uuc.locationRepo.GetMyStopLocationsLast(ctx, myUser.ID)
@@ -574,6 +562,10 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 	//}
 
 	userBalance, err = uuc.ubRepo.GetUserBalance(ctx, myUser.ID)
+	if nil != err {
+		return nil, err
+	}
+	userBalanceLock, err = uuc.ubRepo.GetUserBalanceLock(ctx, myUser.ID)
 	if nil != err {
 		return nil, err
 	}
@@ -603,35 +595,27 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 	var (
 		teamUserIds       []int64
 		teamUsers         map[int64]*User
+		teamUserInfos     map[int64]*UserInfo
 		teamUserAddresses []*v1.UserInfoReply_List7
-		userAreasTeam     []*UserArea
 	)
-	userAreasMap := make(map[int64]int64, 0)
 	userRecommends, err = uuc.urRepo.GetUserRecommendLikeCode(ctx, myCode)
 	if nil != userRecommends {
 		for _, vUserRecommends := range userRecommends {
 			teamUserIds = append(teamUserIds, vUserRecommends.UserId)
 		}
-		// 区信息
-		userAreasTeam, err = uuc.urRepo.GetUserAreas(ctx, teamUserIds)
-		if nil == err {
-			for _, vUserAreas := range userAreasTeam {
-				userAreasMap[vUserAreas.UserId] = vUserAreas.Amount
-			}
-		}
 
 		// 用户信息
 		recommendTeamNum = int64(len(userRecommends))
 		teamUsers, _ = uuc.repo.GetUserByUserIds(ctx, teamUserIds...)
+		teamUserInfos, _ = uuc.uiRepo.GetUserInfoByUserIds(ctx)
 		if nil != teamUsers {
 			for _, vTeamUsers := range teamUsers {
-				var tmpAmount int64
-				if _, ok := userAreasMap[vTeamUsers.ID]; ok {
-					tmpAmount = userAreasMap[vTeamUsers.ID]
+				if _, ok := teamUserInfos[vTeamUsers.ID]; !ok {
+					continue
 				}
 				teamUserAddresses = append(teamUserAddresses, &v1.UserInfoReply_List7{
 					Address: vTeamUsers.Address,
-					Amount:  fmt.Sprintf("%.2f", float64(tmpAmount)/float64(100000)),
+					Amount:  fmt.Sprintf("%.4f", float64(teamUserInfos[vTeamUsers.ID].TeamCsdBalance)/float64(10000000000)),
 				})
 			}
 		}
@@ -640,10 +624,10 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 	// 累计奖励
 	var (
 		recommendTeamList                 []*v1.UserInfoReply_List2
-		recommendAreaList                 []*v1.UserInfoReply_List3
 		locationDailyRewardList           []*v1.UserInfoReply_List4
 		recommendList                     []*v1.UserInfoReply_List5
-		dailyBalanceRewardList            []*v1.UserInfoReply_List6
+		secondRecommendList               []*v1.UserInfoReply_List6
+		levelRecommendList                []*v1.UserInfoReply_List8
 		yesterdayRecommendTeamTotal       int64
 		yesterdayRecommendAreaTotal       int64
 		yesterdayLocationDailyRewardTotal int64
@@ -674,9 +658,8 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 					yesterdayRecommendTeamTotal += vUserReward.Amount
 				}
 				recommendTeamList = append(recommendTeamList, &v1.UserInfoReply_List2{
-					CreatedAt:    vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
-					RecommendNum: vUserReward.ReasonLocationId,
-					Amount:       fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
+					CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
+					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
 				})
 				userRewardTotal += vUserReward.Amount
 				allRewardList = append(allRewardList, &v1.UserInfoReply_List9{
@@ -684,12 +667,12 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
 				})
 
-			} else if "daily_recommend_area" == vUserReward.Reason {
+			} else if "second_recommend" == vUserReward.Reason {
 				recommendAreaTotal += vUserReward.Amount
 				if vUserReward.CreatedAt.Before(yesterdayEnd) && vUserReward.CreatedAt.After(yesterdayStart) {
 					yesterdayRecommendAreaTotal += vUserReward.Amount
 				}
-				recommendAreaList = append(recommendAreaList, &v1.UserInfoReply_List3{
+				secondRecommendList = append(secondRecommendList, &v1.UserInfoReply_List6{
 					CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
 					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
 				})
@@ -698,7 +681,21 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 					CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
 					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
 				})
-			} else if "location_daily_reward" == vUserReward.Reason {
+			} else if "level_recommend" == vUserReward.Reason {
+				recommendAreaTotal += vUserReward.Amount
+				if vUserReward.CreatedAt.Before(yesterdayEnd) && vUserReward.CreatedAt.After(yesterdayStart) {
+					yesterdayRecommendAreaTotal += vUserReward.Amount
+				}
+				levelRecommendList = append(levelRecommendList, &v1.UserInfoReply_List8{
+					CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
+					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
+				})
+				userRewardTotal += vUserReward.Amount
+				allRewardList = append(allRewardList, &v1.UserInfoReply_List9{
+					CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
+					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
+				})
+			} else if "location_daily" == vUserReward.Reason {
 				locationDailyRewardTotal += vUserReward.Amount
 				if vUserReward.CreatedAt.Before(yesterdayEnd) && vUserReward.CreatedAt.After(yesterdayStart) {
 					yesterdayLocationDailyRewardTotal += vUserReward.Amount
@@ -726,155 +723,51 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 					CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
 					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
 				})
-			} else if "daily_balance_reward" == vUserReward.Reason {
-				dailyBalanceRewardTotal += vUserReward.Amount
-				dailyBalanceRewardList = append(dailyBalanceRewardList, &v1.UserInfoReply_List6{
-					CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
-					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
-				})
-				if vUserReward.CreatedAt.Before(yesterdayEnd) && vUserReward.CreatedAt.After(yesterdayStart) {
-					yesterdayDailyBalanceRewardTotal += vUserReward.Amount
-				}
-				userRewardTotal += vUserReward.Amount
-				allRewardList = append(allRewardList, &v1.UserInfoReply_List9{
-					CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
-					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
-				})
 			}
 		}
 	}
 
-	// 小区信息
-	//if "" != myCode {
-	//	var (
-	//		myRecommendUsers    []*UserRecommend
-	//		userAreas           []*UserArea
-	//		myRecommendUserIds  []int64
-	//		myRecommendUsersMap map[int64]*User
-	//	)
-	//	myRecommendUsers, err = uuc.urRepo.GetUserRecommendByCode(ctx, myCode)
-	//	if nil == err {
-	//		// 找直推
-	//		for _, vMyRecommendUsers := range myRecommendUsers {
-	//			myRecommendUserIds = append(myRecommendUserIds, vMyRecommendUsers.UserId)
-	//		}
-	//	}
-	//
-	//	if 0 < len(myRecommendUserIds) {
-	//		var (
-	//			userLocationRecommendUserIds []int64
-	//		)
-	//		userAreas, err = uuc.urRepo.GetUserAreas(ctx, myRecommendUserIds)
-	//		if nil == err {
-	//			for _, vUserAreas := range userAreas {
-	//				tmpAreaAmount := vUserAreas.Amount + vUserAreas.SelfAmount
-	//				totalAreaAmount += tmpAreaAmount
-	//				if tmpAreaAmount > maxAreaAmount {
-	//					maxAreaAmount = tmpAreaAmount
-	//				}
-	//
-	//				if vUserAreas.SelfAmount > 0 {
-	//					userLocationRecommendUserIds = append(userLocationRecommendUserIds, vUserAreas.UserId)
-	//				}
-	//			}
-	//
-	//			areaAmount = totalAreaAmount - maxAreaAmount
-	//		}
-	//
-	//		myRecommendUsersMap, _ = uuc.repo.GetUserByUserIds(ctx, userLocationRecommendUserIds...)
-	//		if nil != myRecommendUsersMap {
-	//			for _, vMyRecommendUsersMap := range myRecommendUsersMap {
-	//				myRecommendUserAddresses = append(myRecommendUserAddresses, &v1.UserInfoReply_List8{Address: vMyRecommendUsersMap.Address})
-	//			}
-	//		}
-	//
-	//		// 比较级别
-	//		if areaAmount >= recommendAreaOne*100000 {
-	//			areaName = "vip1"
-	//		}
-	//
-	//		if areaAmount >= recommendAreaTwo*100000 {
-	//			areaName = "vip2"
-	//		}
-	//
-	//		if areaAmount >= recommendAreaThree*100000 {
-	//			areaName = "vip3"
-	//		}
-	//
-	//		if areaAmount >= recommendAreaFour*100000 {
-	//			areaName = "vip4"
-	//		}
-	//	}
-	//
-	//}
-	// 优先展示设定的
-	//var myUserArea *UserArea
-	//myUserArea, err = uuc.urRepo.GetUserArea(ctx, user.ID)
-	//if nil != myUserArea && 0 < myUserArea.Level {
-	//	if myUserArea.Level >= 1 {
-	//		areaName = "vip1"
-	//	}
-	//	if myUserArea.Level >= 2 {
-	//		areaName = "vip2"
-	//	}
-	//	if myUserArea.Level >= 3 {
-	//		areaName = "vip3"
-	//	}
-	//	if myUserArea.Level >= 4 {
-	//		areaName = "vip4"
+	//var (
+	//	balanceRewards           []*BalanceReward
+	//	totalBalanceRewardAmount int64
+	//)
+	//balanceRewards, err = uuc.ubRepo.GetBalanceRewardByUserId(ctx, user.ID)
+	//if nil != balanceRewards {
+	//	for _, vBalanceReward := range balanceRewards {
+	//		totalBalanceRewardAmount += vBalanceReward.Amount
 	//	}
 	//}
-
-	var (
-		balanceRewards           []*BalanceReward
-		totalBalanceRewardAmount int64
-	)
-	balanceRewards, err = uuc.ubRepo.GetBalanceRewardByUserId(ctx, user.ID)
-	if nil != balanceRewards {
-		for _, vBalanceReward := range balanceRewards {
-			totalBalanceRewardAmount += vBalanceReward.Amount
-		}
-	}
 
 	return &v1.UserInfoReply{
-		Address:                  myUser.Address,
-		Status:                   status,
-		Amount:                   amount,
-		BalanceUsdt:              fmt.Sprintf("%.2f", float64(userBalance.BalanceUsdt)/float64(10000000000)),
-		BalanceDhb:               fmt.Sprintf("%.2f", float64(userBalance.BalanceDhb)/float64(10000000000)),
-		LocationRunningAmount:    fmt.Sprintf("%.2f", float64(locationRunningAmount)/float64(10000000000)),
-		InviteUrl:                encodeString,
-		InviteUserAddress:        inviteUserAddress,
-		RecommendNum:             userInfo.HistoryRecommend,
-		RecommendTeamNum:         recommendTeamNum,
-		Total:                    fmt.Sprintf("%.2f", float64(userRewardTotal)/float64(10000000000)),
-		WithdrawAmount:           fmt.Sprintf("%.2f", float64(withdrawAmount)/float64(10000000000)),
-		RecommendTotal:           fmt.Sprintf("%.2f", float64(recommendTotal)/float64(10000000000)),
-		LocationDailyRewardTotal: fmt.Sprintf("%.2f", float64(locationDailyRewardTotal)/float64(10000000000)),
-		DailyBalanceRewardTotal:  fmt.Sprintf("%.2f", float64(dailyBalanceRewardTotal)/float64(10000000000)),
-		RecommendTeamTotal:       fmt.Sprintf("%.2f", float64(recommendTeamTotal)/float64(10000000000)),
-		RecommendAreaTotal:       fmt.Sprintf("%.2f", float64(recommendAreaTotal)/float64(10000000000)),
-		Usdt:                     "0x55d398326f99059fF775485246999027B3197955",
-		Account:                  "0x8DbfC7a0C0DC41d96922B3B834d620e7aA808D6B",
-		AmountB:                  fmt.Sprintf("%.2f", float64(myLastLocationCurrent)/float64(10000000000)),
-		AmountC:                  fmt.Sprintf("%.2f", float64(stopCoin)/float64(10000000000)),
-		UserCount:                userCount,
-		TotalDeposit:             fmt.Sprintf("%.2f", float64(totalDepoist)/float64(10000000000)),
-		LocationCount:            locationCount,
-		FybPrice:                 fmt.Sprintf("%.2f", float64(fybPrice)/float64(1000)),
-		FybRate:                  fybRate,
-		Undo:                     myUser.Undo,
-		AreaName:                 areaName,
-		AreaAmount:               fmt.Sprintf("%.2f", float64(areaAmount)/float64(100000)),
-		AreaMaxAmount:            fmt.Sprintf("%.2f", float64(maxAreaAmount)/float64(100000)),
-		//TotalAreaAmount:                   fmt.Sprintf("%.2f", float64(myUserArea.Amount)/float64(100000)),
-		AmountBalanceReward:               fmt.Sprintf("%.2f", float64(totalBalanceRewardAmount)/float64(10000000000)),
+		Address:                           myUser.Address,
+		Level:                             userInfo.Vip,
+		Amount:                            amount,
+		AmountAll:                         fmt.Sprintf("%.2f", float64(amountAll)/float64(10000000000)),
+		BalanceUsdt:                       fmt.Sprintf("%.2f", float64(userBalance.BalanceUsdt)/float64(10000000000)),
+		BalanceDhb:                        fmt.Sprintf("%.2f", float64(userBalance.BalanceDhb)/float64(10000000000)),
+		BalanceUsdtLock:                   fmt.Sprintf("%.2f", float64(userBalanceLock.BalanceUsdt)/float64(10000000000)),
+		BalanceDhbLock:                    fmt.Sprintf("%.2f", float64(userBalanceLock.BalanceDhb)/float64(10000000000)),
+		InviteUrl:                         encodeString,
+		InviteUserAddress:                 inviteUserAddress,
+		RecommendNum:                      userInfo.HistoryRecommend,
+		RecommendTeamNum:                  recommendTeamNum,
+		Total:                             fmt.Sprintf("%.2f", float64(userRewardTotal)/float64(10000000000)),
+		WithdrawAmount:                    fmt.Sprintf("%.2f", float64(withdrawAmount)/float64(10000000000)),
+		RecommendTotal:                    fmt.Sprintf("%.2f", float64(recommendTotal)/float64(10000000000)),
+		LocationDailyRewardTotal:          fmt.Sprintf("%.2f", float64(locationDailyRewardTotal)/float64(10000000000)),
+		DailyBalanceRewardTotal:           fmt.Sprintf("%.2f", float64(dailyBalanceRewardTotal)/float64(10000000000)),
+		RecommendTeamTotal:                fmt.Sprintf("%.2f", float64(recommendTeamTotal)/float64(10000000000)),
+		RecommendAreaTotal:                fmt.Sprintf("%.2f", float64(recommendAreaTotal)/float64(10000000000)),
+		Usdt:                              "0x55d398326f99059fF775485246999027B3197955",
+		Hbs:                               "0x0905397af05dd0bdf76690ff318b10c6216e3069",
+		Account:                           "0x8DbfC7a0C0DC41d96922B3B834d620e7aA808D6B",
+		AmountB:                           fmt.Sprintf("%.2f", float64(myLastLocationCurrent)/float64(10000000000)),
+		AmountC:                           fmt.Sprintf("%.2f", float64(stopCoin)/float64(10000000000)),
+		TotalDeposit:                      fmt.Sprintf("%.2f", float64(totalDepoist)/float64(10000000000)),
 		LocationList:                      myLocations,
-		RecommendAreaList:                 recommendAreaList,
 		RecommendList:                     recommendList,
 		RecommendTeamList:                 recommendTeamList,
 		LocationDailyRewardList:           locationDailyRewardList,
-		DailyBalanceRewardList:            dailyBalanceRewardList,
 		YesterdayRecommendTeamTotal:       fmt.Sprintf("%.2f", float64(yesterdayRecommendTeamTotal)/float64(10000000000)),
 		YesterdayRecommendAreaTotal:       fmt.Sprintf("%.2f", float64(yesterdayRecommendAreaTotal)/float64(10000000000)),
 		YesterdayDailyBalanceRewardTotal:  fmt.Sprintf("%.2f", float64(yesterdayDailyBalanceRewardTotal)/float64(10000000000)),
@@ -882,7 +775,6 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		YesterdayRecommendTotal:           fmt.Sprintf("%.2f", float64(yesterdayRecommendTotal)/float64(10000000000)),
 		TeamAddressList:                   teamUserAddresses,
 		AllRewardList:                     allRewardList,
-		MyRecommendAddressList:            myRecommendUserAddresses,
 		Term:                              term,
 		Level1Csd:                         level1csd,
 		Level1Price:                       level1Price,
@@ -892,6 +784,8 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		Level3Price:                       level3Price,
 		Level4Csd:                         level4csd,
 		Level4Price:                       level4Price,
+		WithdrawRate:                      withdrawRate,
+		WithdrawDestroyRate:               withdrawDestroyRate,
 	}, nil
 }
 
