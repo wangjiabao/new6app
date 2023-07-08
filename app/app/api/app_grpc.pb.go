@@ -29,6 +29,8 @@ type AppClient interface {
 	RecommendRewardList(ctx context.Context, in *RecommendRewardListRequest, opts ...grpc.CallOption) (*RecommendRewardListReply, error)
 	FeeRewardList(ctx context.Context, in *FeeRewardListRequest, opts ...grpc.CallOption) (*FeeRewardListReply, error)
 	WithdrawList(ctx context.Context, in *WithdrawListRequest, opts ...grpc.CallOption) (*WithdrawListReply, error)
+	TradeList(ctx context.Context, in *TradeListRequest, opts ...grpc.CallOption) (*TradeListReply, error)
+	TranList(ctx context.Context, in *TranListRequest, opts ...grpc.CallOption) (*TranListReply, error)
 	RecommendList(ctx context.Context, in *RecommendListRequest, opts ...grpc.CallOption) (*RecommendListReply, error)
 	Withdraw(ctx context.Context, in *WithdrawRequest, opts ...grpc.CallOption) (*WithdrawReply, error)
 	Trade(ctx context.Context, in *WithdrawRequest, opts ...grpc.CallOption) (*WithdrawReply, error)
@@ -132,6 +134,24 @@ func (c *appClient) FeeRewardList(ctx context.Context, in *FeeRewardListRequest,
 func (c *appClient) WithdrawList(ctx context.Context, in *WithdrawListRequest, opts ...grpc.CallOption) (*WithdrawListReply, error) {
 	out := new(WithdrawListReply)
 	err := c.cc.Invoke(ctx, "/api.App/WithdrawList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *appClient) TradeList(ctx context.Context, in *TradeListRequest, opts ...grpc.CallOption) (*TradeListReply, error) {
+	out := new(TradeListReply)
+	err := c.cc.Invoke(ctx, "/api.App/TradeList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *appClient) TranList(ctx context.Context, in *TranListRequest, opts ...grpc.CallOption) (*TranListReply, error) {
+	out := new(TranListReply)
+	err := c.cc.Invoke(ctx, "/api.App/TranList", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -248,6 +268,8 @@ type AppServer interface {
 	RecommendRewardList(context.Context, *RecommendRewardListRequest) (*RecommendRewardListReply, error)
 	FeeRewardList(context.Context, *FeeRewardListRequest) (*FeeRewardListReply, error)
 	WithdrawList(context.Context, *WithdrawListRequest) (*WithdrawListReply, error)
+	TradeList(context.Context, *TradeListRequest) (*TradeListReply, error)
+	TranList(context.Context, *TranListRequest) (*TranListReply, error)
 	RecommendList(context.Context, *RecommendListRequest) (*RecommendListReply, error)
 	Withdraw(context.Context, *WithdrawRequest) (*WithdrawReply, error)
 	Trade(context.Context, *WithdrawRequest) (*WithdrawReply, error)
@@ -311,6 +333,12 @@ func (UnimplementedAppServer) FeeRewardList(context.Context, *FeeRewardListReque
 }
 func (UnimplementedAppServer) WithdrawList(context.Context, *WithdrawListRequest) (*WithdrawListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WithdrawList not implemented")
+}
+func (UnimplementedAppServer) TradeList(context.Context, *TradeListRequest) (*TradeListReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TradeList not implemented")
+}
+func (UnimplementedAppServer) TranList(context.Context, *TranListRequest) (*TranListReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TranList not implemented")
 }
 func (UnimplementedAppServer) RecommendList(context.Context, *RecommendListRequest) (*RecommendListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RecommendList not implemented")
@@ -480,6 +508,42 @@ func _App_WithdrawList_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AppServer).WithdrawList(ctx, req.(*WithdrawListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _App_TradeList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TradeListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppServer).TradeList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.App/TradeList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppServer).TradeList(ctx, req.(*TradeListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _App_TranList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TranListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppServer).TranList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.App/TranList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppServer).TranList(ctx, req.(*TranListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -716,6 +780,14 @@ var App_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WithdrawList",
 			Handler:    _App_WithdrawList_Handler,
+		},
+		{
+			MethodName: "TradeList",
+			Handler:    _App_TradeList_Handler,
+		},
+		{
+			MethodName: "TranList",
+			Handler:    _App_TranList_Handler,
 		},
 		{
 			MethodName: "RecommendList",

@@ -122,6 +122,13 @@ type LocationNew struct {
 	CreatedAt         time.Time
 }
 
+type UserBalanceRecord struct {
+	ID        int64
+	UserId    int64
+	Amount    int64
+	CreatedAt time.Time
+}
+
 type BalanceReward struct {
 	ID        int64
 	UserId    int64
@@ -186,6 +193,8 @@ type UserBalanceRepo interface {
 	WithdrawDhb(ctx context.Context, userId int64, amount int64) error
 	TranDhb(ctx context.Context, userId int64, toUserId int64, amount int64) error
 	GetWithdrawByUserId(ctx context.Context, userId int64, typeCoin string) ([]*Withdraw, error)
+	GetUserBalanceRecordByUserId(ctx context.Context, userId int64, typeCoin string, tran string) ([]*UserBalanceRecord, error)
+	GetTradeByUserId(ctx context.Context, userId int64) ([]*Trade, error)
 	GetWithdraws(ctx context.Context, b *Pagination, userId int64) ([]*Withdraw, error, int64)
 	GetWithdrawPassOrRewarded(ctx context.Context) ([]*Withdraw, error)
 	UpdateWithdraw(ctx context.Context, id int64, status string) (*Withdraw, error)
@@ -830,6 +839,42 @@ func (uuc *UserUseCase) FeeRewardList(ctx context.Context, user *User) (*v1.FeeR
 	return res, nil
 }
 
+func (uuc *UserUseCase) TranList(ctx context.Context, user *User, reqTypeCoin string, reqTran string) (*v1.TranListReply, error) {
+
+	var (
+		userBalanceRecord []*UserBalanceRecord
+		typeCoin          = "usdt"
+		tran              = "tran"
+		err               error
+	)
+
+	res := &v1.TranListReply{
+		Tran: make([]*v1.TranListReply_List, 0),
+	}
+
+	if "" != reqTypeCoin {
+		typeCoin = reqTypeCoin
+	}
+
+	if "tran_to" == reqTran {
+		tran = reqTran
+	}
+
+	userBalanceRecord, err = uuc.ubRepo.GetUserBalanceRecordByUserId(ctx, user.ID, typeCoin, tran)
+	if nil != err {
+		return res, err
+	}
+
+	for _, v := range userBalanceRecord {
+		res.Tran = append(res.Tran, &v1.TranListReply_List{
+			CreatedAt: v.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
+			Amount:    fmt.Sprintf("%.2f", float64(v.Amount)/float64(10000000000)),
+		})
+	}
+
+	return res, nil
+}
+
 func (uuc *UserUseCase) WithdrawList(ctx context.Context, user *User, reqTypeCoin string) (*v1.WithdrawListReply, error) {
 
 	var (
@@ -857,6 +902,34 @@ func (uuc *UserUseCase) WithdrawList(ctx context.Context, user *User, reqTypeCoi
 			Amount:    fmt.Sprintf("%.2f", float64(v.Amount)/float64(10000000000)),
 			Status:    v.Status,
 			Type:      v.Type,
+		})
+	}
+
+	return res, nil
+}
+
+func (uuc *UserUseCase) TradeList(ctx context.Context, user *User) (*v1.TradeListReply, error) {
+
+	var (
+		trades []*Trade
+		err    error
+	)
+
+	res := &v1.TradeListReply{
+		Trade: make([]*v1.TradeListReply_List, 0),
+	}
+
+	trades, err = uuc.ubRepo.GetTradeByUserId(ctx, user.ID)
+	if nil != err {
+		return res, err
+	}
+
+	for _, v := range trades {
+		res.Trade = append(res.Trade, &v1.TradeListReply_List{
+			CreatedAt: v.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
+			AmountCsd: fmt.Sprintf("%.2f", float64(v.AmountCsd)/float64(10000000000)),
+			AmountHbs: fmt.Sprintf("%.2f", float64(v.AmountHbs)/float64(10000000000)),
+			Status:    v.Status,
 		})
 	}
 

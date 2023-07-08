@@ -2507,6 +2507,478 @@ var _ interface {
 	ErrorName() string
 } = WithdrawListReplyValidationError{}
 
+// Validate checks the field values on TradeListRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *TradeListRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on TradeListRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// TradeListRequestMultiError, or nil if none found.
+func (m *TradeListRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *TradeListRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return TradeListRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// TradeListRequestMultiError is an error wrapping multiple validation errors
+// returned by TradeListRequest.ValidateAll() if the designated constraints
+// aren't met.
+type TradeListRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m TradeListRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m TradeListRequestMultiError) AllErrors() []error { return m }
+
+// TradeListRequestValidationError is the validation error returned by
+// TradeListRequest.Validate if the designated constraints aren't met.
+type TradeListRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TradeListRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TradeListRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TradeListRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TradeListRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TradeListRequestValidationError) ErrorName() string { return "TradeListRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e TradeListRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTradeListRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TradeListRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TradeListRequestValidationError{}
+
+// Validate checks the field values on TradeListReply with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *TradeListReply) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on TradeListReply with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in TradeListReplyMultiError,
+// or nil if none found.
+func (m *TradeListReply) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *TradeListReply) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetTrade() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, TradeListReplyValidationError{
+						field:  fmt.Sprintf("Trade[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, TradeListReplyValidationError{
+						field:  fmt.Sprintf("Trade[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return TradeListReplyValidationError{
+					field:  fmt.Sprintf("Trade[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return TradeListReplyMultiError(errors)
+	}
+
+	return nil
+}
+
+// TradeListReplyMultiError is an error wrapping multiple validation errors
+// returned by TradeListReply.ValidateAll() if the designated constraints
+// aren't met.
+type TradeListReplyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m TradeListReplyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m TradeListReplyMultiError) AllErrors() []error { return m }
+
+// TradeListReplyValidationError is the validation error returned by
+// TradeListReply.Validate if the designated constraints aren't met.
+type TradeListReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TradeListReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TradeListReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TradeListReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TradeListReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TradeListReplyValidationError) ErrorName() string { return "TradeListReplyValidationError" }
+
+// Error satisfies the builtin error interface
+func (e TradeListReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTradeListReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TradeListReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TradeListReplyValidationError{}
+
+// Validate checks the field values on TranListRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *TranListRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on TranListRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// TranListRequestMultiError, or nil if none found.
+func (m *TranListRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *TranListRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Type
+
+	// no validation rules for Tran
+
+	if len(errors) > 0 {
+		return TranListRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// TranListRequestMultiError is an error wrapping multiple validation errors
+// returned by TranListRequest.ValidateAll() if the designated constraints
+// aren't met.
+type TranListRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m TranListRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m TranListRequestMultiError) AllErrors() []error { return m }
+
+// TranListRequestValidationError is the validation error returned by
+// TranListRequest.Validate if the designated constraints aren't met.
+type TranListRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TranListRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TranListRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TranListRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TranListRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TranListRequestValidationError) ErrorName() string { return "TranListRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e TranListRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTranListRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TranListRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TranListRequestValidationError{}
+
+// Validate checks the field values on TranListReply with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *TranListReply) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on TranListReply with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in TranListReplyMultiError, or
+// nil if none found.
+func (m *TranListReply) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *TranListReply) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetTran() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, TranListReplyValidationError{
+						field:  fmt.Sprintf("Tran[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, TranListReplyValidationError{
+						field:  fmt.Sprintf("Tran[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return TranListReplyValidationError{
+					field:  fmt.Sprintf("Tran[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return TranListReplyMultiError(errors)
+	}
+
+	return nil
+}
+
+// TranListReplyMultiError is an error wrapping multiple validation errors
+// returned by TranListReply.ValidateAll() if the designated constraints
+// aren't met.
+type TranListReplyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m TranListReplyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m TranListReplyMultiError) AllErrors() []error { return m }
+
+// TranListReplyValidationError is the validation error returned by
+// TranListReply.Validate if the designated constraints aren't met.
+type TranListReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TranListReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TranListReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TranListReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TranListReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TranListReplyValidationError) ErrorName() string { return "TranListReplyValidationError" }
+
+// Error satisfies the builtin error interface
+func (e TranListReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTranListReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TranListReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TranListReplyValidationError{}
+
 // Validate checks the field values on RecommendListRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -8148,6 +8620,222 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = WithdrawListReply_ListValidationError{}
+
+// Validate checks the field values on TradeListReply_List with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *TradeListReply_List) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on TradeListReply_List with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// TradeListReply_ListMultiError, or nil if none found.
+func (m *TradeListReply_List) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *TradeListReply_List) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for CreatedAt
+
+	// no validation rules for AmountCsd
+
+	// no validation rules for AmountHbs
+
+	// no validation rules for Status
+
+	if len(errors) > 0 {
+		return TradeListReply_ListMultiError(errors)
+	}
+
+	return nil
+}
+
+// TradeListReply_ListMultiError is an error wrapping multiple validation
+// errors returned by TradeListReply_List.ValidateAll() if the designated
+// constraints aren't met.
+type TradeListReply_ListMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m TradeListReply_ListMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m TradeListReply_ListMultiError) AllErrors() []error { return m }
+
+// TradeListReply_ListValidationError is the validation error returned by
+// TradeListReply_List.Validate if the designated constraints aren't met.
+type TradeListReply_ListValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TradeListReply_ListValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TradeListReply_ListValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TradeListReply_ListValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TradeListReply_ListValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TradeListReply_ListValidationError) ErrorName() string {
+	return "TradeListReply_ListValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e TradeListReply_ListValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTradeListReply_List.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TradeListReply_ListValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TradeListReply_ListValidationError{}
+
+// Validate checks the field values on TranListReply_List with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *TranListReply_List) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on TranListReply_List with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// TranListReply_ListMultiError, or nil if none found.
+func (m *TranListReply_List) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *TranListReply_List) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for CreatedAt
+
+	// no validation rules for Amount
+
+	if len(errors) > 0 {
+		return TranListReply_ListMultiError(errors)
+	}
+
+	return nil
+}
+
+// TranListReply_ListMultiError is an error wrapping multiple validation errors
+// returned by TranListReply_List.ValidateAll() if the designated constraints
+// aren't met.
+type TranListReply_ListMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m TranListReply_ListMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m TranListReply_ListMultiError) AllErrors() []error { return m }
+
+// TranListReply_ListValidationError is the validation error returned by
+// TranListReply_List.Validate if the designated constraints aren't met.
+type TranListReply_ListValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TranListReply_ListValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TranListReply_ListValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TranListReply_ListValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TranListReply_ListValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TranListReply_ListValidationError) ErrorName() string {
+	return "TranListReply_ListValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e TranListReply_ListValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTranListReply_List.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TranListReply_ListValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TranListReply_ListValidationError{}
 
 // Validate checks the field values on RecommendListReply_List with the rules
 // defined in the proto definition for this message. If any rules are

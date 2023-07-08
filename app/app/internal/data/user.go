@@ -1440,6 +1440,57 @@ func (ub *UserBalanceRepo) GetWithdrawByUserId(ctx context.Context, userId int64
 	return res, nil
 }
 
+// GetUserBalanceRecordByUserId .
+func (ub *UserBalanceRepo) GetUserBalanceRecordByUserId(ctx context.Context, userId int64, typeCoin string, tran string) ([]*biz.UserBalanceRecord, error) {
+	var userBalanceRecord []*UserBalanceRecord
+	res := make([]*biz.UserBalanceRecord, 0)
+	if err := ub.data.db.Where("user_id=?", userId).
+		Where("type=? and coin_type=?", tran, typeCoin).Table("user_balance_record").Find(&userBalanceRecord).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return res, errors.NotFound("WITHDRAW_NOT_FOUND", "withdraw not found")
+		}
+
+		return nil, errors.New(500, "WITHDRAW ERROR", err.Error())
+	}
+
+	for _, v := range userBalanceRecord {
+		res = append(res, &biz.UserBalanceRecord{
+			ID:        v.ID,
+			UserId:    v.UserId,
+			Amount:    v.Amount,
+			CreatedAt: v.CreatedAt,
+		})
+	}
+	return res, nil
+}
+
+// GetTradeByUserId .
+func (ub *UserBalanceRepo) GetTradeByUserId(ctx context.Context, userId int64) ([]*biz.Trade, error) {
+	var trades []*Trade
+	res := make([]*biz.Trade, 0)
+	if err := ub.data.db.Where("user_id=?", userId).Table("trade").Find(&trades).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return res, errors.NotFound("WITHDRAW_NOT_FOUND", "withdraw not found")
+		}
+
+		return nil, errors.New(500, "WITHDRAW ERROR", err.Error())
+	}
+
+	for _, trade := range trades {
+		res = append(res, &biz.Trade{
+			ID:           trade.ID,
+			UserId:       trade.UserId,
+			AmountCsd:    trade.AmountCsd,
+			RelAmountCsd: trade.RelAmountCsd,
+			AmountHbs:    trade.AmountHbs,
+			RelAmountHbs: trade.RelAmountHbs,
+			Status:       trade.Status,
+			CreatedAt:    trade.CreatedAt,
+		})
+	}
+	return res, nil
+}
+
 // GetBalanceRewardByUserId .
 func (ub *UserBalanceRepo) GetBalanceRewardByUserId(ctx context.Context, userId int64) ([]*biz.BalanceReward, error) {
 	var balanceRewards []*BalanceReward

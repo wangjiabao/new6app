@@ -33,7 +33,9 @@ const OperationAppRecommendUpdate = "/api.App/RecommendUpdate"
 const OperationAppRewardList = "/api.App/RewardList"
 const OperationAppSetBalanceReward = "/api.App/SetBalanceReward"
 const OperationAppTrade = "/api.App/Trade"
+const OperationAppTradeList = "/api.App/TradeList"
 const OperationAppTran = "/api.App/Tran"
+const OperationAppTranList = "/api.App/TranList"
 const OperationAppUserInfo = "/api.App/UserInfo"
 const OperationAppWithdraw = "/api.App/Withdraw"
 const OperationAppWithdrawList = "/api.App/WithdrawList"
@@ -53,7 +55,9 @@ type AppHTTPServer interface {
 	RewardList(context.Context, *RewardListRequest) (*RewardListReply, error)
 	SetBalanceReward(context.Context, *SetBalanceRewardRequest) (*SetBalanceRewardReply, error)
 	Trade(context.Context, *WithdrawRequest) (*WithdrawReply, error)
+	TradeList(context.Context, *TradeListRequest) (*TradeListReply, error)
 	Tran(context.Context, *TranRequest) (*TranReply, error)
+	TranList(context.Context, *TranListRequest) (*TranListReply, error)
 	UserInfo(context.Context, *UserInfoRequest) (*UserInfoReply, error)
 	Withdraw(context.Context, *WithdrawRequest) (*WithdrawReply, error)
 	WithdrawList(context.Context, *WithdrawListRequest) (*WithdrawListReply, error)
@@ -68,6 +72,8 @@ func RegisterAppHTTPServer(s *http.Server, srv AppHTTPServer) {
 	r.GET("/api/app_server/recommend_reward_list", _App_RecommendRewardList0_HTTP_Handler(srv))
 	r.GET("/api/app_server/fee_reward_list", _App_FeeRewardList0_HTTP_Handler(srv))
 	r.GET("/api/app_server/withdraw_list", _App_WithdrawList0_HTTP_Handler(srv))
+	r.GET("/api/app_server/trade_list", _App_TradeList0_HTTP_Handler(srv))
+	r.GET("/api/app_server/tran_list", _App_TranList0_HTTP_Handler(srv))
 	r.GET("/api/app_server/recommend_list", _App_RecommendList0_HTTP_Handler(srv))
 	r.POST("/api/app_server/withdraw", _App_Withdraw0_HTTP_Handler(srv))
 	r.POST("/api/app_server/trade", _App_Trade0_HTTP_Handler(srv))
@@ -216,6 +222,44 @@ func _App_WithdrawList0_HTTP_Handler(srv AppHTTPServer) func(ctx http.Context) e
 			return err
 		}
 		reply := out.(*WithdrawListReply)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _App_TradeList0_HTTP_Handler(srv AppHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in TradeListRequest
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationAppTradeList)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.TradeList(ctx, req.(*TradeListRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*TradeListReply)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _App_TranList0_HTTP_Handler(srv AppHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in TranListRequest
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationAppTranList)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.TranList(ctx, req.(*TranListRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*TranListReply)
 		return ctx.Result(200, reply)
 	}
 }
@@ -462,7 +506,9 @@ type AppHTTPClient interface {
 	RewardList(ctx context.Context, req *RewardListRequest, opts ...http.CallOption) (rsp *RewardListReply, err error)
 	SetBalanceReward(ctx context.Context, req *SetBalanceRewardRequest, opts ...http.CallOption) (rsp *SetBalanceRewardReply, err error)
 	Trade(ctx context.Context, req *WithdrawRequest, opts ...http.CallOption) (rsp *WithdrawReply, err error)
+	TradeList(ctx context.Context, req *TradeListRequest, opts ...http.CallOption) (rsp *TradeListReply, err error)
 	Tran(ctx context.Context, req *TranRequest, opts ...http.CallOption) (rsp *TranReply, err error)
+	TranList(ctx context.Context, req *TranListRequest, opts ...http.CallOption) (rsp *TranListReply, err error)
 	UserInfo(ctx context.Context, req *UserInfoRequest, opts ...http.CallOption) (rsp *UserInfoReply, err error)
 	Withdraw(ctx context.Context, req *WithdrawRequest, opts ...http.CallOption) (rsp *WithdrawReply, err error)
 	WithdrawList(ctx context.Context, req *WithdrawListRequest, opts ...http.CallOption) (rsp *WithdrawListReply, err error)
@@ -658,6 +704,19 @@ func (c *AppHTTPClientImpl) Trade(ctx context.Context, in *WithdrawRequest, opts
 	return &out, err
 }
 
+func (c *AppHTTPClientImpl) TradeList(ctx context.Context, in *TradeListRequest, opts ...http.CallOption) (*TradeListReply, error) {
+	var out TradeListReply
+	pattern := "/api/app_server/trade_list"
+	path := binding.EncodeURL(pattern, in, true)
+	opts = append(opts, http.Operation(OperationAppTradeList))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
+}
+
 func (c *AppHTTPClientImpl) Tran(ctx context.Context, in *TranRequest, opts ...http.CallOption) (*TranReply, error) {
 	var out TranReply
 	pattern := "/api/app_server/tran"
@@ -665,6 +724,19 @@ func (c *AppHTTPClientImpl) Tran(ctx context.Context, in *TranRequest, opts ...h
 	opts = append(opts, http.Operation(OperationAppTran))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in.SendBody, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
+}
+
+func (c *AppHTTPClientImpl) TranList(ctx context.Context, in *TranListRequest, opts ...http.CallOption) (*TranListReply, error) {
+	var out TranListReply
+	pattern := "/api/app_server/tran_list"
+	path := binding.EncodeURL(pattern, in, true)
+	opts = append(opts, http.Operation(OperationAppTranList))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
 		return nil, err
 	}
