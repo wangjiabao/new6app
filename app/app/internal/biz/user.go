@@ -784,7 +784,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		RecommendLevelTotal:               fmt.Sprintf("%.2f", float64(recommendLevelTotal)/float64(10000000000)),
 		Usdt:                              "0x55d398326f99059fF775485246999027B3197955",
 		Hbs:                               "0x0905397af05dd0bdf76690ff318b10c6216e3069",
-		Account:                           "0x8DbfC7a0C0DC41d96922B3B834d620e7aA808D6B",
+		Account:                           "0x0ec4b249d6ef1af9984d79235551f70c34c2dfaf",
 		AmountB:                           fmt.Sprintf("%.2f", float64(myLastLocationCurrent)/float64(10000000000)),
 		AmountC:                           fmt.Sprintf("%.2f", float64(stopCoin)/float64(10000000000)),
 		TotalDeposit:                      fmt.Sprintf("%.2f", float64(totalDepoist)/float64(10000000000)),
