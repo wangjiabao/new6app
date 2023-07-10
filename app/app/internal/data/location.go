@@ -30,6 +30,8 @@ type LocationNew struct {
 	Status            string    `gorm:"type:varchar(45);not null"`
 	Current           int64     `gorm:"type:bigint;not null"`
 	CurrentMax        int64     `gorm:"type:bigint;not null"`
+	CurrentMaxNew     int64     `gorm:"type:bigint;not null"`
+	Usdt              int64     `gorm:"type:bigint;not null"`
 	StopLocationAgain int64     `gorm:"type:int;not null"`
 	StopCoin          int64     `gorm:"type:bigint;not null"`
 	StopDate          time.Time `gorm:"type:datetime;not null"`
@@ -228,13 +230,15 @@ func (lr *LocationRepo) GetLocationsByUserId(ctx context.Context, userId int64) 
 
 	for _, location := range locations {
 		res = append(res, &biz.LocationNew{
-			ID:         location.ID,
-			UserId:     location.UserId,
-			Status:     location.Status,
-			Current:    location.Current,
-			Term:       location.Term,
-			CurrentMax: location.CurrentMax,
-			CreatedAt:  location.CreatedAt,
+			ID:            location.ID,
+			UserId:        location.UserId,
+			Status:        location.Status,
+			Current:       location.Current,
+			Term:          location.Term,
+			CurrentMax:    location.CurrentMax,
+			CreatedAt:     location.CreatedAt,
+			CurrentMaxNew: location.CurrentMaxNew,
+			Usdt:          location.Usdt,
 		})
 	}
 

@@ -234,10 +234,10 @@ message UserInfoRequest {
 message UserInfoReply {
 	string address = 1; // 地址
 	int64 level = 2; // vip
-	string amountAll = 3; // 总锁定csd
-	string amount = 4; // 未解锁csd
-	string balanceUsdtLock = 82; // 未释放csd金额
-	string balanceDhbLock = 83; // 未释放hbs金额
+	string amountAll = 3;
+	string amount = 4; // 未释放csd
+	string balanceUsdtLock = 82; // 已释放csd金额
+	string balanceDhbLock = 83; // 已释放hbs金额
 	string balanceUsdt = 5; // 可提余额csd
 	string balanceDhb = 6; // 可提余额hbs
 	string teamCsdBalance = 12; // 团队可提余额csd
