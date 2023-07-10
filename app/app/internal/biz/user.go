@@ -797,9 +797,9 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		Level3Price:                       level3Price,
 		Level1Csd:                         fmt.Sprintf("%.4f", float64(level1Price)*float64(csdPrice)/float64(1000)),
 		Level4Price:                       level4Price,
-		Level2Csd:                         fmt.Sprintf("%.4f", float64(level1Price)*float64(csdPrice)/float64(1000)),
-		Level3Csd:                         fmt.Sprintf("%.4f", float64(level1Price)*float64(csdPrice)/float64(1000)),
-		Level4Csd:                         fmt.Sprintf("%.4f", float64(level1Price)*float64(csdPrice)/float64(1000)),
+		Level2Csd:                         fmt.Sprintf("%.4f", float64(level2Price)*float64(csdPrice)/float64(1000)),
+		Level3Csd:                         fmt.Sprintf("%.4f", float64(level3Price)*float64(csdPrice)/float64(1000)),
+		Level4Csd:                         fmt.Sprintf("%.4f", float64(level4Price)*float64(csdPrice)/float64(1000)),
 		WithdrawRate:                      withdrawRate,
 		WithdrawDestroyRate:               withdrawDestroyRate,
 	}, nil
