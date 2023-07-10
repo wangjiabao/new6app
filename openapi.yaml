@@ -702,6 +702,8 @@ components:
                     type: string
                 usdt:
                     type: string
+                csd:
+                    type: string
                 hbs:
                     type: string
                 account:

@@ -248,6 +248,7 @@ message UserInfoReply {
 	string total = 11; // 总收益
 	string recommendTotal = 15; // 直推奖总
 	string usdt = 20; // csd地址
+	string csd = 23; // csd地址
 	string hbs = 21; // hbs地址
 	string account = 22; // 收款账户地址
 	string amountB = 27;

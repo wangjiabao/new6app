@@ -858,6 +858,8 @@ func (m *UserInfoReply) validate(all bool) error {
 
 	// no validation rules for Usdt
 
+	// no validation rules for Csd
+
 	// no validation rules for Hbs
 
 	// no validation rules for Account
