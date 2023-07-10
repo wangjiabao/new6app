@@ -189,7 +189,7 @@ type UserBalanceRepo interface {
 	GetUserBalanceUsdtTotal(ctx context.Context) (int64, error)
 	GreateWithdraw(ctx context.Context, userId int64, amount int64, amountFee int64, coinType string) (*Withdraw, error)
 	WithdrawUsdt(ctx context.Context, userId int64, amount int64, tmpRecommendUserIdsInt []int64) error
-	TranUsdt(ctx context.Context, userId int64, toUserId int64, amount int64) error
+	TranUsdt(ctx context.Context, userId int64, toUserId int64, amount int64, tmpRecommendUserIdsInt []int64, tmpRecommendUserIdsInt2 []int64) error
 	WithdrawDhb(ctx context.Context, userId int64, amount int64) error
 	TranDhb(ctx context.Context, userId int64, toUserId int64, amount int64) error
 	GetWithdrawByUserId(ctx context.Context, userId int64, typeCoin string) ([]*Withdraw, error)
@@ -1066,6 +1066,12 @@ func (uuc *UserUseCase) Tran(ctx context.Context, req *v1.TranRequest, user *Use
 		}, nil
 	}
 
+	if user.ID == toUser.ID {
+		return &v1.TranReply{
+			Status: "不能给自己转账",
+		}, nil
+	}
+
 	if "dhb" != req.SendBody.Type && "usdt" != req.SendBody.Type {
 		return &v1.TranReply{
 			Status: "fail",
@@ -1108,10 +1114,66 @@ func (uuc *UserUseCase) Tran(ctx context.Context, req *v1.TranRequest, user *Use
 			}, nil
 		}
 	}
+
+	var (
+		userRecommend  *UserRecommend
+		userRecommend2 *UserRecommend
+	)
+	userRecommend, err = uuc.urRepo.GetUserRecommendByUserId(ctx, user.ID)
+	if nil == userRecommend {
+		return &v1.TranReply{
+			Status: "信息错误",
+		}, nil
+	}
+
+	var (
+		tmpRecommendUserIds          []string
+		tmpRecommendUserIdsInt       []int64
+		toUserTmpRecommendUserIds    []string
+		toUserTmpRecommendUserIdsInt []int64
+	)
+	if "" != userRecommend.RecommendCode {
+		tmpRecommendUserIds = strings.Split(userRecommend.RecommendCode, "D")
+	}
+	lastKey := len(tmpRecommendUserIds) - 1
+	if 1 <= lastKey {
+		for i := 0; i <= lastKey; i++ {
+			// 有占位信息，推荐人推荐人的上一代
+			if lastKey-i <= 0 {
+				break
+			}
+
+			tmpMyTopUserRecommendUserId, _ := strconv.ParseInt(tmpRecommendUserIds[lastKey-i], 10, 64) // 最后一位是直推人
+			tmpRecommendUserIdsInt = append(tmpRecommendUserIdsInt, tmpMyTopUserRecommendUserId)
+		}
+	}
+
+	userRecommend2, err = uuc.urRepo.GetUserRecommendByUserId(ctx, toUser.ID)
+	if nil == userRecommend2 {
+		return &v1.TranReply{
+			Status: "信息错误",
+		}, nil
+	}
+	if "" != userRecommend2.RecommendCode {
+		toUserTmpRecommendUserIds = strings.Split(userRecommend2.RecommendCode, "D")
+	}
+	lastKey2 := len(toUserTmpRecommendUserIds) - 1
+	if 1 <= lastKey2 {
+		for i := 0; i <= lastKey2; i++ {
+			// 有占位信息，推荐人推荐人的上一代
+			if lastKey2-i <= 0 {
+				break
+			}
+
+			toUserTmpMyTopUserRecommendUserId, _ := strconv.ParseInt(toUserTmpRecommendUserIds[lastKey-i], 10, 64) // 最后一位是直推人
+			toUserTmpRecommendUserIdsInt = append(toUserTmpRecommendUserIdsInt, toUserTmpMyTopUserRecommendUserId)
+		}
+	}
+
 	if err = uuc.tx.ExecTx(ctx, func(ctx context.Context) error { // 事务
 
 		if "usdt" == req.SendBody.Type {
-			err = uuc.ubRepo.TranUsdt(ctx, user.ID, toUser.ID, amount) // 提现
+			err = uuc.ubRepo.TranUsdt(ctx, user.ID, toUser.ID, amount, tmpRecommendUserIdsInt, toUserTmpRecommendUserIdsInt) // 提现
 			if nil != err {
 				return err
 			}
@@ -1141,6 +1203,7 @@ func (uuc *UserUseCase) Trade(ctx context.Context, req *v1.WithdrawRequest, user
 		withdrawDestroyRate int64
 		err                 error
 	)
+
 	configs, _ = uuc.configRepo.GetConfigByKeys(ctx, "withdraw_rate",
 		"withdraw_destroy_rate",
 	)

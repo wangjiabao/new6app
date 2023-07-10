@@ -1161,7 +1161,7 @@ func (ub *UserBalanceRepo) WithdrawUsdt(ctx context.Context, userId int64, amoun
 }
 
 // TranUsdt .
-func (ub *UserBalanceRepo) TranUsdt(ctx context.Context, userId int64, toUserId int64, amount int64) error {
+func (ub *UserBalanceRepo) TranUsdt(ctx context.Context, userId int64, toUserId int64, amount int64, tmpRecommendUserIdsInt []int64, tmpRecommendUserIdsInt2 []int64) error {
 	var err error
 	if res := ub.data.DB(ctx).Table("user_balance").
 		Where("user_id=? and balance_usdt>=?", userId, amount).
@@ -1173,6 +1173,21 @@ func (ub *UserBalanceRepo) TranUsdt(ctx context.Context, userId int64, toUserId 
 		Where("user_id=?", toUserId).
 		Updates(map[string]interface{}{"balance_usdt": gorm.Expr("balance_usdt + ?", amount)}).Error; nil != err {
 		return errors.NotFound("user balance err", "user balance not found")
+	}
+
+	if len(tmpRecommendUserIdsInt2) > 0 {
+		if err = ub.data.DB(ctx).Table("user_info").
+			Where("user_id in (?)", tmpRecommendUserIdsInt2).
+			Updates(map[string]interface{}{"team_csd_balance": gorm.Expr("team_csd_balance + ?", amount)}).Error; nil != err {
+			return errors.NotFound("user balance err", "user balance not found")
+		}
+	}
+	if 0 < len(tmpRecommendUserIdsInt) {
+		if err = ub.data.DB(ctx).Table("user_info").
+			Where("user_id in (?)", tmpRecommendUserIdsInt).
+			Updates(map[string]interface{}{"team_csd_balance": gorm.Expr("team_csd_balance - ?", amount)}).Error; nil != err {
+			return errors.NotFound("user balance err", "user balance not found")
+		}
 	}
 
 	var userBalance UserBalance
