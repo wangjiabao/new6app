@@ -474,7 +474,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 
 	// 配置
 	configs, err = uuc.configRepo.GetConfigByKeys(ctx,
-		"term", "level_2_price", "level_1_price", "level_3_price", "level_4_price", "csdPrice",
+		"term", "level_2_price", "level_1_price", "level_3_price", "level_4_price", "csd_price",
 		"withdraw_destroy_rate", "withdraw_rate",
 	)
 	if nil != configs {
@@ -795,11 +795,11 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		Level1Price:                       level1Price,
 		Level2Price:                       level2Price,
 		Level3Price:                       level3Price,
-		Level1Csd:                         fmt.Sprintf("%.4f", float64(level1Price)*float64(csdPrice)/float64(1000)),
+		Level1Csd:                         fmt.Sprintf("%.4f", float64(level1Price*csdPrice)/1000),
 		Level4Price:                       level4Price,
-		Level2Csd:                         fmt.Sprintf("%.4f", float64(level2Price)*float64(csdPrice)/float64(1000)),
-		Level3Csd:                         fmt.Sprintf("%.4f", float64(level3Price)*float64(csdPrice)/float64(1000)),
-		Level4Csd:                         fmt.Sprintf("%.4f", float64(level4Price)*float64(csdPrice)/float64(1000)),
+		Level2Csd:                         fmt.Sprintf("%.4f", float64(level2Price*csdPrice)/1000),
+		Level3Csd:                         fmt.Sprintf("%.4f", float64(level3Price*csdPrice)/1000),
+		Level4Csd:                         fmt.Sprintf("%.4f", float64(level4Price*csdPrice)/1000),
 		WithdrawRate:                      withdrawRate,
 		WithdrawDestroyRate:               withdrawDestroyRate,
 	}, nil
