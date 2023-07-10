@@ -894,10 +894,10 @@ func (ub *UserBalanceRepo) Trade(ctx context.Context, userId int64, amount int64
 		return err
 	}
 
-	if len(tmpRecommendUserIdsInt) > 0 {
+	if 0 < len(tmpRecommendUserIdsInt) {
 		if err = ub.data.DB(ctx).Table("user_info").
 			Where("user_id in (?)", tmpRecommendUserIdsInt).
-			Updates(map[string]interface{}{"team_csd_balance": gorm.Expr("team_csd_balance + ?", amountRel)}).Error; nil != err {
+			Updates(map[string]interface{}{"team_csd_balance": gorm.Expr("team_csd_balance - ?", amount-amountRel)}).Error; nil != err {
 			return errors.NotFound("user balance err", "user balance not found")
 		}
 	}
