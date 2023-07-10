@@ -811,17 +811,13 @@ components:
                     type: integer
                     format: int64
                 level1csd:
-                    type: integer
-                    format: int64
+                    type: string
                 level2csd:
-                    type: integer
-                    format: int64
+                    type: string
                 level3csd:
-                    type: integer
-                    format: int64
+                    type: string
                 level4csd:
-                    type: integer
-                    format: int64
+                    type: string
                 term:
                     type: integer
                     format: int64

@@ -329,12 +329,12 @@ type UserInfoReply struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Address                           string                  `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`                     // 地址
-	Level                             int64                   `protobuf:"varint,2,opt,name=level,proto3" json:"level,omitempty"`                        // vip
-	AmountAll                         string                  `protobuf:"bytes,3,opt,name=amountAll,proto3" json:"amountAll,omitempty"`                 // 总锁定csd
-	Amount                            string                  `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount,omitempty"`                       // 未解锁csd
-	BalanceUsdtLock                   string                  `protobuf:"bytes,82,opt,name=balanceUsdtLock,proto3" json:"balanceUsdtLock,omitempty"`    // 未释放csd金额
-	BalanceDhbLock                    string                  `protobuf:"bytes,83,opt,name=balanceDhbLock,proto3" json:"balanceDhbLock,omitempty"`      // 未释放hbs金额
+	Address                           string                  `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"` // 地址
+	Level                             int64                   `protobuf:"varint,2,opt,name=level,proto3" json:"level,omitempty"`    // vip
+	AmountAll                         string                  `protobuf:"bytes,3,opt,name=amountAll,proto3" json:"amountAll,omitempty"`
+	Amount                            string                  `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount,omitempty"`                       // 未释放csd
+	BalanceUsdtLock                   string                  `protobuf:"bytes,82,opt,name=balanceUsdtLock,proto3" json:"balanceUsdtLock,omitempty"`    // 已释放csd金额
+	BalanceDhbLock                    string                  `protobuf:"bytes,83,opt,name=balanceDhbLock,proto3" json:"balanceDhbLock,omitempty"`      // 已释放hbs金额
 	BalanceUsdt                       string                  `protobuf:"bytes,5,opt,name=balanceUsdt,proto3" json:"balanceUsdt,omitempty"`             // 可提余额csd
 	BalanceDhb                        string                  `protobuf:"bytes,6,opt,name=balanceDhb,proto3" json:"balanceDhb,omitempty"`               // 可提余额hbs
 	TeamCsdBalance                    string                  `protobuf:"bytes,12,opt,name=teamCsdBalance,proto3" json:"teamCsdBalance,omitempty"`      // 团队可提余额csd
@@ -387,10 +387,10 @@ type UserInfoReply struct {
 	Level2Price                       int64                   `protobuf:"varint,71,opt,name=level2price,proto3" json:"level2price,omitempty"`
 	Level3Price                       int64                   `protobuf:"varint,72,opt,name=level3price,proto3" json:"level3price,omitempty"`
 	Level4Price                       int64                   `protobuf:"varint,73,opt,name=level4price,proto3" json:"level4price,omitempty"`
-	Level1Csd                         int64                   `protobuf:"varint,74,opt,name=level1csd,proto3" json:"level1csd,omitempty"`
-	Level2Csd                         int64                   `protobuf:"varint,75,opt,name=level2csd,proto3" json:"level2csd,omitempty"`
-	Level3Csd                         int64                   `protobuf:"varint,76,opt,name=level3csd,proto3" json:"level3csd,omitempty"`
-	Level4Csd                         int64                   `protobuf:"varint,77,opt,name=level4csd,proto3" json:"level4csd,omitempty"`
+	Level1Csd                         string                  `protobuf:"bytes,74,opt,name=level1csd,proto3" json:"level1csd,omitempty"`
+	Level2Csd                         string                  `protobuf:"bytes,75,opt,name=level2csd,proto3" json:"level2csd,omitempty"`
+	Level3Csd                         string                  `protobuf:"bytes,76,opt,name=level3csd,proto3" json:"level3csd,omitempty"`
+	Level4Csd                         string                  `protobuf:"bytes,77,opt,name=level4csd,proto3" json:"level4csd,omitempty"`
 	Term                              int64                   `protobuf:"varint,78,opt,name=term,proto3" json:"term,omitempty"`
 	WithdrawDestroyRate               int64                   `protobuf:"varint,80,opt,name=withdrawDestroyRate,proto3" json:"withdrawDestroyRate,omitempty"`
 	WithdrawRate                      int64                   `protobuf:"varint,81,opt,name=withdrawRate,proto3" json:"withdrawRate,omitempty"`
@@ -834,32 +834,32 @@ func (x *UserInfoReply) GetLevel4Price() int64 {
 	return 0
 }
 
-func (x *UserInfoReply) GetLevel1Csd() int64 {
+func (x *UserInfoReply) GetLevel1Csd() string {
 	if x != nil {
 		return x.Level1Csd
 	}
-	return 0
+	return ""
 }
 
-func (x *UserInfoReply) GetLevel2Csd() int64 {
+func (x *UserInfoReply) GetLevel2Csd() string {
 	if x != nil {
 		return x.Level2Csd
 	}
-	return 0
+	return ""
 }
 
-func (x *UserInfoReply) GetLevel3Csd() int64 {
+func (x *UserInfoReply) GetLevel3Csd() string {
 	if x != nil {
 		return x.Level3Csd
 	}
-	return 0
+	return ""
 }
 
-func (x *UserInfoReply) GetLevel4Csd() int64 {
+func (x *UserInfoReply) GetLevel4Csd() string {
 	if x != nil {
 		return x.Level4Csd
 	}
-	return 0
+	return ""
 }
 
 func (x *UserInfoReply) GetTerm() int64 {
@@ -5373,12 +5373,12 @@ var file_app_app_api_app_proto_rawDesc = []byte{
 	0x0a, 0x0b, 0x6c, 0x65, 0x76, 0x65, 0x6c, 0x34, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x49, 0x20,
 	0x01, 0x28, 0x03, 0x52, 0x0b, 0x6c, 0x65, 0x76, 0x65, 0x6c, 0x34, 0x70, 0x72, 0x69, 0x63, 0x65,
 	0x12, 0x1c, 0x0a, 0x09, 0x6c, 0x65, 0x76, 0x65, 0x6c, 0x31, 0x63, 0x73, 0x64, 0x18, 0x4a, 0x20,
-	0x01, 0x28, 0x03, 0x52, 0x09, 0x6c, 0x65, 0x76, 0x65, 0x6c, 0x31, 0x63, 0x73, 0x64, 0x12, 0x1c,
+	0x01, 0x28, 0x09, 0x52, 0x09, 0x6c, 0x65, 0x76, 0x65, 0x6c, 0x31, 0x63, 0x73, 0x64, 0x12, 0x1c,
 	0x0a, 0x09, 0x6c, 0x65, 0x76, 0x65, 0x6c, 0x32, 0x63, 0x73, 0x64, 0x18, 0x4b, 0x20, 0x01, 0x28,
-	0x03, 0x52, 0x09, 0x6c, 0x65, 0x76, 0x65, 0x6c, 0x32, 0x63, 0x73, 0x64, 0x12, 0x1c, 0x0a, 0x09,
-	0x6c, 0x65, 0x76, 0x65, 0x6c, 0x33, 0x63, 0x73, 0x64, 0x18, 0x4c, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x09, 0x52, 0x09, 0x6c, 0x65, 0x76, 0x65, 0x6c, 0x32, 0x63, 0x73, 0x64, 0x12, 0x1c, 0x0a, 0x09,
+	0x6c, 0x65, 0x76, 0x65, 0x6c, 0x33, 0x63, 0x73, 0x64, 0x18, 0x4c, 0x20, 0x01, 0x28, 0x09, 0x52,
 	0x09, 0x6c, 0x65, 0x76, 0x65, 0x6c, 0x33, 0x63, 0x73, 0x64, 0x12, 0x1c, 0x0a, 0x09, 0x6c, 0x65,
-	0x76, 0x65, 0x6c, 0x34, 0x63, 0x73, 0x64, 0x18, 0x4d, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x6c,
+	0x76, 0x65, 0x6c, 0x34, 0x63, 0x73, 0x64, 0x18, 0x4d, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6c,
 	0x65, 0x76, 0x65, 0x6c, 0x34, 0x63, 0x73, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x65, 0x72, 0x6d,
 	0x18, 0x4e, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x74, 0x65, 0x72, 0x6d, 0x12, 0x30, 0x0a, 0x13,
 	0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x44, 0x65, 0x73, 0x74, 0x72, 0x6f, 0x79, 0x52,

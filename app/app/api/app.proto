@@ -339,10 +339,10 @@ message UserInfoReply {
 	int64 level2price = 71;
 	int64 level3price = 72;
 	int64 level4price = 73;
-	int64 level1csd = 74;
-	int64 level2csd = 75;
-	int64 level3csd = 76;
-	int64 level4csd = 77;
+	string level1csd = 74;
+	string level2csd = 75;
+	string level3csd = 76;
+	string level4csd = 77;
 	int64 term = 78;
 	int64 withdrawDestroyRate = 80;
 	int64 withdrawRate = 81;

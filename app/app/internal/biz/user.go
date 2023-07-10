@@ -462,10 +462,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		level2Price         int64
 		level3Price         int64
 		level4Price         int64
-		level1csd           int64
-		level2csd           int64
-		level3csd           int64
-		level4csd           int64
+		csdPrice            int64
 		withdrawDestroyRate int64
 		withdrawRate        int64
 		term                int64
@@ -477,25 +474,16 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 
 	// 配置
 	configs, err = uuc.configRepo.GetConfigByKeys(ctx,
-		"term", "level_2_price", "level_1_price", "level_3_price", "level_4_price", "level_1_csd", "level_2_csd",
-		"level_3_csd", "level_4_csd", "withdraw_destroy_rate", "withdraw_rate",
+		"term", "level_2_price", "level_1_price", "level_3_price", "level_4_price", "csdPrice",
+		"withdraw_destroy_rate", "withdraw_rate",
 	)
 	if nil != configs {
 		for _, vConfig := range configs {
 			if "term" == vConfig.KeyName {
 				term, _ = strconv.ParseInt(vConfig.Value, 10, 64)
 			}
-			if "level_4_csd" == vConfig.KeyName {
-				level4csd, _ = strconv.ParseInt(vConfig.Value, 10, 64)
-			}
-			if "level_3_csd" == vConfig.KeyName {
-				level3csd, _ = strconv.ParseInt(vConfig.Value, 10, 64)
-			}
-			if "level_2_csd" == vConfig.KeyName {
-				level2csd, _ = strconv.ParseInt(vConfig.Value, 10, 64)
-			}
-			if "level_1_csd" == vConfig.KeyName {
-				level1csd, _ = strconv.ParseInt(vConfig.Value, 10, 64)
+			if "csd_price" == vConfig.KeyName {
+				csdPrice, _ = strconv.ParseInt(vConfig.Value, 10, 64)
 			}
 			if "level_4_price" == vConfig.KeyName {
 				level4Price, _ = strconv.ParseInt(vConfig.Value, 10, 64)
@@ -804,14 +792,14 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		AllRewardList:                     allRewardList,
 		RecommendAddressList:              recommendAddresses,
 		Term:                              term,
-		Level1Csd:                         level1csd,
 		Level1Price:                       level1Price,
-		Level2Csd:                         level2csd,
-		Level3Csd:                         level3csd,
 		Level2Price:                       level2Price,
 		Level3Price:                       level3Price,
-		Level4Csd:                         level4csd,
+		Level1Csd:                         fmt.Sprintf("%.4f", float64(level1Price)*float64(csdPrice)/float64(1000)),
 		Level4Price:                       level4Price,
+		Level2Csd:                         fmt.Sprintf("%.4f", float64(level1Price)*float64(csdPrice)/float64(1000)),
+		Level3Csd:                         fmt.Sprintf("%.4f", float64(level1Price)*float64(csdPrice)/float64(1000)),
+		Level4Csd:                         fmt.Sprintf("%.4f", float64(level1Price)*float64(csdPrice)/float64(1000)),
 		WithdrawRate:                      withdrawRate,
 		WithdrawDestroyRate:               withdrawDestroyRate,
 	}, nil
