@@ -861,8 +861,14 @@ func (ub UserBalanceRepo) GetUserBalanceLock(ctx context.Context, userId int64) 
 func (ub *UserBalanceRepo) Trade(ctx context.Context, userId int64, amount int64, amountB int64, amountRel int64, amountBRel int64, tmpRecommendUserIdsInt []int64) error {
 	var err error
 	if res := ub.data.DB(ctx).Table("user_balance_lock").
-		Where("user_id=? and balance_usdt>=? and balance_dhb>=?", userId, amount, amountB).
-		Updates(map[string]interface{}{"balance_usdt": gorm.Expr("balance_usdt - ?", amount), "balance_dhb": gorm.Expr("balance_dhb - ?", amountB)}); 0 == res.RowsAffected || nil != res.Error {
+		Where("user_id=? and balance_usdt>=?", userId, amount).
+		Updates(map[string]interface{}{"balance_usdt": gorm.Expr("balance_usdt - ?", amount)}); 0 == res.RowsAffected || nil != res.Error {
+		return errors.NotFound("user balance err", "user balance error")
+	}
+
+	if res := ub.data.DB(ctx).Table("user_balance").
+		Where("user_id=? and balance_dhb>=?", userId, amountB-amountBRel).
+		Updates(map[string]interface{}{"balance_dhb": gorm.Expr("balance_dhb - ?", amountB-amountBRel)}); 0 == res.RowsAffected || nil != res.Error {
 		return errors.NotFound("user balance err", "user balance error")
 	}
 
@@ -904,7 +910,7 @@ func (ub *UserBalanceRepo) Trade(ctx context.Context, userId int64, amount int64
 
 	if err = ub.data.DB(ctx).Table("user_balance").
 		Where("user_id=?", userId).
-		Updates(map[string]interface{}{"balance_usdt": gorm.Expr("balance_usdt + ?", amountRel), "balance_dhb": gorm.Expr("balance_dhb + ?", amountBRel)}).Error; nil != err {
+		Updates(map[string]interface{}{"balance_usdt": gorm.Expr("balance_usdt + ?", amountRel)}).Error; nil != err {
 		return errors.NotFound("user balance err", "user balance not found")
 	}
 

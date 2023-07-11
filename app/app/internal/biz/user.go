@@ -1188,6 +1188,7 @@ func (uuc *UserUseCase) Tran(ctx context.Context, req *v1.TranRequest, user *Use
 func (uuc *UserUseCase) Trade(ctx context.Context, req *v1.WithdrawRequest, user *User, amount int64, amountB int64) (*v1.WithdrawReply, error) {
 	var (
 		userBalance         *UserBalance
+		userBalance2        *UserBalance
 		configs             []*Config
 		userRecommend       *UserRecommend
 		withdrawRate        int64
@@ -1214,13 +1215,18 @@ func (uuc *UserUseCase) Trade(ctx context.Context, req *v1.WithdrawRequest, user
 		return nil, err
 	}
 
+	userBalance2, err = uuc.ubRepo.GetUserBalance(ctx, user.ID)
+	if nil != err {
+		return nil, err
+	}
+
 	if userBalance.BalanceUsdt < amount {
 		return &v1.WithdrawReply{
 			Status: "csd锁定部分的余额不足",
 		}, nil
 	}
 
-	if userBalance.BalanceDhb < amountB {
+	if userBalance2.BalanceDhb < amountB {
 		return &v1.WithdrawReply{
 			Status: "hbs锁定部分的余额不足",
 		}, nil
