@@ -324,15 +324,15 @@ func (a *AppService) Trade(ctx context.Context, req *v1.WithdrawRequest) (*v1.Wi
 	amountFloat, _ := strconv.ParseFloat(req.SendBody.Amount, 10)
 	amountFloatCsd = amountFloat * 10000000000
 	amount, _ := strconv.ParseInt(strconv.FormatFloat(amountFloatCsd, 'f', -1, 64), 10, 64)
-	if 100000000000 > amount {
+	if 10000000000 > amount {
 		return &v1.WithdrawReply{
 			Status: "fail",
 		}, nil
 	}
 
-	if 0 != amount%10 {
-		return nil, errors.New(500, "ERROR_TOKEN", "10的整数倍")
-	}
+	//if 0 != amount%10 {
+	//	return nil, errors.New(500, "ERROR_TOKEN", "10的整数倍")
+	//}
 
 	csd, err = GetAmountOut(req.SendBody.Amount + "000000000000000000")
 	if nil != err {
