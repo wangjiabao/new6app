@@ -264,16 +264,13 @@ func (a *AppService) GetTrade(ctx context.Context, req *v1.GetTradeRequest) (*v1
 	amountFloat, _ := strconv.ParseFloat(req.SendBody.Amount, 10)
 	amountFloatCsd = amountFloat * 10000000000
 	amount, _ := strconv.ParseInt(strconv.FormatFloat(amountFloatCsd, 'f', -1, 64), 10, 64)
-	if 100000000000 > amount {
+	if 10000000000 > amount {
 		return nil, errors.New(500, "ERROR_TOKEN", "输入错误")
-	}
-
-	if 0 != amount%10 {
-		return nil, errors.New(500, "ERROR_TOKEN", "10的整数倍")
 	}
 
 	csd, err = GetAmountOut(req.SendBody.Amount + "000000000000000000")
 	if nil != err {
+		fmt.Println(2)
 		return nil, errors.New(500, "ERROR_TOKEN", "查询币价错误")
 	}
 	lenValue := len(csd)
@@ -287,6 +284,7 @@ func (a *AppService) GetTrade(ctx context.Context, req *v1.GetTradeRequest) (*v1
 
 	hbs, err = requestHbsResult()
 	if nil != err {
+		fmt.Println(1)
 		return nil, errors.New(500, "ERROR_TOKEN", "查询币价错误")
 	}
 	amountFloatHbs = amountFloat * 10
