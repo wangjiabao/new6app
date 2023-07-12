@@ -463,6 +463,7 @@ func GetAmountOut(strAmount string) (string, error) {
 
 	bals, err := instance.GetAmountsOut(&bind.CallOpts{}, amount, addresses)
 	if err != nil {
+		fmt.Println(err)
 		return "", err
 	}
 
