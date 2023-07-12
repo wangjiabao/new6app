@@ -1126,16 +1126,19 @@ func (uuc *UserUseCase) Tran(ctx context.Context, req *v1.TranRequest, user *Use
 	if "" != userRecommend.RecommendCode {
 		tmpRecommendUserIds = strings.Split(userRecommend.RecommendCode, "D")
 	}
-	lastKey := len(tmpRecommendUserIds) - 1
-	if 1 <= lastKey {
-		for i := 0; i <= lastKey; i++ {
-			// 有占位信息，推荐人推荐人的上一代
-			if lastKey-i <= 0 {
-				break
-			}
 
-			tmpMyTopUserRecommendUserId, _ := strconv.ParseInt(tmpRecommendUserIds[lastKey-i], 10, 64) // 最后一位是直推人
-			tmpRecommendUserIdsInt = append(tmpRecommendUserIdsInt, tmpMyTopUserRecommendUserId)
+	if 1 < len(tmpRecommendUserIds) {
+		lastKey := len(tmpRecommendUserIds) - 1
+		if 1 <= lastKey {
+			for i := 0; i <= lastKey; i++ {
+				// 有占位信息，推荐人推荐人的上一代
+				if lastKey-i <= 0 {
+					break
+				}
+
+				tmpMyTopUserRecommendUserId, _ := strconv.ParseInt(tmpRecommendUserIds[lastKey-i], 10, 64) // 最后一位是直推人
+				tmpRecommendUserIdsInt = append(tmpRecommendUserIdsInt, tmpMyTopUserRecommendUserId)
+			}
 		}
 	}
 
@@ -1148,16 +1151,19 @@ func (uuc *UserUseCase) Tran(ctx context.Context, req *v1.TranRequest, user *Use
 	if "" != userRecommend2.RecommendCode {
 		toUserTmpRecommendUserIds = strings.Split(userRecommend2.RecommendCode, "D")
 	}
-	lastKey2 := len(toUserTmpRecommendUserIds) - 1
-	if 1 <= lastKey2 {
-		for i := 0; i <= lastKey2; i++ {
-			// 有占位信息，推荐人推荐人的上一代
-			if lastKey2-i <= 0 {
-				break
-			}
 
-			toUserTmpMyTopUserRecommendUserId, _ := strconv.ParseInt(toUserTmpRecommendUserIds[lastKey-i], 10, 64) // 最后一位是直推人
-			toUserTmpRecommendUserIdsInt = append(toUserTmpRecommendUserIdsInt, toUserTmpMyTopUserRecommendUserId)
+	if 1 < len(toUserTmpRecommendUserIds) {
+		lastKey2 := len(toUserTmpRecommendUserIds) - 1
+		if 1 <= lastKey2 {
+			for i := 0; i <= lastKey2; i++ {
+				// 有占位信息，推荐人推荐人的上一代
+				if lastKey2-i <= 0 {
+					break
+				}
+
+				toUserTmpMyTopUserRecommendUserId, _ := strconv.ParseInt(toUserTmpRecommendUserIds[lastKey-i], 10, 64) // 最后一位是直推人
+				toUserTmpRecommendUserIdsInt = append(toUserTmpRecommendUserIdsInt, toUserTmpMyTopUserRecommendUserId)
+			}
 		}
 	}
 
