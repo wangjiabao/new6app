@@ -357,8 +357,6 @@ func (a *AppService) Trade(ctx context.Context, req *v1.WithdrawRequest) (*v1.Wi
 		return nil, errors.New(500, "ERROR_TOKEN", "币价错误")
 	}
 
-	fmt.Println(tmpValue, amountB)
-
 	return a.uuc.Trade(ctx, req, &biz.User{
 		ID: userId,
 	}, tmpValue, amountB)
