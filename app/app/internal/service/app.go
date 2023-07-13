@@ -357,7 +357,7 @@ func (a *AppService) Trade(ctx context.Context, req *v1.WithdrawRequest) (*v1.Wi
 		return nil, errors.New(500, "ERROR_TOKEN", "币价错误")
 	}
 
-	csdTrade, err = GetAmountOut(strconv.FormatInt(amount+amount*10, 10) + "000000000000000000")
+	csdTrade, err = GetAmountOut(strconv.FormatInt((amount+amount*10)/10000000000, 10) + "000000000000000000")
 	if nil != err {
 		return nil, errors.New(500, "ERROR_TOKEN", "查询币价错误")
 	}
