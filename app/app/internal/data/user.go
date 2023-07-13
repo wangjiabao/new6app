@@ -26,6 +26,7 @@ type Trade struct {
 	RelAmountCsd int64     `gorm:"type:bigint"`
 	AmountHbs    int64     `gorm:"type:bigint"`
 	RelAmountHbs int64     `gorm:"type:bigint"`
+	CsdReward    int64     `gorm:"type:bigint"`
 	Status       string    `gorm:"type:varchar(45);not null"`
 	CreatedAt    time.Time `gorm:"type:datetime;not null"`
 	UpdatedAt    time.Time `gorm:"type:datetime;not null"`
@@ -858,7 +859,7 @@ func (ub UserBalanceRepo) GetUserBalanceLock(ctx context.Context, userId int64) 
 }
 
 // Trade .
-func (ub *UserBalanceRepo) Trade(ctx context.Context, userId int64, amount int64, amountB int64, amountRel int64, amountBRel int64, tmpRecommendUserIdsInt []int64) error {
+func (ub *UserBalanceRepo) Trade(ctx context.Context, userId int64, amount int64, amountB int64, amountRel int64, amountBRel int64, tmpRecommendUserIdsInt []int64, amount2 int64) error {
 	var err error
 	if res := ub.data.DB(ctx).Table("user_balance_lock").
 		Where("user_id=? and balance_usdt>=?", userId, amount).
@@ -893,6 +894,7 @@ func (ub *UserBalanceRepo) Trade(ctx context.Context, userId int64, amount int64
 	trade.AmountHbs = amountB
 	trade.RelAmountCsd = amountRel
 	trade.RelAmountHbs = amountBRel
+	trade.CsdReward = amount2
 	trade.UserId = userId
 	trade.Status = "default"
 	err = ub.data.DB(ctx).Table("trade").Create(&trade).Error

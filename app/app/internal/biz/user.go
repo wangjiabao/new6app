@@ -218,7 +218,7 @@ type UserBalanceRepo interface {
 	GetBalanceRewardByUserId(ctx context.Context, userId int64) ([]*BalanceReward, error)
 
 	GetUserBalanceLock(ctx context.Context, userId int64) (*UserBalance, error)
-	Trade(ctx context.Context, userId int64, amount int64, amountB int64, amountRel int64, amountBRel int64, tmpRecommendUserIdsInt []int64) error
+	Trade(ctx context.Context, userId int64, amount int64, amountB int64, amountRel int64, amountBRel int64, tmpRecommendUserIdsInt []int64, amount2 int64) error
 }
 
 type UserRecommendRepo interface {
@@ -1191,7 +1191,7 @@ func (uuc *UserUseCase) Tran(ctx context.Context, req *v1.TranRequest, user *Use
 	}, nil
 }
 
-func (uuc *UserUseCase) Trade(ctx context.Context, req *v1.WithdrawRequest, user *User, amount int64, amountB int64) (*v1.WithdrawReply, error) {
+func (uuc *UserUseCase) Trade(ctx context.Context, req *v1.WithdrawRequest, user *User, amount int64, amountB int64, amount2 int64) (*v1.WithdrawReply, error) {
 	var (
 		userBalance         *UserBalance
 		userBalance2        *UserBalance
@@ -1268,7 +1268,7 @@ func (uuc *UserUseCase) Trade(ctx context.Context, req *v1.WithdrawRequest, user
 
 	if err = uuc.tx.ExecTx(ctx, func(ctx context.Context) error { // 事务
 
-		err = uuc.ubRepo.Trade(ctx, user.ID, amount, amountB, amount-amount/100*(withdrawRate+withdrawDestroyRate), amountB-amountB/100*(withdrawRate+withdrawDestroyRate), tmpRecommendUserIdsInt) // 提现
+		err = uuc.ubRepo.Trade(ctx, user.ID, amount, amountB, amount-amount/100*(withdrawRate+withdrawDestroyRate), amountB-amountB/100*(withdrawRate+withdrawDestroyRate), tmpRecommendUserIdsInt, amount2) // 提现
 		if nil != err {
 			return err
 		}
