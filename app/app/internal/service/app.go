@@ -365,7 +365,7 @@ func (a *AppService) Trade(ctx context.Context, req *v1.WithdrawRequest) (*v1.Wi
 	if 10 > lenCsdTradeValue {
 		return nil, errors.New(500, "ERROR_TOKEN", "币价过低")
 	}
-	tmpValue2, _ = strconv.ParseInt(csd[0:lenCsdTradeValue-8], 10, 64)
+	tmpValue2, _ = strconv.ParseInt(csdTrade[0:lenCsdTradeValue-8], 10, 64)
 	if 0 == tmpValue2 {
 		return nil, errors.New(500, "ERROR_TOKEN", "币价过低")
 	}
