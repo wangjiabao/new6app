@@ -307,7 +307,6 @@ func (a *AppService) Trade(ctx context.Context, req *v1.WithdrawRequest) (*v1.Wi
 		tmpValue       int64
 		tmpValue2      int64
 		hbs            float64
-		csdTrade       string
 		amountFloatHbs float64
 		amountFloatCsd float64
 		csd            string
@@ -357,18 +356,18 @@ func (a *AppService) Trade(ctx context.Context, req *v1.WithdrawRequest) (*v1.Wi
 		return nil, errors.New(500, "ERROR_TOKEN", "币价错误")
 	}
 
-	csdTrade, err = GetAmountOut(strconv.FormatInt((amount+amount*10)/10000000000, 10) + "000000000000000000")
-	if nil != err {
-		return nil, errors.New(500, "ERROR_TOKEN", "查询币价错误")
-	}
-	lenCsdTradeValue := len(csdTrade)
-	if 10 > lenCsdTradeValue {
-		return nil, errors.New(500, "ERROR_TOKEN", "币价过低")
-	}
-	tmpValue2, _ = strconv.ParseInt(csdTrade[0:lenCsdTradeValue-8], 10, 64)
-	if 0 == tmpValue2 {
-		return nil, errors.New(500, "ERROR_TOKEN", "币价过低")
-	}
+	//csdTrade, err = GetAmountOut(strconv.FormatInt((amount+amount*10)/10000000000, 10) + "000000000000000000")
+	//if nil != err {
+	//	return nil, errors.New(500, "ERROR_TOKEN", "查询币价错误")
+	//}
+	//lenCsdTradeValue := len(csdTrade)
+	//if 10 > lenCsdTradeValue {
+	//	return nil, errors.New(500, "ERROR_TOKEN", "币价过低")
+	//}
+	//tmpValue2, _ = strconv.ParseInt(csdTrade[0:lenCsdTradeValue-8], 10, 64)
+	//if 0 == tmpValue2 {
+	//	return nil, errors.New(500, "ERROR_TOKEN", "币价过低")
+	//}
 
 	return a.uuc.Trade(ctx, req, &biz.User{
 		ID: userId,

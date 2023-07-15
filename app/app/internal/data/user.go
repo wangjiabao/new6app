@@ -889,12 +889,21 @@ func (ub *UserBalanceRepo) Trade(ctx context.Context, userId int64, amount int64
 		return err
 	}
 
+	var userBalanceRecode1 UserBalanceRecord
+	userBalanceRecode1.Balance = userBalance.BalanceDhb
+	userBalanceRecode1.UserId = userBalance.UserId
+	userBalanceRecode1.Type = "trade_dhb"
+	userBalanceRecode1.Amount = amount
+	err = ub.data.DB(ctx).Table("user_balance_record").Create(&userBalanceRecode1).Error
+	if err != nil {
+		return err
+	}
+
 	var trade Trade
 	trade.AmountCsd = amount
 	trade.AmountHbs = amountB
 	trade.RelAmountCsd = amountRel
 	trade.RelAmountHbs = amountBRel
-	trade.CsdReward = amount2
 	trade.UserId = userId
 	trade.Status = "default"
 	err = ub.data.DB(ctx).Table("trade").Create(&trade).Error
