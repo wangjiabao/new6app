@@ -698,7 +698,13 @@ components:
                     format: int64
                 total:
                     type: string
+                totalHbs:
+                    type: string
                 recommendTotal:
+                    type: string
+                recommendTotalLocation:
+                    type: string
+                recommendHbsTotal:
                     type: string
                 usdt:
                     type: string
@@ -711,6 +717,8 @@ components:
                 amountB:
                     type: string
                 recommendLevelTotal:
+                    type: string
+                recommendLevelHbsTotal:
                     type: string
                 feeDaily:
                     type: string
@@ -731,6 +739,8 @@ components:
                     type: string
                 recommendSecondTotal:
                     type: string
+                recommendSecondHbsTotal:
+                    type: string
                 areaMaxAmount:
                     type: string
                 undo:
@@ -743,6 +753,8 @@ components:
                 areaName:
                     type: string
                 recommendTeamTotal:
+                    type: string
+                recommendTeamHbsTotal:
                     type: string
                 locationDailyRewardTotal:
                     type: string
@@ -778,6 +790,10 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/UserInfoReply_List5'
+                recommendLocationList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/UserInfoReply_List14'
                 secondRecommendList:
                     type: array
                     items:
@@ -846,12 +862,23 @@ components:
                     type: string
                 Amount:
                     type: string
+        UserInfoReply_List14:
+            type: object
+            properties:
+                createdAt:
+                    type: string
+                amount:
+                    type: string
+                amountB:
+                    type: string
         UserInfoReply_List2:
             type: object
             properties:
                 createdAt:
                     type: string
                 amount:
+                    type: string
+                amountB:
                     type: string
         UserInfoReply_List4:
             type: object
@@ -860,6 +887,8 @@ components:
                     type: string
                 amount:
                     type: string
+                amountB:
+                    type: string
         UserInfoReply_List5:
             type: object
             properties:
@@ -867,12 +896,16 @@ components:
                     type: string
                 amount:
                     type: string
+                amountB:
+                    type: string
         UserInfoReply_List6:
             type: object
             properties:
                 createdAt:
                     type: string
                 amount:
+                    type: string
+                amountB:
                     type: string
         UserInfoReply_List7:
             type: object
@@ -888,12 +921,16 @@ components:
                     type: string
                 amount:
                     type: string
+                amountB:
+                    type: string
         UserInfoReply_List9:
             type: object
             properties:
                 createdAt:
                     type: string
                 amount:
+                    type: string
+                amountB:
                     type: string
         WithdrawListReply:
             type: object

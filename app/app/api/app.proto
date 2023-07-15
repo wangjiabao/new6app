@@ -246,13 +246,17 @@ message UserInfoReply {
 	int64 recommendNum = 9; // 历史推荐人数
 	int64 recommendTeamNum = 10; // 团队人数
 	string total = 11; // 总收益
+	string totalHbs = 98; // hbs总收益
 	string recommendTotal = 15; // 直推奖总
+	string recommendTotalLocation = 92; // 投资直推奖总
+	string recommendHbsTotal = 93; // hbs直推奖总
 	string usdt = 20; // csd地址
 	string csd = 23; // csd地址
 	string hbs = 21; // hbs地址
 	string account = 22; // 收款账户地址
 	string amountB = 27;
 	string recommendLevelTotal = 28; // 平级奖总
+	string recommendLevelHbsTotal = 94; // hbs平级奖总
 	string feeDaily = 29;
 	string withdrawAmount = 30;
 	string userCount = 31;
@@ -262,12 +266,14 @@ message UserInfoReply {
 	string todayReward = 36;
 	string areaAmount = 42;
 	string recommendSecondTotal = 43; // 间推奖总
+	string recommendSecondHbsTotal = 95; // hbs间推奖总
 	string areaMaxAmount = 44;
 	int64  undo = 45;
 	string AmountC = 46;
 	string AmountBalanceReward = 47;
 	string areaName = 48;
 	string recommendTeamTotal = 49; // 团队奖总
+	string recommendTeamHbsTotal = 96; // hbs团队奖总
 	string locationDailyRewardTotal = 50; // 投资奖总
 	string dailyBalanceRewardTotal = 51;
 
@@ -291,30 +297,42 @@ message UserInfoReply {
 	message List2 {
 		string created_at = 1;
 		string amount = 2;
+		string amountB = 3;
 	}
 
 	repeated List4 locationDailyRewardList = 55; // 投资每日释放受益列表
 	message List4 {
 		string created_at = 1;
 		string amount = 2;
+		string amountB = 3;
 	}
 
 	repeated List5 recommendList = 56; // 直推受益列表
 	message List5 {
 		string created_at = 1;
 		string amount = 2;
+		string amountB = 3;
+	}
+
+	repeated List14 recommendLocationList = 99; // 投资直推受益列表
+	message List14 {
+		string created_at = 1;
+		string amount = 2;
+		string amountB = 3;
 	}
 
 	repeated List6 secondRecommendList = 57; // 间推受益列表
 	message List6 {
 		string created_at = 1;
 		string amount = 2;
+		string amountB = 3;
 	}
 
 	repeated List8 levelRecommendList = 54; // 平级受益列表
 	message List8 {
 		string created_at = 1;
 		string amount = 2;
+		string amountB = 3;
 	}
 
 	repeated List7 teamAddressList = 65; // 团队列表
@@ -333,6 +351,7 @@ message UserInfoReply {
 	message List9 {
 		string created_at = 1;
 		string amount = 2;
+		string amountB = 3;
 	}
 
 	int64 level1price = 70;

@@ -136,6 +136,7 @@ type Reward struct {
 	ID               int64     `gorm:"primarykey;type:int"`
 	UserId           int64     `gorm:"type:int;not null"`
 	Amount           int64     `gorm:"type:bigint;not null"`
+	AmountB          int64     `gorm:"type:bigint;not null"`
 	BalanceRecordId  int64     `gorm:"type:int;not null"`
 	Type             string    `gorm:"type:varchar(45);not null"`
 	TypeRecordId     int64     `gorm:"type:int;not null"`
@@ -2042,6 +2043,7 @@ func (ub *UserBalanceRepo) GetUserRewardByUserId(ctx context.Context, userId int
 			ReasonLocationId: reward.ReasonLocationId,
 			LocationType:     reward.LocationType,
 			CreatedAt:        reward.CreatedAt,
+			AmountB:          reward.AmountB,
 		})
 	}
 	return res, nil

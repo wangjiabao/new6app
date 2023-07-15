@@ -145,6 +145,7 @@ type Reward struct {
 	ID               int64
 	UserId           int64
 	Amount           int64
+	AmountB          int64
 	BalanceRecordId  int64
 	Type             string
 	TypeRecordId     int64
@@ -641,11 +642,18 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		recommendList                     []*v1.UserInfoReply_List5
 		secondRecommendList               []*v1.UserInfoReply_List6
 		levelRecommendList                []*v1.UserInfoReply_List8
+		recommendLocationList             []*v1.UserInfoReply_List14
 		yesterdayRecommendTeamTotal       int64
 		yesterdayRecommendAreaTotal       int64
 		yesterdayLocationDailyRewardTotal int64
 		yesterdayRecommendTotal           int64
 		yesterdayDailyBalanceRewardTotal  int64
+		recommendTeamHbsTotal             int64
+		userRewardHbsTotal                int64
+		recommendHbsTotal                 int64
+		recommendSecondHbsTotal           int64
+		recommendLevelHbsTotal            int64
+		recommendLocationTotal            int64
 	)
 
 	var startDate time.Time
@@ -667,46 +675,58 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 
 			if "recommend_team" == vUserReward.Reason {
 				recommendTeamTotal += vUserReward.Amount
+				recommendTeamHbsTotal += vUserReward.AmountB
 				if vUserReward.CreatedAt.Before(yesterdayEnd) && vUserReward.CreatedAt.After(yesterdayStart) {
 					yesterdayRecommendTeamTotal += vUserReward.Amount
 				}
 				recommendTeamList = append(recommendTeamList, &v1.UserInfoReply_List2{
 					CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
 					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
+					AmountB:   fmt.Sprintf("%.2f", float64(vUserReward.AmountB)/float64(10000000000)),
 				})
 				userRewardTotal += vUserReward.Amount
+				userRewardHbsTotal += vUserReward.AmountB
 				allRewardList = append(allRewardList, &v1.UserInfoReply_List9{
 					CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
 					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
+					AmountB:   fmt.Sprintf("%.2f", float64(vUserReward.AmountB)/float64(10000000000)),
 				})
 
 			} else if "second_recommend" == vUserReward.Reason {
 				recommendSecondTotal += vUserReward.Amount
+				recommendSecondHbsTotal += vUserReward.AmountB
 				if vUserReward.CreatedAt.Before(yesterdayEnd) && vUserReward.CreatedAt.After(yesterdayStart) {
 					yesterdayRecommendAreaTotal += vUserReward.Amount
 				}
 				secondRecommendList = append(secondRecommendList, &v1.UserInfoReply_List6{
 					CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
 					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
+					AmountB:   fmt.Sprintf("%.2f", float64(vUserReward.AmountB)/float64(10000000000)),
 				})
 				userRewardTotal += vUserReward.Amount
+				userRewardHbsTotal += vUserReward.AmountB
 				allRewardList = append(allRewardList, &v1.UserInfoReply_List9{
 					CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
 					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
+					AmountB:   fmt.Sprintf("%.2f", float64(vUserReward.AmountB)/float64(10000000000)),
 				})
 			} else if "level_recommend" == vUserReward.Reason {
 				recommendLevelTotal += vUserReward.Amount
+				recommendLevelHbsTotal += vUserReward.AmountB
 				if vUserReward.CreatedAt.Before(yesterdayEnd) && vUserReward.CreatedAt.After(yesterdayStart) {
 					yesterdayRecommendAreaTotal += vUserReward.Amount
 				}
 				levelRecommendList = append(levelRecommendList, &v1.UserInfoReply_List8{
 					CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
 					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
+					AmountB:   fmt.Sprintf("%.2f", float64(vUserReward.AmountB)/float64(10000000000)),
 				})
 				userRewardTotal += vUserReward.Amount
+				userRewardHbsTotal += vUserReward.AmountB
 				allRewardList = append(allRewardList, &v1.UserInfoReply_List9{
 					CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
 					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
+					AmountB:   fmt.Sprintf("%.2f", float64(vUserReward.AmountB)/float64(10000000000)),
 				})
 			} else if "location_daily" == vUserReward.Reason {
 				locationDailyRewardTotal += vUserReward.Amount
@@ -723,18 +743,35 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
 				})
 			} else if "recommend" == vUserReward.Reason {
-				recommendTotal += vUserReward.Amount
+
+				if "location" == vUserReward.Type {
+					recommendLocationList = append(recommendLocationList, &v1.UserInfoReply_List14{
+						CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
+						Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
+						AmountB:   fmt.Sprintf("%.2f", float64(vUserReward.AmountB)/float64(10000000000)),
+					})
+
+					recommendLocationTotal += vUserReward.Amount
+				} else {
+					recommendHbsTotal += vUserReward.AmountB
+					recommendList = append(recommendList, &v1.UserInfoReply_List5{
+						CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
+						Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
+						AmountB:   fmt.Sprintf("%.2f", float64(vUserReward.AmountB)/float64(10000000000)),
+					})
+
+					userRewardHbsTotal += vUserReward.AmountB
+					recommendTotal += vUserReward.Amount
+				}
+
 				if vUserReward.CreatedAt.Before(yesterdayEnd) && vUserReward.CreatedAt.After(yesterdayStart) {
 					yesterdayRecommendTotal += vUserReward.Amount
 				}
-				recommendList = append(recommendList, &v1.UserInfoReply_List5{
-					CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
-					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
-				})
 				userRewardTotal += vUserReward.Amount
 				allRewardList = append(allRewardList, &v1.UserInfoReply_List9{
 					CreatedAt: vUserReward.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
 					Amount:    fmt.Sprintf("%.2f", float64(vUserReward.Amount)/float64(10000000000)),
+					AmountB:   fmt.Sprintf("%.2f", float64(vUserReward.AmountB)/float64(10000000000)),
 				})
 			}
 		}
@@ -802,6 +839,13 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		Level4Csd:                         fmt.Sprintf("%.4f", float64(level4Price*csdPrice)/1000),
 		WithdrawRate:                      withdrawRate,
 		WithdrawDestroyRate:               withdrawDestroyRate,
+		TotalHbs:                          fmt.Sprintf("%.2f", float64(userRewardHbsTotal)/float64(10000000000)),
+		RecommendHbsTotal:                 fmt.Sprintf("%.2f", float64(recommendHbsTotal)/float64(10000000000)),
+		RecommendLevelHbsTotal:            fmt.Sprintf("%.2f", float64(recommendLevelHbsTotal)/float64(10000000000)),
+		RecommendTeamHbsTotal:             fmt.Sprintf("%.2f", float64(recommendTeamHbsTotal)/float64(10000000000)),
+		RecommendSecondHbsTotal:           fmt.Sprintf("%.2f", float64(recommendSecondHbsTotal)/float64(10000000000)),
+		RecommendTotalLocation:            fmt.Sprintf("%.2f", float64(recommendLocationTotal)/float64(10000000000)),
+		RecommendLocationList:             recommendLocationList,
 	}, nil
 }
 
