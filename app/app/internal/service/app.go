@@ -456,10 +456,10 @@ func (a *AppService) AdminWithdrawEth(ctx context.Context, req *v1.AdminWithdraw
 	return &v1.AdminWithdrawEthReply{}, nil
 }
 
-func GetAmountOut1(strAmount string) (string, error) {
+func GetAmountOut(strAmount string) (string, error) {
 
 	var balString string
-	url1 := "https://bsc-dataseed.binance.org/"
+	url1 := "https://bnb-bscnews.rpc.blxrbdn.com/"
 
 	for i := 4; i < 16; i++ {
 		client, err := ethclient.Dial(url1)
@@ -483,7 +483,7 @@ func GetAmountOut1(strAmount string) (string, error) {
 			if 0 == i%4 {
 				url1 = "https://bsc-dataseed4.binance.org"
 			} else if 1 == i%4 {
-				url1 = "https://bsc-dataseed2.binance.org"
+				url1 = "https://bsc-dataseed1.binance.org"
 			} else if 2 == i%4 {
 				url1 = "https://bsc-dataseed.binance.org"
 			} else if 3 == i%4 {
@@ -499,10 +499,10 @@ func GetAmountOut1(strAmount string) (string, error) {
 	return balString, nil
 }
 
-func GetAmountOut(strAmount string) (string, error) {
+func GetAmountOut1(strAmount string) (string, error) {
 
 	var balString string
-	url1 := "https://bsc-dataseed.binance.org/"
+	url1 := "https://bnb-bscnews.rpc.blxrbdn.com/"
 
 	client, err := ethclient.Dial(url1)
 	if err != nil {
