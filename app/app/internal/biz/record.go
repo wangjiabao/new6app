@@ -21,6 +21,7 @@ type Location struct {
 	UserId       int64
 	Status       string
 	CurrentLevel int64
+	Usdt         int64
 	Current      int64
 	CurrentMax   int64
 	Row          int64
@@ -61,6 +62,7 @@ type LocationRepo interface {
 	GetLocationsByUserId(ctx context.Context, userId int64) ([]*LocationNew, error)
 	GetRewardLocationByRowOrCol(ctx context.Context, row int64, col int64, locationRowConfig int64) ([]*Location, error)
 	GetRewardLocationByIds(ctx context.Context, ids ...int64) (map[int64]*Location, error)
+	GetLocationMapByIds(ctx context.Context, userIds ...int64) (map[int64][]*Location, error)
 	GetLocationByIds(ctx context.Context, userIds ...int64) ([]*Location, error)
 	UpdateLocation(ctx context.Context, id int64, status string, current int64, stopDate time.Time) error
 	GetLocations(ctx context.Context, b *Pagination, userId int64) ([]*Location, error, int64)

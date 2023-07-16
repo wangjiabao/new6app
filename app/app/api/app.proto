@@ -339,12 +339,14 @@ message UserInfoReply {
 	message List7 {
 		string address = 1;
 		string Amount = 2;
+		string Usdt = 3;
 	}
 
 	repeated List11 recommendAddressList = 66; // 团队列表
 	message List11 {
 		string address = 1;
 		string Amount = 2;
+		string Usdt = 3;
 	}
 
 	repeated List9 allRewardList = 67;

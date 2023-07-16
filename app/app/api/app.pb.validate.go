@@ -7954,6 +7954,8 @@ func (m *UserInfoReply_List7) validate(all bool) error {
 
 	// no validation rules for Amount
 
+	// no validation rules for Usdt
+
 	if len(errors) > 0 {
 		return UserInfoReply_List7MultiError(errors)
 	}
@@ -8059,6 +8061,8 @@ func (m *UserInfoReply_List11) validate(all bool) error {
 	// no validation rules for Address
 
 	// no validation rules for Amount
+
+	// no validation rules for Usdt
 
 	if len(errors) > 0 {
 		return UserInfoReply_List11MultiError(errors)

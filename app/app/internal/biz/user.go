@@ -598,6 +598,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		teamUserInfos      map[int64]*UserInfo
 		teamUserAddresses  []*v1.UserInfoReply_List7
 		recommendAddresses []*v1.UserInfoReply_List11
+		teamLocations      map[int64][]*Location
 		recommendUserIds   map[int64]int64
 	)
 	recommendUserIds = make(map[int64]int64, 0)
@@ -613,23 +614,34 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		// 用户信息
 		recommendTeamNum = int64(len(userRecommends))
 		teamUsers, _ = uuc.repo.GetUserByUserIds(ctx, teamUserIds...)
-		teamUserInfos, _ = uuc.uiRepo.GetUserInfoByUserIds(ctx)
+		teamUserInfos, _ = uuc.uiRepo.GetUserInfoByUserIds(ctx, teamUserIds...)
+		teamLocations, _ = uuc.locationRepo.GetLocationMapByIds(ctx, teamUserIds...)
 		if nil != teamUsers {
 			for _, vTeamUsers := range teamUsers {
+				var locationAmount int64
 				if _, ok := teamUserInfos[vTeamUsers.ID]; !ok {
 					continue
+				}
+
+				if _, ok := teamLocations[vTeamUsers.ID]; ok {
+
+					for _, vTeamLocations := range teamLocations[vTeamUsers.ID] {
+						locationAmount = vTeamLocations.Usdt
+					}
 				}
 
 				if _, ok := recommendUserIds[vTeamUsers.ID]; ok {
 					recommendAddresses = append(recommendAddresses, &v1.UserInfoReply_List11{
 						Address: vTeamUsers.Address,
 						Amount:  fmt.Sprintf("%.4f", float64(teamUserInfos[vTeamUsers.ID].TeamCsdBalance)/float64(10000000000)),
+						Usdt:    fmt.Sprintf("%.2f", float64(locationAmount)/float64(10000000000)),
 					})
 				}
 
 				teamUserAddresses = append(teamUserAddresses, &v1.UserInfoReply_List7{
 					Address: vTeamUsers.Address,
 					Amount:  fmt.Sprintf("%.4f", float64(teamUserInfos[vTeamUsers.ID].TeamCsdBalance)/float64(10000000000)),
+					Usdt:    fmt.Sprintf("%.2f", float64(locationAmount)/float64(10000000000)),
 				})
 			}
 		}

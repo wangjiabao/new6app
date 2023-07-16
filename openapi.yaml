@@ -862,6 +862,8 @@ components:
                     type: string
                 Amount:
                     type: string
+                Usdt:
+                    type: string
         UserInfoReply_List14:
             type: object
             properties:
@@ -913,6 +915,8 @@ components:
                 address:
                     type: string
                 Amount:
+                    type: string
+                Usdt:
                     type: string
         UserInfoReply_List8:
             type: object

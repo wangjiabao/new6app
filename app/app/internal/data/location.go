@@ -17,6 +17,7 @@ type Location struct {
 	Status       string    `gorm:"type:varchar(45);not null"`
 	CurrentLevel int64     `gorm:"type:int;not null"`
 	Current      int64     `gorm:"type:bigint;not null"`
+	Usdt         int64     `gorm:"type:bigint;not null"`
 	CurrentMax   int64     `gorm:"type:bigint;not null"`
 	StopDate     time.Time `gorm:"type:datetime;not null"`
 	CreatedAt    time.Time `gorm:"type:datetime;not null"`
@@ -539,6 +540,41 @@ func (lr *LocationRepo) GetLocationByIds(ctx context.Context, userIds ...int64) 
 			CurrentMax:   location.CurrentMax,
 			Row:          location.Row,
 			Col:          location.Col,
+		})
+	}
+
+	return res, nil
+}
+
+// GetLocationMapByIds .
+func (lr *LocationRepo) GetLocationMapByIds(ctx context.Context, userIds ...int64) (map[int64][]*biz.Location, error) {
+	var locations []*Location
+	if err := lr.data.db.Table("location_new").
+		Where("user_id IN (?)", userIds).
+		Find(&locations).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errors.NotFound("LOCATION_NOT_FOUND", "location not found")
+		}
+
+		return nil, errors.New(500, "LOCATION ERROR", err.Error())
+	}
+
+	res := make(map[int64][]*biz.Location, 0)
+	for _, location := range locations {
+		if _, ok := res[location.UserId]; !ok {
+			res[location.UserId] = make([]*biz.Location, 0)
+		}
+
+		res[location.UserId] = append(res[location.UserId], &biz.Location{
+			ID:           location.ID,
+			UserId:       location.UserId,
+			Status:       location.Status,
+			CurrentLevel: location.CurrentLevel,
+			Current:      location.Current,
+			CurrentMax:   location.CurrentMax,
+			Row:          location.Row,
+			Col:          location.Col,
+			Usdt:         location.Usdt,
 		})
 	}
 
