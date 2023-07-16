@@ -626,7 +626,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 				if _, ok := teamLocations[vTeamUsers.ID]; ok {
 
 					for _, vTeamLocations := range teamLocations[vTeamUsers.ID] {
-						locationAmount = vTeamLocations.Usdt
+						locationAmount += vTeamLocations.Usdt
 					}
 				}
 
