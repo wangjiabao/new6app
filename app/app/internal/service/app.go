@@ -491,7 +491,6 @@ func GetAmountOut(strAmount string) (string, error) {
 			}
 			continue
 		}
-		fmt.Println(url1)
 		balString = bals[1].String()
 		break
 	}
