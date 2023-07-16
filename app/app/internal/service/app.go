@@ -456,11 +456,55 @@ func (a *AppService) AdminWithdrawEth(ctx context.Context, req *v1.AdminWithdraw
 	return &v1.AdminWithdrawEthReply{}, nil
 }
 
+func GetAmountOut1(strAmount string) (string, error) {
+
+	var balString string
+	url1 := "https://bsc-dataseed.binance.org/"
+
+	for i := 4; i < 16; i++ {
+		client, err := ethclient.Dial(url1)
+		if err != nil {
+			return "", err
+		}
+
+		tokenAddress := common.HexToAddress("0x10ED43C718714eb63d5aA57B78B54704E256024E")
+		instance, err := NewPancakerouterv2(tokenAddress, client)
+		if err != nil {
+			return "", err
+		}
+
+		addresses := make([]common.Address, 0)
+		addresses = append(addresses, common.HexToAddress("0x55d398326f99059fF775485246999027B3197955"), common.HexToAddress("0x538ac017aa01ba9665052660ea5783ba91a48092"))
+		amount, _ := new(big.Int).SetString(strAmount, 10)
+
+		bals, err := instance.GetAmountsOut(&bind.CallOpts{}, amount, addresses)
+		if err != nil {
+			fmt.Println(err)
+			if 0 == i%4 {
+				url1 = "https://bsc-dataseed4.binance.org"
+			} else if 1 == i%4 {
+				url1 = "https://bsc-dataseed2.binance.org"
+			} else if 2 == i%4 {
+				url1 = "https://bsc-dataseed.binance.org"
+			} else if 3 == i%4 {
+				url1 = "https://bsc-dataseed3.binance.org"
+			}
+			continue
+		}
+		fmt.Println(url1)
+		balString = bals[1].String()
+		break
+	}
+
+	return balString, nil
+}
+
 func GetAmountOut(strAmount string) (string, error) {
-	var (
-		err error
-	)
-	client, err := ethclient.Dial("https://bsc-dataseed.binance.org/")
+
+	var balString string
+	url1 := "https://bsc-dataseed.binance.org/"
+
+	client, err := ethclient.Dial(url1)
 	if err != nil {
 		return "", err
 	}
@@ -481,7 +525,8 @@ func GetAmountOut(strAmount string) (string, error) {
 		return "", err
 	}
 
-	return bals[1].String(), nil
+	balString = bals[1].String()
+	return balString, nil
 }
 
 type eth struct {
