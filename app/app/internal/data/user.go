@@ -1497,6 +1497,31 @@ func (ub *UserBalanceRepo) GetUserBalanceRecordByUserId(ctx context.Context, use
 	return res, nil
 }
 
+// GetUserBalanceRecordsByUserId .
+func (ub *UserBalanceRepo) GetUserBalanceRecordsByUserId(ctx context.Context, userId int64) ([]*biz.UserBalanceRecord, error) {
+	var userBalanceRecord []*UserBalanceRecord
+	res := make([]*biz.UserBalanceRecord, 0)
+	if err := ub.data.db.Where("user_id=?", userId).
+		Where("type=? and (coin_type=? or coin_type=?)", "deposit", "CSD", "HBS").Table("user_balance_record").Find(&userBalanceRecord).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return res, errors.NotFound("WITHDRAW_NOT_FOUND", "withdraw not found")
+		}
+
+		return nil, errors.New(500, "WITHDRAW ERROR", err.Error())
+	}
+
+	for _, v := range userBalanceRecord {
+		res = append(res, &biz.UserBalanceRecord{
+			ID:        v.ID,
+			UserId:    v.UserId,
+			Amount:    v.Amount,
+			CoinType:  v.CoinType,
+			CreatedAt: v.CreatedAt,
+		})
+	}
+	return res, nil
+}
+
 // GetTradeByUserId .
 func (ub *UserBalanceRepo) GetTradeByUserId(ctx context.Context, userId int64) ([]*biz.Trade, error) {
 	var trades []*Trade

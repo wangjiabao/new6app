@@ -814,6 +814,10 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/UserInfoReply_List9'
+                depositList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/UserInfoReply_List13'
                 level1price:
                     type: integer
                     format: int64
@@ -863,6 +867,15 @@ components:
                 Amount:
                     type: string
                 Usdt:
+                    type: string
+        UserInfoReply_List13:
+            type: object
+            properties:
+                createdAt:
+                    type: string
+                amount:
+                    type: string
+                coinType:
                     type: string
         UserInfoReply_List14:
             type: object

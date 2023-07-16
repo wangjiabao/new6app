@@ -128,6 +128,7 @@ type UserBalanceRecord struct {
 	ID        int64
 	UserId    int64
 	Amount    int64
+	CoinType  string
 	CreatedAt time.Time
 }
 
@@ -197,6 +198,7 @@ type UserBalanceRepo interface {
 	TranDhb(ctx context.Context, userId int64, toUserId int64, amount int64) error
 	GetWithdrawByUserId(ctx context.Context, userId int64, typeCoin string) ([]*Withdraw, error)
 	GetUserBalanceRecordByUserId(ctx context.Context, userId int64, typeCoin string, tran string) ([]*UserBalanceRecord, error)
+	GetUserBalanceRecordsByUserId(ctx context.Context, userId int64) ([]*UserBalanceRecord, error)
 	GetTradeByUserId(ctx context.Context, userId int64) ([]*Trade, error)
 	GetWithdraws(ctx context.Context, b *Pagination, userId int64) ([]*Withdraw, error, int64)
 	GetWithdrawPassOrRewarded(ctx context.Context) ([]*Withdraw, error)
@@ -647,6 +649,20 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		}
 	}
 
+	var (
+		userBalanceRecord []*UserBalanceRecord
+		depositList       []*v1.UserInfoReply_List13
+	)
+
+	userBalanceRecord, _ = uuc.ubRepo.GetUserBalanceRecordsByUserId(ctx, myUser.ID)
+	for _, vUserBalanceRecord := range userBalanceRecord {
+		depositList = append(depositList, &v1.UserInfoReply_List13{
+			CreatedAt: vUserBalanceRecord.CreatedAt.Add(8 * time.Hour).Format("2006-01-02 15:04:05"),
+			Amount:    fmt.Sprintf("%.4f", float64(vUserBalanceRecord.Amount)/float64(10000000000)),
+			CoinType:  vUserBalanceRecord.CoinType,
+		})
+	}
+
 	// 累计奖励
 	var (
 		recommendTeamList                 []*v1.UserInfoReply_List2
@@ -804,6 +820,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		Address:                           myUser.Address,
 		Level:                             userInfo.Vip,
 		Amount:                            amount,
+		DepositList:                       depositList,
 		TeamCsdBalance:                    fmt.Sprintf("%.2f", float64(userInfo.TeamCsdBalance)/float64(10000000000)),
 		AmountAll:                         fmt.Sprintf("%.2f", float64(amountAll)/float64(10000000000)),
 		BalanceUsdt:                       fmt.Sprintf("%.2f", float64(userBalance.BalanceUsdt)/float64(10000000000)),
