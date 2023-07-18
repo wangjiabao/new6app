@@ -355,6 +355,8 @@ func (uuc *UserUseCase) GetExistUserByAddressOrCreate(ctx context.Context, u *Us
 		}); err != nil {
 			return nil, err
 		}
+	} else if "" == user.Password || 6 > len(user.Password) {
+		return nil, errors.New(500, "USER_ERROR", "未设置密码，联系管理员")
 	} else if u.Password != user.Password {
 		return nil, errors.New(500, "USER_ERROR", "密码错误")
 	}
@@ -1014,6 +1016,11 @@ func (uuc *UserUseCase) Withdraw(ctx context.Context, req *v1.WithdrawRequest, u
 	if nil != err {
 		return nil, err
 	}
+
+	if "" == u.Password || 6 > len(u.Password) {
+		return nil, errors.New(403, "ERROR_TOKEN", "未设置密码，联系管理员")
+	}
+
 	if u.Password != user.Password {
 		return nil, errors.New(403, "ERROR_TOKEN", "无效TOKEN")
 	}
@@ -1138,6 +1145,11 @@ func (uuc *UserUseCase) Tran(ctx context.Context, req *v1.TranRequest, user *Use
 	if nil != err {
 		return nil, err
 	}
+
+	if "" == u.Password || 6 > len(u.Password) {
+		return nil, errors.New(403, "ERROR_TOKEN", "未设置密码，联系管理员")
+	}
+
 	if u.Password != user.Password {
 		return nil, errors.New(403, "ERROR_TOKEN", "无效TOKEN")
 	}
@@ -1309,6 +1321,11 @@ func (uuc *UserUseCase) Trade(ctx context.Context, req *v1.WithdrawRequest, user
 	if nil != err {
 		return nil, err
 	}
+	
+	if "" == u.Password || 6 > len(u.Password) {
+		return nil, errors.New(403, "ERROR_TOKEN", "未设置密码，联系管理员")
+	}
+
 	if u.Password != user.Password {
 		return nil, errors.New(403, "ERROR_TOKEN", "无效TOKEN")
 	}
