@@ -192,6 +192,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /api/app_server/password_change:
+        post:
+            tags:
+                - App
+            operationId: App_PasswordChange
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PasswordChangeRequest_SendBody'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PasswordChangeReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /api/app_server/recommend_list:
         get:
             tags:
@@ -534,6 +558,18 @@ components:
                     description: The type of the serialized message.
             additionalProperties: true
             description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+        PasswordChangeReply:
+            type: object
+            properties:
+                status:
+                    type: string
+        PasswordChangeRequest_SendBody:
+            type: object
+            properties:
+                account:
+                    type: string
+                password:
+                    type: string
         RecommendListReply:
             type: object
             properties:

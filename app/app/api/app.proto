@@ -73,6 +73,13 @@ service App {
 		};
 	};
 
+	rpc PasswordChange (PasswordChangeRequest) returns (PasswordChangeReply) {
+		option (google.api.http) = {
+			post: "/api/app_server/password_change"
+			body: "send_body"
+		};
+	};
+
 	rpc Withdraw (WithdrawRequest) returns (WithdrawReply) {
 		option (google.api.http) = {
 			post: "/api/app_server/withdraw"
@@ -493,6 +500,20 @@ message WithdrawRequest {
 message WithdrawReply {
 	string status = 1;
 }
+
+message PasswordChangeRequest {
+	message SendBody{
+		string account = 1;
+		string password = 2;
+	}
+
+	SendBody send_body = 1;
+}
+
+message PasswordChangeReply {
+	string status = 1;
+}
+
 
 message TranRequest {
 	message SendBody{

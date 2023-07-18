@@ -27,6 +27,7 @@ const OperationAppDeposit = "/api.App/Deposit"
 const OperationAppEthAuthorize = "/api.App/EthAuthorize"
 const OperationAppFeeRewardList = "/api.App/FeeRewardList"
 const OperationAppGetTrade = "/api.App/GetTrade"
+const OperationAppPasswordChange = "/api.App/PasswordChange"
 const OperationAppRecommendList = "/api.App/RecommendList"
 const OperationAppRecommendRewardList = "/api.App/RecommendRewardList"
 const OperationAppRecommendUpdate = "/api.App/RecommendUpdate"
@@ -49,6 +50,7 @@ type AppHTTPServer interface {
 	EthAuthorize(context.Context, *EthAuthorizeRequest) (*EthAuthorizeReply, error)
 	FeeRewardList(context.Context, *FeeRewardListRequest) (*FeeRewardListReply, error)
 	GetTrade(context.Context, *GetTradeRequest) (*GetTradeReply, error)
+	PasswordChange(context.Context, *PasswordChangeRequest) (*PasswordChangeReply, error)
 	RecommendList(context.Context, *RecommendListRequest) (*RecommendListReply, error)
 	RecommendRewardList(context.Context, *RecommendRewardListRequest) (*RecommendRewardListReply, error)
 	RecommendUpdate(context.Context, *RecommendUpdateRequest) (*RecommendUpdateReply, error)
@@ -75,6 +77,7 @@ func RegisterAppHTTPServer(s *http.Server, srv AppHTTPServer) {
 	r.GET("/api/app_server/trade_list", _App_TradeList0_HTTP_Handler(srv))
 	r.GET("/api/app_server/tran_list", _App_TranList0_HTTP_Handler(srv))
 	r.GET("/api/app_server/recommend_list", _App_RecommendList0_HTTP_Handler(srv))
+	r.POST("/api/app_server/password_change", _App_PasswordChange0_HTTP_Handler(srv))
 	r.POST("/api/app_server/withdraw", _App_Withdraw0_HTTP_Handler(srv))
 	r.POST("/api/app_server/trade", _App_Trade0_HTTP_Handler(srv))
 	r.POST("/api/app_server/tran", _App_Tran0_HTTP_Handler(srv))
@@ -279,6 +282,28 @@ func _App_RecommendList0_HTTP_Handler(srv AppHTTPServer) func(ctx http.Context) 
 			return err
 		}
 		reply := out.(*RecommendListReply)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _App_PasswordChange0_HTTP_Handler(srv AppHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in PasswordChangeRequest
+		if err := ctx.Bind(&in.SendBody); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationAppPasswordChange)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.PasswordChange(ctx, req.(*PasswordChangeRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*PasswordChangeReply)
 		return ctx.Result(200, reply)
 	}
 }
@@ -500,6 +525,7 @@ type AppHTTPClient interface {
 	EthAuthorize(ctx context.Context, req *EthAuthorizeRequest, opts ...http.CallOption) (rsp *EthAuthorizeReply, err error)
 	FeeRewardList(ctx context.Context, req *FeeRewardListRequest, opts ...http.CallOption) (rsp *FeeRewardListReply, err error)
 	GetTrade(ctx context.Context, req *GetTradeRequest, opts ...http.CallOption) (rsp *GetTradeReply, err error)
+	PasswordChange(ctx context.Context, req *PasswordChangeRequest, opts ...http.CallOption) (rsp *PasswordChangeReply, err error)
 	RecommendList(ctx context.Context, req *RecommendListRequest, opts ...http.CallOption) (rsp *RecommendListReply, err error)
 	RecommendRewardList(ctx context.Context, req *RecommendRewardListRequest, opts ...http.CallOption) (rsp *RecommendRewardListReply, err error)
 	RecommendUpdate(ctx context.Context, req *RecommendUpdateRequest, opts ...http.CallOption) (rsp *RecommendUpdateReply, err error)
@@ -618,6 +644,19 @@ func (c *AppHTTPClientImpl) GetTrade(ctx context.Context, in *GetTradeRequest, o
 	pattern := "/api/app_server/get_trade"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationAppGetTrade))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in.SendBody, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
+}
+
+func (c *AppHTTPClientImpl) PasswordChange(ctx context.Context, in *PasswordChangeRequest, opts ...http.CallOption) (*PasswordChangeReply, error) {
+	var out PasswordChangeReply
+	pattern := "/api/app_server/password_change"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationAppPasswordChange))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in.SendBody, &out, opts...)
 	if err != nil {

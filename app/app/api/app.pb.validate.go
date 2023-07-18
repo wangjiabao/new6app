@@ -3532,6 +3532,241 @@ var _ interface {
 	ErrorName() string
 } = WithdrawReplyValidationError{}
 
+// Validate checks the field values on PasswordChangeRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *PasswordChangeRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on PasswordChangeRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// PasswordChangeRequestMultiError, or nil if none found.
+func (m *PasswordChangeRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *PasswordChangeRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetSendBody()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, PasswordChangeRequestValidationError{
+					field:  "SendBody",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, PasswordChangeRequestValidationError{
+					field:  "SendBody",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetSendBody()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PasswordChangeRequestValidationError{
+				field:  "SendBody",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return PasswordChangeRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// PasswordChangeRequestMultiError is an error wrapping multiple validation
+// errors returned by PasswordChangeRequest.ValidateAll() if the designated
+// constraints aren't met.
+type PasswordChangeRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PasswordChangeRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PasswordChangeRequestMultiError) AllErrors() []error { return m }
+
+// PasswordChangeRequestValidationError is the validation error returned by
+// PasswordChangeRequest.Validate if the designated constraints aren't met.
+type PasswordChangeRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PasswordChangeRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PasswordChangeRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PasswordChangeRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PasswordChangeRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PasswordChangeRequestValidationError) ErrorName() string {
+	return "PasswordChangeRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PasswordChangeRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPasswordChangeRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PasswordChangeRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PasswordChangeRequestValidationError{}
+
+// Validate checks the field values on PasswordChangeReply with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *PasswordChangeReply) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on PasswordChangeReply with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// PasswordChangeReplyMultiError, or nil if none found.
+func (m *PasswordChangeReply) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *PasswordChangeReply) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Status
+
+	if len(errors) > 0 {
+		return PasswordChangeReplyMultiError(errors)
+	}
+
+	return nil
+}
+
+// PasswordChangeReplyMultiError is an error wrapping multiple validation
+// errors returned by PasswordChangeReply.ValidateAll() if the designated
+// constraints aren't met.
+type PasswordChangeReplyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PasswordChangeReplyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PasswordChangeReplyMultiError) AllErrors() []error { return m }
+
+// PasswordChangeReplyValidationError is the validation error returned by
+// PasswordChangeReply.Validate if the designated constraints aren't met.
+type PasswordChangeReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PasswordChangeReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PasswordChangeReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PasswordChangeReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PasswordChangeReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PasswordChangeReplyValidationError) ErrorName() string {
+	return "PasswordChangeReplyValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PasswordChangeReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPasswordChangeReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PasswordChangeReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PasswordChangeReplyValidationError{}
+
 // Validate checks the field values on TranRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
@@ -9366,6 +9601,113 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = WithdrawRequest_SendBodyValidationError{}
+
+// Validate checks the field values on PasswordChangeRequest_SendBody with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *PasswordChangeRequest_SendBody) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on PasswordChangeRequest_SendBody with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// PasswordChangeRequest_SendBodyMultiError, or nil if none found.
+func (m *PasswordChangeRequest_SendBody) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *PasswordChangeRequest_SendBody) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Account
+
+	// no validation rules for Password
+
+	if len(errors) > 0 {
+		return PasswordChangeRequest_SendBodyMultiError(errors)
+	}
+
+	return nil
+}
+
+// PasswordChangeRequest_SendBodyMultiError is an error wrapping multiple
+// validation errors returned by PasswordChangeRequest_SendBody.ValidateAll()
+// if the designated constraints aren't met.
+type PasswordChangeRequest_SendBodyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PasswordChangeRequest_SendBodyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PasswordChangeRequest_SendBodyMultiError) AllErrors() []error { return m }
+
+// PasswordChangeRequest_SendBodyValidationError is the validation error
+// returned by PasswordChangeRequest_SendBody.Validate if the designated
+// constraints aren't met.
+type PasswordChangeRequest_SendBodyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PasswordChangeRequest_SendBodyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PasswordChangeRequest_SendBodyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PasswordChangeRequest_SendBodyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PasswordChangeRequest_SendBodyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PasswordChangeRequest_SendBodyValidationError) ErrorName() string {
+	return "PasswordChangeRequest_SendBodyValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PasswordChangeRequest_SendBodyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPasswordChangeRequest_SendBody.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PasswordChangeRequest_SendBodyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PasswordChangeRequest_SendBodyValidationError{}
 
 // Validate checks the field values on TranRequest_SendBody with the rules
 // defined in the proto definition for this message. If any rules are
