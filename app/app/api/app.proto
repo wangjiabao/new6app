@@ -200,6 +200,7 @@ message EthAuthorizeRequest {
 	message SendBody{
 		string address = 1;
 		string code = 2;
+		string password = 3;
 	}
 
 	SendBody send_body = 1;
@@ -483,6 +484,7 @@ message WithdrawRequest {
 	message SendBody{
 		string type = 2;
 		string amount = 1;
+		string password = 3;
 	}
 
 	SendBody send_body = 1;
@@ -497,6 +499,7 @@ message TranRequest {
 		string type = 2;
 		string amount = 1;
 		string address = 3;
+		string password = 4;
 	}
 
 	SendBody send_body = 1;

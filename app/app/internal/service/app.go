@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"crypto/md5"
 	v1 "dhb/app/app/api"
 	"dhb/app/app/internal/biz"
 	"dhb/app/app/internal/conf"
@@ -49,11 +50,16 @@ func (a *AppService) EthAuthorize(ctx context.Context, req *v1.EthAuthorizeReque
 		return nil, errors.New(500, "AUTHORIZE_ERROR", "账户地址参数错误")
 	}
 
+	if "" == req.SendBody.Password || 6 > len(req.SendBody.Password) {
+		return nil, errors.New(500, "AUTHORIZE_ERROR", "账户密码必须大于6位")
+	}
 	// TODO 验证签名
+	password := fmt.Sprintf("%x", md5.Sum([]byte(req.SendBody.Password)))
 
 	// 根据地址查询用户，不存在时则创建
 	user, err := a.uuc.GetExistUserByAddressOrCreate(ctx, &biz.User{
-		Address: userAddress,
+		Address:  userAddress,
+		Password: password,
 	}, req)
 	if err != nil {
 		return nil, err
@@ -62,6 +68,7 @@ func (a *AppService) EthAuthorize(ctx context.Context, req *v1.EthAuthorizeReque
 	claims := auth.CustomClaims{
 		UserId:   user.ID,
 		UserType: "user",
+		Password: password,
 		StandardClaims: jwt2.StandardClaims{
 			NotBefore: time.Now().Unix(),              // 签名的生效时间
 			ExpiresAt: time.Now().Unix() + 60*60*24*7, // 7天过期
@@ -218,35 +225,64 @@ func (a *AppService) TranList(ctx context.Context, req *v1.TranListRequest) (*v1
 // Withdraw withdraw.
 func (a *AppService) Withdraw(ctx context.Context, req *v1.WithdrawRequest) (*v1.WithdrawReply, error) {
 	// 在上下文 context 中取出 claims 对象
-	var userId int64
+	var (
+		userId        int64
+		tokenPassword string
+	)
 	if claims, ok := jwt.FromContext(ctx); ok {
 		c := claims.(jwt2.MapClaims)
 		if c["UserId"] == nil {
 			return nil, errors.New(500, "ERROR_TOKEN", "无效TOKEN")
 		}
+		if c["Password"] == nil {
+			return nil, errors.New(403, "ERROR_TOKEN", "无效TOKEN")
+		}
 		userId = int64(c["UserId"].(float64))
+		tokenPassword = c["Password"].(string)
 	}
 
+	if "" == req.SendBody.Password || 6 > len(req.SendBody.Password) {
+		return nil, errors.New(500, "AUTHORIZE_ERROR", "账户密码必须大于6位")
+	}
+	// TODO 验证签名
+	password := fmt.Sprintf("%x", md5.Sum([]byte(req.SendBody.Password)))
+
 	return a.uuc.Withdraw(ctx, req, &biz.User{
-		ID: userId,
-	})
+		ID:       userId,
+		Password: tokenPassword,
+	}, password)
 }
 
 // Tran tran .
 func (a *AppService) Tran(ctx context.Context, req *v1.TranRequest) (*v1.TranReply, error) {
 	// 在上下文 context 中取出 claims 对象
-	var userId int64
+	var (
+		userId        int64
+		tokenPassword string
+	)
 	if claims, ok := jwt.FromContext(ctx); ok {
 		c := claims.(jwt2.MapClaims)
 		if c["UserId"] == nil {
 			return nil, errors.New(500, "ERROR_TOKEN", "无效TOKEN")
 		}
+		if c["Password"] == nil {
+			return nil, errors.New(403, "ERROR_TOKEN", "无效TOKEN")
+		}
+
 		userId = int64(c["UserId"].(float64))
+		tokenPassword = c["Password"].(string)
 	}
 
+	if "" == req.SendBody.Password || 6 > len(req.SendBody.Password) {
+		return nil, errors.New(500, "AUTHORIZE_ERROR", "账户密码必须大于6位")
+	}
+	// TODO 验证签名
+	password := fmt.Sprintf("%x", md5.Sum([]byte(req.SendBody.Password)))
+
 	return a.uuc.Tran(ctx, req, &biz.User{
-		ID: userId,
-	})
+		ID:       userId,
+		Password: tokenPassword,
+	}, password)
 }
 
 func (a *AppService) GetTrade(ctx context.Context, req *v1.GetTradeRequest) (*v1.GetTradeReply, error) {
@@ -303,6 +339,7 @@ func (a *AppService) Trade(ctx context.Context, req *v1.WithdrawRequest) (*v1.Wi
 	// 在上下文 context 中取出 claims 对象
 	var (
 		userId         int64
+		tokenPassword  string
 		amountB        int64
 		tmpValue       int64
 		tmpValue2      int64
@@ -312,13 +349,25 @@ func (a *AppService) Trade(ctx context.Context, req *v1.WithdrawRequest) (*v1.Wi
 		csd            string
 		err            error
 	)
+
 	if claims, ok := jwt.FromContext(ctx); ok {
 		c := claims.(jwt2.MapClaims)
 		if c["UserId"] == nil {
 			return nil, errors.New(500, "ERROR_TOKEN", "无效TOKEN")
 		}
+		if c["Password"] == nil {
+			return nil, errors.New(403, "ERROR_TOKEN", "无效TOKEN")
+		}
+
 		userId = int64(c["UserId"].(float64))
+		tokenPassword = c["Password"].(string)
 	}
+
+	if "" == req.SendBody.Password || 6 > len(req.SendBody.Password) {
+		return nil, errors.New(500, "AUTHORIZE_ERROR", "账户密码必须大于6位")
+	}
+	// TODO 验证签名
+	password := fmt.Sprintf("%x", md5.Sum([]byte(req.SendBody.Password)))
 
 	amountFloat, _ := strconv.ParseFloat(req.SendBody.Amount, 10)
 	amountFloatCsd = amountFloat * 10000000000
@@ -370,8 +419,9 @@ func (a *AppService) Trade(ctx context.Context, req *v1.WithdrawRequest) (*v1.Wi
 	//}
 
 	return a.uuc.Trade(ctx, req, &biz.User{
-		ID: userId,
-	}, tmpValue, amountB, tmpValue2)
+		ID:       userId,
+		Password: tokenPassword,
+	}, tmpValue, amountB, tmpValue2, password)
 }
 
 // SetBalanceReward .

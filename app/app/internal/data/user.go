@@ -14,6 +14,7 @@ import (
 type User struct {
 	ID        int64     `gorm:"primarykey;type:int"`
 	Address   string    `gorm:"type:varchar(100)"`
+	Password  string    `gorm:"type:varchar(100)"`
 	Undo      int64     `gorm:"type:int;not null"`
 	CreatedAt time.Time `gorm:"type:datetime;not null"`
 	UpdatedAt time.Time `gorm:"type:datetime;not null"`
@@ -231,8 +232,9 @@ func (u *UserRepo) GetUserByAddress(ctx context.Context, address string) (*biz.U
 	}
 
 	return &biz.User{
-		ID:      user.ID,
-		Address: user.Address,
+		ID:       user.ID,
+		Address:  user.Address,
+		Password: user.Password,
 	}, nil
 }
 
@@ -309,9 +311,10 @@ func (u *UserRepo) GetUserById(ctx context.Context, Id int64) (*biz.User, error)
 	}
 
 	return &biz.User{
-		ID:      user.ID,
-		Address: user.Address,
-		Undo:    user.Undo,
+		ID:       user.ID,
+		Password: user.Password,
+		Address:  user.Address,
+		Undo:     user.Undo,
 	}, nil
 }
 
@@ -455,14 +458,16 @@ func (u *UserRepo) GetUsers(ctx context.Context, b *biz.Pagination, address stri
 func (u *UserRepo) CreateUser(ctx context.Context, uc *biz.User) (*biz.User, error) {
 	var user User
 	user.Address = uc.Address
+	user.Password = uc.Password
 	res := u.data.DB(ctx).Table("user").Create(&user)
 	if res.Error != nil {
 		return nil, errors.New(500, "CREATE_USER_ERROR", "用户创建失败")
 	}
 
 	return &biz.User{
-		ID:      user.ID,
-		Address: user.Address,
+		ID:       user.ID,
+		Address:  user.Address,
+		Password: user.Password,
 	}, nil
 }
 

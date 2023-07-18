@@ -7018,6 +7018,8 @@ func (m *EthAuthorizeRequest_SendBody) validate(all bool) error {
 
 	// no validation rules for Code
 
+	// no validation rules for Password
+
 	if len(errors) > 0 {
 		return EthAuthorizeRequest_SendBodyMultiError(errors)
 	}
@@ -9283,6 +9285,8 @@ func (m *WithdrawRequest_SendBody) validate(all bool) error {
 
 	// no validation rules for Amount
 
+	// no validation rules for Password
+
 	if len(errors) > 0 {
 		return WithdrawRequest_SendBodyMultiError(errors)
 	}
@@ -9390,6 +9394,8 @@ func (m *TranRequest_SendBody) validate(all bool) error {
 	// no validation rules for Amount
 
 	// no validation rules for Address
+
+	// no validation rules for Password
 
 	if len(errors) > 0 {
 		return TranRequest_SendBodyMultiError(errors)

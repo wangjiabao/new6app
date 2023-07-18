@@ -498,6 +498,8 @@ components:
                     type: string
                 code:
                     type: string
+                password:
+                    type: string
         FeeRewardListReply:
             type: object
             properties:
@@ -663,6 +665,8 @@ components:
                 amount:
                     type: string
                 address:
+                    type: string
+                password:
                     type: string
         UserInfoReply:
             type: object
@@ -978,6 +982,8 @@ components:
                 type:
                     type: string
                 amount:
+                    type: string
+                password:
                     type: string
 tags:
     - name: App

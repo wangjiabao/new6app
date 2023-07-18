@@ -15,6 +15,7 @@ import (
 type User struct {
 	ID        int64
 	Address   string
+	Password  string
 	Undo      int64
 	CreatedAt time.Time
 }
@@ -354,6 +355,8 @@ func (uuc *UserUseCase) GetExistUserByAddressOrCreate(ctx context.Context, u *Us
 		}); err != nil {
 			return nil, err
 		}
+	} else if u.Password != user.Password {
+		return nil, errors.New(500, "USER_ERROR", "密码错误")
 	}
 
 	return user, nil
@@ -1000,11 +1003,24 @@ func (uuc *UserUseCase) TradeList(ctx context.Context, user *User) (*v1.TradeLis
 	return res, nil
 }
 
-func (uuc *UserUseCase) Withdraw(ctx context.Context, req *v1.WithdrawRequest, user *User) (*v1.WithdrawReply, error) {
+func (uuc *UserUseCase) Withdraw(ctx context.Context, req *v1.WithdrawRequest, user *User, password string) (*v1.WithdrawReply, error) {
 	var (
+		u           *User
 		err         error
 		userBalance *UserBalance
 	)
+
+	u, _ = uuc.repo.GetUserById(ctx, user.ID)
+	if nil != err {
+		return nil, err
+	}
+	if u.Password != user.Password {
+		return nil, errors.New(403, "ERROR_TOKEN", "无效TOKEN")
+	}
+
+	if password != u.Password {
+		return nil, errors.New(500, "密码错误", err.Error())
+	}
 
 	if "dhb" != req.SendBody.Type && "usdt" != req.SendBody.Type {
 		return &v1.WithdrawReply{
@@ -1110,12 +1126,25 @@ func (uuc *UserUseCase) Withdraw(ctx context.Context, req *v1.WithdrawRequest, u
 	}, nil
 }
 
-func (uuc *UserUseCase) Tran(ctx context.Context, req *v1.TranRequest, user *User) (*v1.TranReply, error) {
+func (uuc *UserUseCase) Tran(ctx context.Context, req *v1.TranRequest, user *User, password string) (*v1.TranReply, error) {
 	var (
 		err         error
 		userBalance *UserBalance
 		toUser      *User
+		u           *User
 	)
+
+	u, _ = uuc.repo.GetUserById(ctx, user.ID)
+	if nil != err {
+		return nil, err
+	}
+	if u.Password != user.Password {
+		return nil, errors.New(403, "ERROR_TOKEN", "无效TOKEN")
+	}
+
+	if password != u.Password {
+		return nil, errors.New(500, "密码错误", err.Error())
+	}
 
 	if "" == req.SendBody.Address {
 		return &v1.TranReply{
@@ -1264,8 +1293,9 @@ func (uuc *UserUseCase) Tran(ctx context.Context, req *v1.TranRequest, user *Use
 	}, nil
 }
 
-func (uuc *UserUseCase) Trade(ctx context.Context, req *v1.WithdrawRequest, user *User, amount int64, amountB int64, amount2 int64) (*v1.WithdrawReply, error) {
+func (uuc *UserUseCase) Trade(ctx context.Context, req *v1.WithdrawRequest, user *User, amount int64, amountB int64, amount2 int64, password string) (*v1.WithdrawReply, error) {
 	var (
+		u                   *User
 		userBalance         *UserBalance
 		userBalance2        *UserBalance
 		configs             []*Config
@@ -1274,6 +1304,18 @@ func (uuc *UserUseCase) Trade(ctx context.Context, req *v1.WithdrawRequest, user
 		withdrawDestroyRate int64
 		err                 error
 	)
+
+	u, _ = uuc.repo.GetUserById(ctx, user.ID)
+	if nil != err {
+		return nil, err
+	}
+	if u.Password != user.Password {
+		return nil, errors.New(403, "ERROR_TOKEN", "无效TOKEN")
+	}
+
+	if password != u.Password {
+		return nil, errors.New(500, "密码错误", err.Error())
+	}
 
 	configs, _ = uuc.configRepo.GetConfigByKeys(ctx, "withdraw_rate",
 		"withdraw_destroy_rate",

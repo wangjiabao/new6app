@@ -7,6 +7,7 @@ import (
 
 type CustomClaims struct {
 	UserId   int64
+	Password string
 	UserType string
 	jwt.StandardClaims
 }
