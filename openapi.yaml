@@ -561,13 +561,11 @@ components:
         PasswordChangeReply:
             type: object
             properties:
-                status:
+                password:
                     type: string
         PasswordChangeRequest_SendBody:
             type: object
             properties:
-                account:
-                    type: string
                 password:
                     type: string
         RecommendListReply:

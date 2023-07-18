@@ -503,7 +503,6 @@ message WithdrawReply {
 
 message PasswordChangeRequest {
 	message SendBody{
-		string account = 1;
 		string password = 2;
 	}
 
@@ -511,9 +510,8 @@ message PasswordChangeRequest {
 }
 
 message PasswordChangeReply {
-	string status = 1;
+	string password = 1;
 }
-
 
 message TranRequest {
 	message SendBody{

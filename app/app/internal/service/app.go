@@ -222,6 +222,14 @@ func (a *AppService) TranList(ctx context.Context, req *v1.TranListRequest) (*v1
 	}, req.Type, req.Tran)
 }
 
+// PasswordChange withdraw.
+func (a *AppService) PasswordChange(ctx context.Context, req *v1.PasswordChangeRequest) (*v1.PasswordChangeReply, error) {
+	// 在上下文 context 中取出 claims 对象
+	return &v1.PasswordChangeReply{
+		Password: fmt.Sprintf("%x", md5.Sum([]byte(req.SendBody.Password))),
+	}, nil
+}
+
 // Withdraw withdraw.
 func (a *AppService) Withdraw(ctx context.Context, req *v1.WithdrawRequest) (*v1.WithdrawReply, error) {
 	// 在上下文 context 中取出 claims 对象

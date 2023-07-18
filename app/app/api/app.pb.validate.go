@@ -3685,7 +3685,7 @@ func (m *PasswordChangeReply) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Status
+	// no validation rules for Password
 
 	if len(errors) > 0 {
 		return PasswordChangeReplyMultiError(errors)
@@ -9623,8 +9623,6 @@ func (m *PasswordChangeRequest_SendBody) validate(all bool) error {
 	}
 
 	var errors []error
-
-	// no validation rules for Account
 
 	// no validation rules for Password
 
