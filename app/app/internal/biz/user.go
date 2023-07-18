@@ -1026,7 +1026,7 @@ func (uuc *UserUseCase) Withdraw(ctx context.Context, req *v1.WithdrawRequest, u
 	}
 
 	if password != u.Password {
-		return nil, errors.New(500, "密码错误", err.Error())
+		return nil, errors.New(500, "密码错误", "密码错误")
 	}
 
 	if "dhb" != req.SendBody.Type && "usdt" != req.SendBody.Type {
@@ -1155,7 +1155,7 @@ func (uuc *UserUseCase) Tran(ctx context.Context, req *v1.TranRequest, user *Use
 	}
 
 	if password != u.Password {
-		return nil, errors.New(500, "密码错误", err.Error())
+		return nil, errors.New(500, "密码错误", "密码错误")
 	}
 
 	if "" == req.SendBody.Address {
@@ -1321,7 +1321,7 @@ func (uuc *UserUseCase) Trade(ctx context.Context, req *v1.WithdrawRequest, user
 	if nil != err {
 		return nil, err
 	}
-	
+
 	if "" == u.Password || 6 > len(u.Password) {
 		return nil, errors.New(403, "ERROR_TOKEN", "未设置密码，联系管理员")
 	}
@@ -1331,7 +1331,7 @@ func (uuc *UserUseCase) Trade(ctx context.Context, req *v1.WithdrawRequest, user
 	}
 
 	if password != u.Password {
-		return nil, errors.New(500, "密码错误", err.Error())
+		return nil, errors.New(500, "密码错误", "密码错误")
 	}
 
 	configs, _ = uuc.configRepo.GetConfigByKeys(ctx, "withdraw_rate",
