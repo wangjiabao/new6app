@@ -543,7 +543,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 			})
 		}
 
-		amount = fmt.Sprintf("%.2f", float64(tmpCurrentMaxSubCurrent)/float64(10000000000))
+		amount = fmt.Sprintf("%.4f", float64(tmpCurrentMaxSubCurrent)/float64(10000000000))
 	}
 
 	// 提现记录
@@ -830,8 +830,8 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		AmountAll:                         fmt.Sprintf("%.2f", float64(amountAll)/float64(10000000000)),
 		BalanceUsdt:                       fmt.Sprintf("%.2f", float64(userBalance.BalanceUsdt)/float64(10000000000)),
 		BalanceDhb:                        fmt.Sprintf("%.2f", float64(userBalance.BalanceDhb)/float64(10000000000)),
-		BalanceUsdtLock:                   fmt.Sprintf("%.2f", float64(userBalanceLock.BalanceUsdt)/float64(10000000000)),
-		BalanceDhbLock:                    fmt.Sprintf("%.2f", float64(userBalanceLock.BalanceDhb)/float64(10000000000)),
+		BalanceUsdtLock:                   fmt.Sprintf("%.4f", float64(userBalanceLock.BalanceUsdt)/float64(10000000000)),
+		BalanceDhbLock:                    fmt.Sprintf("%.4f", float64(userBalanceLock.BalanceDhb)/float64(10000000000)),
 		InviteUrl:                         encodeString,
 		InviteUserAddress:                 inviteUserAddress,
 		RecommendNum:                      userInfo.HistoryRecommend,
@@ -1018,7 +1018,7 @@ func (uuc *UserUseCase) Withdraw(ctx context.Context, req *v1.WithdrawRequest, u
 	}
 
 	if "" == u.Password || 6 > len(u.Password) {
-		return nil, errors.New(403, "ERROR_TOKEN", "未设置密码，联系管理员")
+		return nil, errors.New(500, "ERROR_TOKEN", "未设置密码，联系管理员")
 	}
 
 	if u.Password != user.Password {
@@ -1147,7 +1147,7 @@ func (uuc *UserUseCase) Tran(ctx context.Context, req *v1.TranRequest, user *Use
 	}
 
 	if "" == u.Password || 6 > len(u.Password) {
-		return nil, errors.New(403, "ERROR_TOKEN", "未设置密码，联系管理员")
+		return nil, errors.New(500, "ERROR_TOKEN", "未设置密码，联系管理员")
 	}
 
 	if u.Password != user.Password {
@@ -1323,7 +1323,7 @@ func (uuc *UserUseCase) Trade(ctx context.Context, req *v1.WithdrawRequest, user
 	}
 
 	if "" == u.Password || 6 > len(u.Password) {
-		return nil, errors.New(403, "ERROR_TOKEN", "未设置密码，联系管理员")
+		return nil, errors.New(500, "ERROR_TOKEN", "未设置密码，联系管理员")
 	}
 
 	if u.Password != user.Password {
