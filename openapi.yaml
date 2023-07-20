@@ -710,6 +710,12 @@ components:
                 level:
                     type: integer
                     format: int64
+                useVip:
+                    type: integer
+                    format: int64
+                levelOk:
+                    type: integer
+                    format: int64
                 amountAll:
                     type: string
                 amount:
@@ -906,6 +912,15 @@ components:
                     type: string
                 Usdt:
                     type: string
+                Vip:
+                    type: integer
+                    format: int64
+                UseVip:
+                    type: integer
+                    format: int64
+                levelOk:
+                    type: integer
+                    format: int64
         UserInfoReply_List13:
             type: object
             properties:
@@ -969,6 +984,15 @@ components:
                     type: string
                 Usdt:
                     type: string
+                Vip:
+                    type: integer
+                    format: int64
+                UseVip:
+                    type: integer
+                    format: int64
+                levelOk:
+                    type: integer
+                    format: int64
         UserInfoReply_List8:
             type: object
             properties:

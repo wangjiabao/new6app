@@ -242,6 +242,8 @@ message UserInfoRequest {
 message UserInfoReply {
 	string address = 1; // 地址
 	int64 level = 2; // vip
+	int64 useVip = 102; // 1vip账户0普通账户
+	int64 levelOk = 101; // 有效用户1，无效0
 	string amountAll = 3;
 	string amount = 4; // 未释放csd
 	string balanceUsdtLock = 82; // 已释放csd金额
@@ -348,6 +350,9 @@ message UserInfoReply {
 		string address = 1;
 		string Amount = 2;
 		string Usdt = 3;
+		int64 Vip = 4;
+		int64 UseVip = 5;
+		int64 levelOk = 6;
 	}
 
 	repeated List11 recommendAddressList = 66; // 团队列表
@@ -355,6 +360,9 @@ message UserInfoReply {
 		string address = 1;
 		string Amount = 2;
 		string Usdt = 3;
+		int64 Vip = 4;
+		int64 UseVip = 5;
+		int64 levelOk = 6;
 	}
 
 	repeated List9 allRewardList = 67;

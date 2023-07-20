@@ -830,6 +830,10 @@ func (m *UserInfoReply) validate(all bool) error {
 
 	// no validation rules for Level
 
+	// no validation rules for UseVip
+
+	// no validation rules for LevelOk
+
 	// no validation rules for AmountAll
 
 	// no validation rules for Amount
@@ -8227,6 +8231,12 @@ func (m *UserInfoReply_List7) validate(all bool) error {
 
 	// no validation rules for Usdt
 
+	// no validation rules for Vip
+
+	// no validation rules for UseVip
+
+	// no validation rules for LevelOk
+
 	if len(errors) > 0 {
 		return UserInfoReply_List7MultiError(errors)
 	}
@@ -8334,6 +8344,12 @@ func (m *UserInfoReply_List11) validate(all bool) error {
 	// no validation rules for Amount
 
 	// no validation rules for Usdt
+
+	// no validation rules for Vip
+
+	// no validation rules for UseVip
+
+	// no validation rules for LevelOk
 
 	if len(errors) > 0 {
 		return UserInfoReply_List11MultiError(errors)

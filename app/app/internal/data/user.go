@@ -37,6 +37,7 @@ type UserInfo struct {
 	ID               int64     `gorm:"primarykey;type:int"`
 	UserId           int64     `gorm:"type:int;not null"`
 	Vip              int64     `gorm:"type:int;not null"`
+	UseVip           int64     `gorm:"type:int;not null"`
 	HistoryRecommend int64     `gorm:"type:int;not null"`
 	CreatedAt        time.Time `gorm:"type:datetime;not null"`
 	UpdatedAt        time.Time `gorm:"type:datetime;not null"`
@@ -335,6 +336,7 @@ func (ui *UserInfoRepo) GetUserInfoByUserId(ctx context.Context, userId int64) (
 		Vip:              userInfo.Vip,
 		HistoryRecommend: userInfo.HistoryRecommend,
 		TeamCsdBalance:   userInfo.TeamCsdBalance,
+		UseVip:           userInfo.UseVip,
 	}, nil
 }
 

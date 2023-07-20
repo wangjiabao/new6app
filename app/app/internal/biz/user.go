@@ -24,6 +24,7 @@ type UserInfo struct {
 	ID               int64
 	UserId           int64
 	Vip              int64
+	UseVip           int64
 	HistoryRecommend int64
 	TeamCsdBalance   int64
 }
@@ -474,6 +475,8 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		withdrawDestroyRate int64
 		withdrawRate        int64
 		term                int64
+		vip0Balance         int64
+		levelOk             int64
 		amountAll           int64
 		myLocations         []*v1.UserInfoReply_List
 		allRewardList       []*v1.UserInfoReply_List9
@@ -483,7 +486,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 	// 配置
 	configs, err = uuc.configRepo.GetConfigByKeys(ctx,
 		"term", "level_2_price", "level_1_price", "level_3_price", "level_4_price", "csd_price",
-		"withdraw_destroy_rate", "withdraw_rate",
+		"withdraw_destroy_rate", "withdraw_rate", "vip_0_balance",
 	)
 	if nil != configs {
 		for _, vConfig := range configs {
@@ -510,6 +513,9 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 			}
 			if "withdraw_rate" == vConfig.KeyName {
 				withdrawRate, _ = strconv.ParseInt(vConfig.Value, 10, 64)
+			}
+			if "vip_0_balance" == vConfig.KeyName {
+				vip0Balance, _ = strconv.ParseInt(vConfig.Value, 10, 64)
 			}
 		}
 	}
@@ -607,6 +613,7 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		recommendAddresses []*v1.UserInfoReply_List11
 		teamLocations      map[int64][]*Location
 		recommendUserIds   map[int64]int64
+		userBalanceMap     map[int64]*UserBalance
 	)
 	recommendUserIds = make(map[int64]int64, 0)
 	userRecommends, err = uuc.urRepo.GetUserRecommendLikeCode(ctx, myCode)
@@ -623,10 +630,15 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 		teamUsers, _ = uuc.repo.GetUserByUserIds(ctx, teamUserIds...)
 		teamUserInfos, _ = uuc.uiRepo.GetUserInfoByUserIds(ctx, teamUserIds...)
 		teamLocations, _ = uuc.locationRepo.GetLocationMapByIds(ctx, teamUserIds...)
+		userBalanceMap, _ = uuc.ubRepo.GetUserBalanceByUserIds(ctx, teamUserIds...)
 		if nil != teamUsers {
 			for _, vTeamUsers := range teamUsers {
 				var locationAmount int64
 				if _, ok := teamUserInfos[vTeamUsers.ID]; !ok {
+					continue
+				}
+
+				if _, ok := userBalanceMap[vTeamUsers.ID]; !ok {
 					continue
 				}
 
@@ -637,11 +649,19 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 					}
 				}
 
+				levelOkTmp := int64(0)
+				if vip0Balance <= userBalanceMap[vTeamUsers.ID].BalanceUsdt/10000000000 {
+					levelOkTmp = 1
+				}
+
 				if _, ok := recommendUserIds[vTeamUsers.ID]; ok {
 					recommendAddresses = append(recommendAddresses, &v1.UserInfoReply_List11{
 						Address: vTeamUsers.Address,
 						Amount:  fmt.Sprintf("%.4f", float64(teamUserInfos[vTeamUsers.ID].TeamCsdBalance)/float64(10000000000)),
 						Usdt:    fmt.Sprintf("%.2f", float64(locationAmount)/float64(10000000000)),
+						Vip:     teamUserInfos[vTeamUsers.ID].Vip,
+						UseVip:  teamUserInfos[vTeamUsers.ID].UseVip,
+						LevelOk: levelOkTmp,
 					})
 				}
 
@@ -649,6 +669,9 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 					Address: vTeamUsers.Address,
 					Amount:  fmt.Sprintf("%.4f", float64(teamUserInfos[vTeamUsers.ID].TeamCsdBalance)/float64(10000000000)),
 					Usdt:    fmt.Sprintf("%.2f", float64(locationAmount)/float64(10000000000)),
+					Vip:     teamUserInfos[vTeamUsers.ID].Vip,
+					UseVip:  teamUserInfos[vTeamUsers.ID].UseVip,
+					LevelOk: levelOkTmp,
 				})
 			}
 		}
@@ -821,9 +844,15 @@ func (uuc *UserUseCase) UserInfo(ctx context.Context, user *User) (*v1.UserInfoR
 	//	}
 	//}
 
+	if vip0Balance <= userBalance.BalanceUsdt/10000000000 {
+		levelOk = 1
+	}
+
 	return &v1.UserInfoReply{
 		Address:                           myUser.Address,
 		Level:                             userInfo.Vip,
+		UseVip:                            userInfo.UseVip,
+		LevelOk:                           levelOk,
 		Amount:                            amount,
 		DepositList:                       depositList,
 		TeamCsdBalance:                    fmt.Sprintf("%.2f", float64(userInfo.TeamCsdBalance)/float64(10000000000)),
