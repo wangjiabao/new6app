@@ -532,7 +532,7 @@ func GetAmountOut(strAmount string) (string, error) {
 		}
 
 		addresses := make([]common.Address, 0)
-		addresses = append(addresses, common.HexToAddress("0x55d398326f99059fF775485246999027B3197955"), common.HexToAddress("0x538ac017aa01ba9665052660ea5783ba91a48092"))
+		addresses = append(addresses, common.HexToAddress("0x55d398326f99059fF775485246999027B3197955"), common.HexToAddress("0xfAd476cd33Ed9213ED0a2F4c20f6865A98bf0a8B"))
 		amount, _ := new(big.Int).SetString(strAmount, 10)
 
 		bals, err := instance.GetAmountsOut(&bind.CallOpts{}, amount, addresses)
