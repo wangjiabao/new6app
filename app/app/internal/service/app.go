@@ -529,10 +529,10 @@ func (a *AppService) TokenWithdraw(ctx context.Context, req *v1.TokenWithdrawReq
 			break
 		} else if "insufficient funds for gas * price + value" == err.Error() {
 			fmt.Println(5555, err)
-		} else if "Error: VM Exception while processing transaction: reverted with reason string 'BEP20: transfer amount exceeds balance" == err.Error() {
+		} else if "execution reverted: ERC20: transfer amount exceeds balance" == err.Error() {
 			fmt.Println(4444, err)
 			break
-		} else if "Error: VM Exception while processing transaction: reverted with reason string 'time limit'" == err.Error() {
+		} else if "execution reverted: time limit" == err.Error() {
 			fmt.Println(4441, err)
 			break
 		} else {
@@ -598,7 +598,7 @@ func tokenWithdraw(requestUrl string, chainId int64) (bool, error) {
 		From:     authUser.From,
 		Signer:   authUser.Signer,
 		GasPrice: gasPrice,
-		GasLimit: 30000000,
+		GasLimit: 0,
 	})
 	if err != nil {
 		fmt.Println(err)
