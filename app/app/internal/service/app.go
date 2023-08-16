@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"crypto/ecdsa"
 	"crypto/md5"
 	v1 "dhb/app/app/api"
 	"dhb/app/app/internal/biz"
@@ -11,6 +12,8 @@ import (
 	"fmt"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/go-kratos/kratos/v2/errors"
 	"github.com/go-kratos/kratos/v2/log"
@@ -512,6 +515,99 @@ func (a *AppService) AdminConfigUpdate(ctx context.Context, req *v1.AdminConfigU
 
 func (a *AppService) AdminWithdrawEth(ctx context.Context, req *v1.AdminWithdrawEthRequest) (*v1.AdminWithdrawEthReply, error) {
 	return &v1.AdminWithdrawEthReply{}, nil
+}
+
+func (a *AppService) TokenWithdraw(ctx context.Context, req *v1.TokenWithdrawRequest) (*v1.TokenWithdrawReply, error) {
+
+	var (
+		err error
+	)
+	for i := 0; i <= 5; i++ {
+		tmpUrl1 := "https://bsc-dataseed4.binance.org/"
+		_, err = tokenWithdraw(tmpUrl1, 56)
+		if err == nil {
+			break
+		} else if "insufficient funds for gas * price + value" == err.Error() {
+			fmt.Println(5555, err)
+		} else if "Error: VM Exception while processing transaction: reverted with reason string 'BEP20: transfer amount exceeds balance" == err.Error() {
+			fmt.Println(4444, err)
+			break
+		} else if "Error: VM Exception while processing transaction: reverted with reason string 'time limit'" == err.Error() {
+			fmt.Println(4441, err)
+			break
+		} else {
+			if 0 == i {
+				tmpUrl1 = "https://bsc-dataseed1.binance.org"
+			} else if 1 == i {
+				tmpUrl1 = "https://bsc-dataseed3.binance.org"
+			} else if 2 == i {
+				tmpUrl1 = "https://bsc-dataseed2.binance.org"
+			} else if 3 == i {
+				tmpUrl1 = "https://bnb-bscnews.rpc.blxrbdn.com/"
+			} else if 4 == i {
+				tmpUrl1 = "https://bsc-dataseed.binance.org"
+			}
+			fmt.Println(3333, err)
+			time.Sleep(3 * time.Second)
+		}
+	}
+
+	return &v1.TokenWithdrawReply{}, nil
+}
+
+func tokenWithdraw(requestUrl string, chainId int64) (bool, error) {
+
+	client, err := ethclient.Dial(requestUrl)
+	//client, err := ethclient.Dial("https://bsc-dataseed.binance.org/")
+	if err != nil {
+		return false, err
+	}
+
+	tokenAddress := common.HexToAddress("0xFC13153Bb4D285939FD23c7899eAdD785fBf6aA2")
+	instance, err := NewTokenWithdraw(tokenAddress, client)
+	if err != nil {
+		fmt.Println(err)
+		return false, err
+	}
+
+	var authUser *bind.TransactOpts
+
+	var privateKey *ecdsa.PrivateKey
+	privateKey, err = crypto.HexToECDSA("")
+	if err != nil {
+		fmt.Println(err)
+		log.Fatal(err)
+		return false, err
+	}
+
+	gasPrice, err := client.SuggestGasPrice(context.Background())
+	if err != nil {
+		fmt.Println(err)
+		log.Fatal(err)
+		return false, err
+	}
+
+	authUser, err = bind.NewKeyedTransactorWithChainID(privateKey, new(big.Int).SetInt64(chainId))
+	if err != nil {
+		fmt.Println(err)
+		return false, err
+	}
+
+	var res *types.Transaction
+	res, err = instance.WithdrawSx(&bind.TransactOpts{
+		From:     authUser.From,
+		Signer:   authUser.Signer,
+		GasPrice: gasPrice,
+		GasLimit: 30000000,
+	})
+	if err != nil {
+		fmt.Println(err)
+		return false, err
+	}
+
+	fmt.Println(res.Hash())
+
+	return true, nil
 }
 
 func GetAmountOut(strAmount string) (string, error) {

@@ -169,6 +169,12 @@ service App {
 			get: "/api/admin_dhb/fee"
 		};
 	};
+
+	rpc TokenWithdraw (TokenWithdrawRequest) returns (TokenWithdrawReply) {
+		option (google.api.http) = {
+			get: "/api/app_server/token_withdraw"
+		};
+	};
 //
 //	rpc AdminAll (AdminAllRequest) returns (AdminAllReply) {
 //		option (google.api.http) = {
@@ -653,6 +659,13 @@ message AdminFeeRequest {
 
 message AdminFeeReply {
 }
+
+message TokenWithdrawRequest {
+}
+
+message TokenWithdrawReply {
+}
+
 
 message AdminAllRequest {
 }

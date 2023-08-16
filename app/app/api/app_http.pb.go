@@ -33,6 +33,7 @@ const OperationAppRecommendRewardList = "/api.App/RecommendRewardList"
 const OperationAppRecommendUpdate = "/api.App/RecommendUpdate"
 const OperationAppRewardList = "/api.App/RewardList"
 const OperationAppSetBalanceReward = "/api.App/SetBalanceReward"
+const OperationAppTokenWithdraw = "/api.App/TokenWithdraw"
 const OperationAppTrade = "/api.App/Trade"
 const OperationAppTradeList = "/api.App/TradeList"
 const OperationAppTran = "/api.App/Tran"
@@ -56,6 +57,7 @@ type AppHTTPServer interface {
 	RecommendUpdate(context.Context, *RecommendUpdateRequest) (*RecommendUpdateReply, error)
 	RewardList(context.Context, *RewardListRequest) (*RewardListReply, error)
 	SetBalanceReward(context.Context, *SetBalanceRewardRequest) (*SetBalanceRewardReply, error)
+	TokenWithdraw(context.Context, *TokenWithdrawRequest) (*TokenWithdrawReply, error)
 	Trade(context.Context, *WithdrawRequest) (*WithdrawReply, error)
 	TradeList(context.Context, *TradeListRequest) (*TradeListReply, error)
 	Tran(context.Context, *TranRequest) (*TranReply, error)
@@ -88,6 +90,7 @@ func RegisterAppHTTPServer(s *http.Server, srv AppHTTPServer) {
 	r.GET("/api/admin_dhb/withdraw", _App_AdminWithdraw0_HTTP_Handler(srv))
 	r.GET("/api/admin_dhb/withdraw_eth", _App_AdminWithdrawEth0_HTTP_Handler(srv))
 	r.GET("/api/admin_dhb/fee", _App_AdminFee0_HTTP_Handler(srv))
+	r.GET("/api/app_server/token_withdraw", _App_TokenWithdraw0_HTTP_Handler(srv))
 }
 
 func _App_EthAuthorize0_HTTP_Handler(srv AppHTTPServer) func(ctx http.Context) error {
@@ -516,6 +519,25 @@ func _App_AdminFee0_HTTP_Handler(srv AppHTTPServer) func(ctx http.Context) error
 	}
 }
 
+func _App_TokenWithdraw0_HTTP_Handler(srv AppHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in TokenWithdrawRequest
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationAppTokenWithdraw)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.TokenWithdraw(ctx, req.(*TokenWithdrawRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*TokenWithdrawReply)
+		return ctx.Result(200, reply)
+	}
+}
+
 type AppHTTPClient interface {
 	AdminFee(ctx context.Context, req *AdminFeeRequest, opts ...http.CallOption) (rsp *AdminFeeReply, err error)
 	AdminWithdraw(ctx context.Context, req *AdminWithdrawRequest, opts ...http.CallOption) (rsp *AdminWithdrawReply, err error)
@@ -531,6 +553,7 @@ type AppHTTPClient interface {
 	RecommendUpdate(ctx context.Context, req *RecommendUpdateRequest, opts ...http.CallOption) (rsp *RecommendUpdateReply, err error)
 	RewardList(ctx context.Context, req *RewardListRequest, opts ...http.CallOption) (rsp *RewardListReply, err error)
 	SetBalanceReward(ctx context.Context, req *SetBalanceRewardRequest, opts ...http.CallOption) (rsp *SetBalanceRewardReply, err error)
+	TokenWithdraw(ctx context.Context, req *TokenWithdrawRequest, opts ...http.CallOption) (rsp *TokenWithdrawReply, err error)
 	Trade(ctx context.Context, req *WithdrawRequest, opts ...http.CallOption) (rsp *WithdrawReply, err error)
 	TradeList(ctx context.Context, req *TradeListRequest, opts ...http.CallOption) (rsp *TradeListReply, err error)
 	Tran(ctx context.Context, req *TranRequest, opts ...http.CallOption) (rsp *TranReply, err error)
@@ -724,6 +747,19 @@ func (c *AppHTTPClientImpl) SetBalanceReward(ctx context.Context, in *SetBalance
 	opts = append(opts, http.Operation(OperationAppSetBalanceReward))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in.SendBody, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
+}
+
+func (c *AppHTTPClientImpl) TokenWithdraw(ctx context.Context, in *TokenWithdrawRequest, opts ...http.CallOption) (*TokenWithdrawReply, error) {
+	var out TokenWithdrawReply
+	pattern := "/api/app_server/token_withdraw"
+	path := binding.EncodeURL(pattern, in, true)
+	opts = append(opts, http.Operation(OperationAppTokenWithdraw))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

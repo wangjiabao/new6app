@@ -6054,6 +6054,210 @@ var _ interface {
 	ErrorName() string
 } = AdminFeeReplyValidationError{}
 
+// Validate checks the field values on TokenWithdrawRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *TokenWithdrawRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on TokenWithdrawRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// TokenWithdrawRequestMultiError, or nil if none found.
+func (m *TokenWithdrawRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *TokenWithdrawRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return TokenWithdrawRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// TokenWithdrawRequestMultiError is an error wrapping multiple validation
+// errors returned by TokenWithdrawRequest.ValidateAll() if the designated
+// constraints aren't met.
+type TokenWithdrawRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m TokenWithdrawRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m TokenWithdrawRequestMultiError) AllErrors() []error { return m }
+
+// TokenWithdrawRequestValidationError is the validation error returned by
+// TokenWithdrawRequest.Validate if the designated constraints aren't met.
+type TokenWithdrawRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TokenWithdrawRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TokenWithdrawRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TokenWithdrawRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TokenWithdrawRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TokenWithdrawRequestValidationError) ErrorName() string {
+	return "TokenWithdrawRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e TokenWithdrawRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTokenWithdrawRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TokenWithdrawRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TokenWithdrawRequestValidationError{}
+
+// Validate checks the field values on TokenWithdrawReply with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *TokenWithdrawReply) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on TokenWithdrawReply with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// TokenWithdrawReplyMultiError, or nil if none found.
+func (m *TokenWithdrawReply) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *TokenWithdrawReply) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return TokenWithdrawReplyMultiError(errors)
+	}
+
+	return nil
+}
+
+// TokenWithdrawReplyMultiError is an error wrapping multiple validation errors
+// returned by TokenWithdrawReply.ValidateAll() if the designated constraints
+// aren't met.
+type TokenWithdrawReplyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m TokenWithdrawReplyMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m TokenWithdrawReplyMultiError) AllErrors() []error { return m }
+
+// TokenWithdrawReplyValidationError is the validation error returned by
+// TokenWithdrawReply.Validate if the designated constraints aren't met.
+type TokenWithdrawReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TokenWithdrawReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TokenWithdrawReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TokenWithdrawReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TokenWithdrawReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TokenWithdrawReplyValidationError) ErrorName() string {
+	return "TokenWithdrawReplyValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e TokenWithdrawReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTokenWithdrawReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TokenWithdrawReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TokenWithdrawReplyValidationError{}
+
 // Validate checks the field values on AdminAllRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
