@@ -1355,7 +1355,7 @@ func (ub *UserBalanceRepo) TranDhb(ctx context.Context, userId int64, toUserId i
 
 	if err = ub.data.DB(ctx).Table("user_balance").
 		Where("user_id=?", toUserId).
-		Updates(map[string]interface{}{"balance_usdt": gorm.Expr("balance_usdt + ?", amount)}).Error; nil != err {
+		Updates(map[string]interface{}{"balance_dhb": gorm.Expr("balance_dhb + ?", amount)}).Error; nil != err {
 		return errors.NotFound("user balance err", "user balance not found")
 	}
 
