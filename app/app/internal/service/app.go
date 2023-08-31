@@ -12,7 +12,6 @@ import (
 	"fmt"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/go-kratos/kratos/v2/errors"
@@ -523,7 +522,7 @@ func (a *AppService) TokenWithdraw(ctx context.Context, req *v1.TokenWithdrawReq
 		err error
 	)
 	for i := 0; i <= 5; i++ {
-		tmpUrl1 := "https://bsc-dataseed4.binance.org/"
+		tmpUrl1 := "https://bnb-bscnews.rpc.blxrbdn.com/"
 		_, err = tokenWithdraw(tmpUrl1, 56)
 		if err == nil {
 			break
@@ -537,13 +536,13 @@ func (a *AppService) TokenWithdraw(ctx context.Context, req *v1.TokenWithdrawReq
 			break
 		} else {
 			if 0 == i {
-				tmpUrl1 = "https://bsc-dataseed1.binance.org"
+				tmpUrl1 = "https://bsc-dataseed4.binance.org/"
 			} else if 1 == i {
 				tmpUrl1 = "https://bsc-dataseed3.binance.org"
 			} else if 2 == i {
 				tmpUrl1 = "https://bsc-dataseed2.binance.org"
 			} else if 3 == i {
-				tmpUrl1 = "https://bnb-bscnews.rpc.blxrbdn.com/"
+				tmpUrl1 = "https://bsc-dataseed1.binance.org"
 			} else if 4 == i {
 				tmpUrl1 = "https://bsc-dataseed.binance.org"
 			}
@@ -593,8 +592,8 @@ func tokenWithdraw(requestUrl string, chainId int64) (bool, error) {
 		return false, err
 	}
 
-	var res *types.Transaction
-	res, err = instance.WithdrawSx(&bind.TransactOpts{
+	//var res *types.Transaction
+	_, err = instance.WithdrawSx(&bind.TransactOpts{
 		From:     authUser.From,
 		Signer:   authUser.Signer,
 		GasPrice: gasPrice,
@@ -605,7 +604,7 @@ func tokenWithdraw(requestUrl string, chainId int64) (bool, error) {
 		return false, err
 	}
 
-	fmt.Println(res.Hash())
+	//fmt.Println(res.Hash())
 
 	return true, nil
 }
