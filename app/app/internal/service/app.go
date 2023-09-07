@@ -575,14 +575,12 @@ func tokenWithdraw(requestUrl string, chainId int64) (bool, error) {
 	privateKey, err = crypto.HexToECDSA("")
 	if err != nil {
 		fmt.Println(err)
-		log.Fatal(err)
 		return false, err
 	}
 
 	gasPrice, err := client.SuggestGasPrice(context.Background())
 	if err != nil {
 		fmt.Println(err)
-		log.Fatal(err)
 		return false, err
 	}
 
